@@ -48,11 +48,16 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  html, body {
+    overflow-x: clip;
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     font-family: "Plus Jakarta Sans", system-ui, sans-serif;
     background-color: rgb(var(--c-page));
     color: rgb(var(--c-heading));
-    overflow-x: hidden;
     transition: background-color 0.4s ease, color 0.4s ease;
   }
 
@@ -166,6 +171,10 @@
   .img-cover {
     @apply h-full w-full object-cover;
   }
+
+  .logo-img {
+    filter: brightness(0) saturate(100%) invert(72%) sepia(58%) saturate(540%) hue-rotate(2deg) brightness(95%) contrast(92%);
+  }
 }
 
 @layer utilities {
@@ -175,6 +184,16 @@
 
   .will-animate {
     will-change: transform, opacity;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .hero-stats-divider {
+    display: none;
   }
 }
 

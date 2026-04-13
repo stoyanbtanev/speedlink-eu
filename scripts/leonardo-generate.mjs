@@ -5,7 +5,11 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUTPUT_DIR = path.join(__dirname, "..", "public", "images");
 
-const API_KEY = process.env.LEONARDO_API_KEY || "9f3bed64-d4ba-42e6-b8e9-a10756cda51a";
+const API_KEY = process.env.LEONARDO_API_KEY;
+if (!API_KEY) {
+  console.error("Missing LEONARDO_API_KEY env var.");
+  process.exit(1);
+}
 const API_V2 = "https://cloud.leonardo.ai/api/rest/v2/generations";
 const API_V1_GET = "https://cloud.leonardo.ai/api/rest/v1/generations";
 

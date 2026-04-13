@@ -68,7 +68,7 @@ export function GallerySection() {
           </p>
         </div>
       </div>
-      <div className="gallery-scroll h-dvh">
+      <div className="gallery-scroll h-svh">
         <div
           ref={trackRef}
           className="flex h-full items-center gap-6 pl-8"
@@ -76,7 +76,7 @@ export function GallerySection() {
           {IMAGES.gallery.map((src, i) => (
             <div
               key={i}
-              className="gallery-card relative h-[70dvh] w-[80vw] flex-shrink-0 overflow-hidden rounded-2xl md:w-[60vw] lg:h-[75dvh] lg:w-[50vw]"
+              className="gallery-card relative h-[70svh] w-[80vw] flex-shrink-0 overflow-hidden rounded-2xl md:w-[60vw] lg:h-[75svh] lg:w-[50vw]"
             >
               <img
                 src={src}

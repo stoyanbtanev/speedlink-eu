@@ -1,4 +1,8 @@
-const token = "b0f2a247595717f1f52dc062fe9274e3";
+const token = process.env.KREA_API_TOKEN;
+if (!token) {
+  console.error("Missing KREA_API_TOKEN env var.");
+  process.exit(1);
+}
 
 const r = await fetch("https://api.krea.ai/generate/image/google/nano-banana-2", {
   method: "POST",

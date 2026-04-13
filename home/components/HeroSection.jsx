@@ -29,8 +29,6 @@ export function HeroSection() {
   const subtitleRef = useRef(null);
   const ctaRef = useRef(null);
   const statsRef = useRef(null);
-  const scrollIndicatorRef = useRef(null);
-  const scrollDotRef = useRef(null);
 
   const titleText = useMemo(() => t(hero.title, lang), [lang]);
 
@@ -165,27 +163,6 @@ export function HeroSection() {
       }, "-=0.2");
     }
 
-    // --- SCROLL INDICATOR ---
-    if (scrollDotRef.current && scrollIndicatorRef.current) {
-      gsap.to(scrollDotRef.current, {
-        y: 8,
-        duration: 1.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "breathe",
-      });
-
-      gsap.to(scrollIndicatorRef.current, {
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "50px top",
-          end: "150px top",
-          scrub: true,
-        },
-      });
-    }
   }, { scope: sectionRef, dependencies: [lang] });
 
   const splitChars = (text) => {
@@ -212,8 +189,8 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[300dvh]">
-      <div ref={stickyRef} className="sticky top-0 h-dvh overflow-hidden" style={{ perspective: "1200px" }}>
+    <section ref={sectionRef} className="relative h-[300svh]">
+      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={{ perspective: "1200px" }}>
         <div ref={gridRef} className="absolute inset-0 z-0">
           <img
             src={IMAGES.hero[4]}
@@ -292,19 +269,19 @@ export function HeroSection() {
 
               <div
                 ref={statsRef}
-                className="mt-16 flex flex-wrap items-center justify-center gap-4 text-white/30 sm:gap-8"
+                className="hero-stats mt-16 flex flex-wrap items-center justify-center gap-4 text-white/30 sm:gap-8"
                 style={{ opacity: 0 }}
               >
                 <div className="flex items-center gap-2">
                   <span className="font-display text-2xl font-bold text-brand">47</span>
                   <span className="font-body text-body-sm">{lang === "bg" ? "държави" : "countries"}</span>
                 </div>
-                <div className="h-4 w-px bg-white/20" />
+                <div className="hero-stats-divider h-4 w-px bg-white/20" />
                 <div className="flex items-center gap-2">
                   <span className="font-display text-2xl font-bold text-brand">8,400+</span>
                   <span className="font-body text-body-sm">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
                 </div>
-                <div className="h-4 w-px bg-white/20" />
+                <div className="hero-stats-divider h-4 w-px bg-white/20" />
                 <div className="flex items-center gap-2">
                   <span className="font-display text-2xl font-bold text-brand">15+</span>
                   <span className="font-body text-body-sm">{lang === "bg" ? "години" : "years"}</span>
@@ -314,14 +291,6 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div
-          ref={scrollIndicatorRef}
-          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
-        >
-          <div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/20 pt-1.5">
-            <div ref={scrollDotRef} className="h-2 w-1 rounded-full bg-brand" />
-          </div>
-        </div>
       </div>
     </section>
   );

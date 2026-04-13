@@ -1,6 +1,11 @@
 const API_BASE = "https://api.krea.ai";
-const API_TOKEN = "b0f2a247595717f1f52dc062fe9274e3";
+const API_TOKEN = process.env.KREA_API_TOKEN;
 const MODEL = "google/nano-banana-2";
+
+if (!API_TOKEN) {
+  console.error("Missing KREA_API_TOKEN env var.");
+  process.exit(1);
+}
 
 const IMAGES = [
   { id: "hero-truck-1", prompt: "Cinematic aerial photograph of a modern European freight truck driving on a highway through alpine mountains at golden hour, dramatic lighting, long shadows, motion blur on road, professional logistics photography, ultra-realistic, no text, no watermark", aspect_ratio: "1:1", quality: "2K" },

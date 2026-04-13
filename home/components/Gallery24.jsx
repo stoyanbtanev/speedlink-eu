@@ -37,7 +37,7 @@ export function Gallery24() {
           <p className="md:text-md">Routes across Europe, Asia, and beyond</p>
         </div>
       </div>
-      <div className="gallery24-scroll h-dvh">
+      <div className="gallery24-scroll h-svh">
         <div
           ref={trackRef}
           className="flex h-full w-max items-center gap-x-6 px-[5%] md:gap-x-8"
@@ -45,7 +45,7 @@ export function Gallery24() {
           <a className="inline-block max-w-full">
             <div className="relative size-full max-w-full overflow-hidden">
               <img
-                className="h-[80dvh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
+                className="h-[80svh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
                 src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
                 alt="Placeholder image 1"
               />
@@ -54,7 +54,7 @@ export function Gallery24() {
           <a className="inline-block max-w-full">
             <div className="relative size-full max-w-full overflow-hidden">
               <img
-                className="h-[80dvh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
+                className="h-[80svh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
                 src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
                 alt="Placeholder image 2"
               />
@@ -63,7 +63,7 @@ export function Gallery24() {
           <a className="inline-block max-w-full">
             <div className="relative size-full max-w-full overflow-hidden">
               <img
-                className="h-[80dvh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
+                className="h-[80svh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
                 src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
                 alt="Placeholder image 3"
               />

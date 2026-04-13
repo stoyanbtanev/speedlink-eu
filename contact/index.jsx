@@ -8,10 +8,45 @@ import { IMAGES } from "../src/data/images";
 import { PageHeader } from "../src/components/PageHeader";
 import { LeafletMap } from "../src/components/LeafletMap";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 function ContactForm() {
   const { lang } = useLang();
   const { theme } = useTheme();
   const sectionRef = useRef(null);
+  const [values, setValues] = useState({
+    firstName: "", lastName: "", email: "", phone: "",
+    service: "", role: "", message: "", terms: false, website: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState(null);
+
+  const setField = (key) => (e) => {
+    const v = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    setValues((prev) => ({ ...prev, [key]: v }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+  };
+
+  const validate = () => {
+    const errs = {};
+    const req = lang === "bg" ? "Задължително поле" : "Required field";
+    if (!values.firstName.trim()) errs.firstName = req;
+    if (!values.lastName.trim()) errs.lastName = req;
+    if (!values.email.trim()) errs.email = req;
+    else if (!EMAIL_RE.test(values.email.trim())) errs.email = lang === "bg" ? "Невалиден имейл" : "Invalid email";
+    if (!values.message.trim()) errs.message = req;
+    if (!values.terms) errs.terms = lang === "bg" ? "Приемете условията" : "Please accept the terms";
+    return errs;
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (values.website) return;
+    const errs = validate();
+    setErrors(errs);
+    if (Object.keys(errs).length) return;
+    setStatus("sent");
+  };
 
   useGSAP(() => {
     const section = sectionRef.current;
@@ -37,6 +72,10 @@ function ContactForm() {
     }
   }, { scope: sectionRef });
 
+  const inputBase = "w-full rounded-xl border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50";
+  const inputCls = (k) => `${inputBase} ${errors[k] ? "border-red-500/60" : "border-surface-border"}`;
+  const errText = (k) => errors[k] ? <p className="mt-1.5 font-body text-xs text-red-500/80">{errors[k]}</p> : null;
+
   return (
     <section className="section-padding section-py" ref={sectionRef}>
       <div className="container-xl">
@@ -46,30 +85,44 @@ function ContactForm() {
             <h2 className="font-display text-display-md text-heading">{t(contactPage.formTitle, lang)}</h2>
             <p className="mt-3 font-body text-body-lg text-heading/50">{t(contactPage.formSubtitle, lang)}</p>
 
-            <form className="mt-10 space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="mt-10 space-y-6" onSubmit={onSubmit} noValidate>
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={values.website}
+                onChange={setField("website")}
+                style={{ position: "absolute", left: "-10000px", width: 1, height: 1, opacity: 0 }}
+                aria-hidden="true"
+              />
+
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.firstName, lang)}</label>
-                  <input type="text" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
+                  <input type="text" autoComplete="given-name" value={values.firstName} onChange={setField("firstName")} className={inputCls("firstName")} />
+                  {errText("firstName")}
                 </div>
                 <div>
                   <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.lastName, lang)}</label>
-                  <input type="text" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
+                  <input type="text" autoComplete="family-name" value={values.lastName} onChange={setField("lastName")} className={inputCls("lastName")} />
+                  {errText("lastName")}
                 </div>
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.email, lang)}</label>
-                  <input type="email" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
+                  <input type="email" autoComplete="email" value={values.email} onChange={setField("email")} className={inputCls("email")} />
+                  {errText("email")}
                 </div>
                 <div>
                   <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.phone, lang)}</label>
-                  <input type="tel" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
+                  <input type="tel" autoComplete="tel" value={values.phone} onChange={setField("phone")} className={inputCls("phone")} />
                 </div>
               </div>
               <div>
                 <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.serviceLabel, lang)}</label>
-                <select className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading/70 outline-none transition-colors focus:border-brand/50">
+                <select autoComplete="off" value={values.service} onChange={setField("service")} className={`${inputCls("service")} text-heading/70`}>
                   <option value="">{lang === "bg" ? "Изберете услуга" : "Select a service"}</option>
                   {contactPage.serviceOptions.map((opt) => (
                     <option key={opt.value} value={opt.value}>{t(opt.label, lang)}</option>
@@ -78,7 +131,7 @@ function ContactForm() {
               </div>
               <div>
                 <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.roleLabel, lang)}</label>
-                <select className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading/70 outline-none transition-colors focus:border-brand/50">
+                <select autoComplete="off" value={values.role} onChange={setField("role")} className={`${inputCls("role")} text-heading/70`}>
                   <option value="">{lang === "bg" ? "Изберете роля" : "Select role"}</option>
                   {contactPage.roles.map((role) => (
                     <option key={role.value} value={role.value}>{t(role.label, lang)}</option>
@@ -87,18 +140,25 @@ function ContactForm() {
               </div>
               <div>
                 <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.message, lang)}</label>
-                <textarea rows="4" placeholder={t(contactPage.messagePlaceholder, lang)} className="w-full resize-none rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
+                <textarea rows="4" autoComplete="off" placeholder={t(contactPage.messagePlaceholder, lang)} value={values.message} onChange={setField("message")} className={`${inputCls("message")} resize-none`} />
+                {errText("message")}
               </div>
               <div className="flex items-start gap-3">
-                <input type="checkbox" id="terms" className="mt-1 h-4 w-4 rounded border-surface-border bg-surface-card accent-brand" />
+                <input type="checkbox" id="terms" checked={values.terms} onChange={setField("terms")} className="mt-1 h-4 w-4 rounded border-surface-border bg-surface-card accent-brand" />
                 <label htmlFor="terms" className="font-body text-body-sm text-heading/50">{t(contactPage.terms, lang)}</label>
               </div>
+              {errors.terms && <p className="-mt-4 font-body text-xs text-red-500/80">{errors.terms}</p>}
               <button type="submit" className="btn-primary w-full sm:w-auto">
                 {t(contactPage.send, lang)}
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </button>
+              {status === "sent" && (
+                <p className="font-body text-sm text-brand">
+                  {lang === "bg" ? "Благодарим! Ще се свържем до 24 часа." : "Thanks! We will reply within 24 hours."}
+                </p>
+              )}
             </form>
           </div>
 

@@ -101,22 +101,22 @@ export function WhyUsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:grid-rows-2">
           {whyUs.cards.map((card, i) => (
             <div
               key={i}
               className="why-card group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30 hover:shadow-[0_20px_60px_-15px_rgba(232,168,56,0.15)]"
             >
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-40 overflow-hidden md:h-44">
                 <img
                   src={CARD_IMAGES[i]}
                   alt={t(card.title, lang)}
-                  className="img-cover transition-transform duration-700 group-hover:scale-110"
+                  className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-card/80 to-transparent" />
               </div>
-              <div className="p-6">
+              <div className="p-5">
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 text-brand transition-transform duration-500 group-hover:-translate-y-1">
                   {ICONS[i]}
                 </div>
@@ -134,16 +134,16 @@ export function WhyUsSection() {
           ))}
 
           <div className="why-featured group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30 sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:col-start-3 lg:row-start-1">
-            <div className="relative h-64 overflow-hidden lg:h-80">
+            <div className="relative h-48 overflow-hidden lg:h-64">
               <img
                 src={IMAGES.services.warehouse}
                 alt={t(whyUs.featured.title, lang)}
-                className="img-cover transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-card via-surface-card/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface-card/70 via-surface-card/20 to-transparent" />
             </div>
-            <div className="flex flex-1 flex-col justify-center p-8 lg:p-10">
+            <div className="flex flex-1 flex-col justify-center p-6 lg:p-8">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-brand">
                 <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
                   <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
