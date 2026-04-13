@@ -50,7 +50,7 @@
   }
 
   html, body {
-    overflow-x: hidden;
+    overflow-x: clip;
     overscroll-behavior: none;
     -webkit-text-size-adjust: 100%;
   }
