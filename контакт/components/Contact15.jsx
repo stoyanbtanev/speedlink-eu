@@ -5,7 +5,7 @@ import { BiEnvelope, BiMap, BiPhone } from "react-icons/bi";
 
 export function Contact15() {
   return (
-    <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
+    <section id="section" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div>
           <div className="mb-12 grid auto-cols-fr grid-cols-1 gap-x-12 gap-y-12 md:mb-20 md:grid-cols-[1fr_.75fr] md:gap-x-20 md:gap-y-16">
@@ -65,7 +65,7 @@ export function Contact15() {
           <img
             src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
             className="w-full object-cover"
-            alt="Relume placeholder image"
+            alt="Placeholder image"
           />
         </div>
       </div>

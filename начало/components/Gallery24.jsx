@@ -28,7 +28,7 @@ export function Gallery24() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="relume">
+    <section ref={sectionRef} id="section">
       <div className="px-[5%] pt-16 md:pt-24 lg:pt-28">
         <div className="container text-center">
           <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
@@ -47,7 +47,7 @@ export function Gallery24() {
               <img
                 className="h-[80svh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
                 src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                alt="Relume placeholder image 1"
+                alt="Placeholder image 1"
               />
             </div>
           </a>
@@ -56,7 +56,7 @@ export function Gallery24() {
               <img
                 className="h-[80svh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
                 src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                alt="Relume placeholder image 2"
+                alt="Placeholder image 2"
               />
             </div>
           </a>
@@ -65,7 +65,7 @@ export function Gallery24() {
               <img
                 className="h-[80svh] max-h-[25rem] object-cover sm:max-h-[30rem] sm:w-[90vw] md:max-h-[40rem] md:w-[80vw] lg:max-h-none"
                 src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                alt="Relume placeholder image 3"
+                alt="Placeholder image 3"
               />
             </div>
           </a>

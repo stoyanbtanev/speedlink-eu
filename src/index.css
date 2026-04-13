@@ -86,7 +86,7 @@
 
 @media (pointer: fine) {
   * {
-    cursor: none !important;
+    /* cursor was none, now removed */
   }
 }
 

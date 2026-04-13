@@ -6,7 +6,7 @@ import { RxChevronRight } from "react-icons/rx";
 
 export function Layout375() {
   return (
-    <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
+    <section id="section" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="rb-12 mb-12 md:mb-18 lg:mb-20">
           <div className="mx-auto max-w-lg text-center">
@@ -23,7 +23,7 @@ export function Layout375() {
               <div className="flex items-center justify-center">
                 <img
                   src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
-                  alt="Relume placeholder image 1"
+                  alt="Placeholder image 1"
                   className="w-full object-cover"
                 />
               </div>
@@ -51,7 +51,7 @@ export function Layout375() {
               <div className="flex items-center justify-center">
                 <img
                   src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
-                  alt="Relume placeholder image 2"
+                  alt="Placeholder image 2"
                   className="w-full object-cover"
                 />
               </div>
@@ -79,7 +79,7 @@ export function Layout375() {
               <div className="flex items-center justify-center">
                 <img
                   src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
-                  alt="Relume placeholder image 3"
+                  alt="Placeholder image 3"
                   className="w-full object-cover"
                 />
               </div>
@@ -107,7 +107,7 @@ export function Layout375() {
               <div className="flex items-center justify-center">
                 <img
                   src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
-                  alt="Relume placeholder image 4"
+                  alt="Placeholder image 4"
                   className="w-full object-cover"
                 />
               </div>
@@ -135,7 +135,7 @@ export function Layout375() {
               <div className="flex items-center justify-center">
                 <img
                   src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg"
-                  alt="Relume placeholder image 5"
+                  alt="Placeholder image 5"
                   className="w-full object-cover"
                 />
               </div>

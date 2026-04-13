@@ -35,7 +35,7 @@ export function Header83() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="relume" className="relative h-[300svh]">
+    <section ref={sectionRef} id="section" className="relative h-[300svh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div
           ref={contentRef}
@@ -69,31 +69,31 @@ export function Header83() {
             className="grid size-full auto-cols-fr grid-cols-1 gap-x-4 gap-y-4 md:grid-cols-3"
           >
             <div className="relative hidden md:block">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 1" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 1" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 2" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 2" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative hidden md:block">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 3" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 3" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative hidden md:block">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 4" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 4" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 5" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 5" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative hidden md:block">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 6" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 6" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative hidden md:block">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 7" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 7" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 8" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 8" className="absolute inset-0 size-full object-cover" />
             </div>
             <div className="relative hidden md:block">
-              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 9" className="absolute inset-0 size-full object-cover" />
+              <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Placeholder image 9" className="absolute inset-0 size-full object-cover" />
             </div>
           </div>
         </div>

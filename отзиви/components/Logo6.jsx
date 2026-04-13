@@ -4,7 +4,7 @@ import React from "react";
 
 export function Logo6() {
   return (
-    <section id="relume" className="px-[5%] py-12 md:py-16 lg:py-20">
+    <section id="section" className="px-[5%] py-12 md:py-16 lg:py-20">
       <div className="container">
         <h1 className="mx-auto mb-8 w-full max-w-lg text-center text-base font-bold leading-[1.2] md:mb-10 md:text-md md:leading-[1.2] lg:mb-12">
           Trusted by leading companies across Europe and Asia
@@ -21,7 +21,7 @@ export function Logo6() {
             <img
               src="https://d22po4pjz3o32e.cloudfront.net/relume-logo.svg"
               className="max-h-12 md:max-h-14"
-              alt="Relume logo 1"
+              alt="Logo 1"
             />
           </div>
           <div className="flex w-full items-start justify-center justify-self-center bg-neutral-lightest px-4 pb-4 pt-[0.875rem] md:p-[0.875rem]">
@@ -35,7 +35,7 @@ export function Logo6() {
             <img
               src="https://d22po4pjz3o32e.cloudfront.net/relume-logo.svg"
               className="max-h-12 md:max-h-14"
-              alt="Relume logo 2"
+              alt="Logo 2"
             />
           </div>
           <div className="flex w-full items-start justify-center justify-self-center bg-neutral-lightest px-4 pb-4 pt-[0.875rem] md:p-[0.875rem]">
@@ -49,7 +49,7 @@ export function Logo6() {
             <img
               src="https://d22po4pjz3o32e.cloudfront.net/relume-logo.svg"
               className="max-h-12 md:max-h-14"
-              alt="Relume logo 3"
+              alt="Logo 3"
             />
           </div>
         </div>

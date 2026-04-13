@@ -12,7 +12,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 export function Footer4() {
   return (
-    <footer id="relume" className="px-[5%] py-12 md:py-18 lg:py-20">
+    <footer id="section" className="px-[5%] py-12 md:py-18 lg:py-20">
       <div className="container">
         <div className="grid grid-cols-1 items-center justify-center justify-items-center gap-x-[4vw] gap-y-12 pb-12 md:pb-18 lg:grid-cols-[0.25fr_1fr_0.25fr] lg:justify-between lg:gap-y-4 lg:pb-20">
           <Link to="/" className="lg:justify-self-start">
@@ -60,7 +60,7 @@ export function Footer4() {
         <div className="h-px w-full bg-black" />
         <div className="flex flex-col-reverse items-center justify-center justify-items-center pb-4 pt-6 text-sm md:flex-row md:gap-x-6 md:pb-0 md:pt-8">
           <ul className="grid grid-flow-row grid-cols-[max-content] items-center justify-center justify-items-center gap-y-4 text-sm md:grid-flow-col md:gap-x-6 md:gap-y-0">
-            <p className="mt-8 md:mt-0">© 2024 Relume. All rights reserved.</p>
+            <p className="mt-8 md:mt-0">© 2024 Speedlink. All rights reserved.</p>
           </ul>
         </div>
       </div>

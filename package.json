@@ -1,4 +1,5 @@
 {
+  "name": "speedlink-eu",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
