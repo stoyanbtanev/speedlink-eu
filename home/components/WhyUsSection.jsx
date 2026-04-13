@@ -6,12 +6,10 @@ import { whyUs, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
 
 const ICONS = [
-  // Speed — angular bolt with split prong and decorative spark
   <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
     <path d="M14.5 2L6 13h5.5l-1.5 9L19 10h-5.5L16 2h-1.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
     <path d="M5.5 7.5l-1.2-.8M4 12H2.5M5.5 16.5l-1.2.8" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
   </svg>,
-  // Coverage — globe with latitude arcs, offset meridian, and orbit ring
   <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
     <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.4"/>
     <ellipse cx="12" cy="12" rx="4" ry="9.5" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
@@ -19,7 +17,6 @@ const ICONS = [
     <circle cx="19.5" cy="4.5" r="2" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
     <circle cx="19.5" cy="4.5" r="0.6" fill="currentColor" opacity="0.7"/>
   </svg>,
-  // Customs — clipboard with official stamp mark and stacked lines
   <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
     <path d="M8 2h8v3a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V2z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
     <rect x="5" y="4" width="14" height="18" rx="2" stroke="currentColor" strokeWidth="1.4"/>
@@ -27,7 +24,6 @@ const ICONS = [
     <circle cx="16.5" cy="17" r="2.5" stroke="currentColor" strokeWidth="1.2" opacity="0.7"/>
     <path d="M15.3 17l.8.8 1.7-1.6" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
   </svg>,
-  // Tracking — signal pulse with pin dot and radiating arcs
   <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
     <circle cx="12" cy="14" r="2.5" stroke="currentColor" strokeWidth="1.4"/>
     <circle cx="12" cy="14" r="0.8" fill="currentColor"/>
@@ -45,43 +41,68 @@ const CARD_IMAGES = [
   IMAGES.services.air,
 ];
 
-const CARD_ROTATIONS = [-2, 1.5, -1, 2];
-
 export function WhyUsSection() {
   const { lang } = useLang();
   const sectionRef = useRef(null);
+  const headerRef = useRef(null);
 
   useGSAP(() => {
     const section = sectionRef.current;
     if (!section) return;
 
+    // --- Header reveal ---
     const headerEls = section.querySelectorAll(".reveal-header-child");
-    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.set(headerEls, { y: 40, opacity: 0 });
     gsap.to(headerEls, {
-      y: 0, opacity: 1, duration: 1.1, ease: "silk",
+      y: 0, opacity: 1, duration: 1, ease: "silk",
       stagger: { each: 0.1, ease: "power2.out" },
       scrollTrigger: { trigger: section, start: "top 82%", once: true },
     });
 
+    // --- Card entry reveal ---
     const cards = section.querySelectorAll(".why-card");
     cards.forEach((card, i) => {
-      gsap.set(card, { y: 70, opacity: 0, scale: 0.92, rotation: CARD_ROTATIONS[i] || 0 });
+      gsap.set(card, { y: 80, opacity: 0, scale: 0.96 });
       gsap.to(card, {
-        y: 0, opacity: 1, scale: 1, rotation: 0,
-        duration: 1.05 + i * 0.05, ease: "silk",
-        scrollTrigger: { trigger: section, start: "top 72%", once: true },
-        delay: 0.14 * i,
+        y: 0, opacity: 1, scale: 1,
+        duration: 1.1, ease: "silk",
+        scrollTrigger: { trigger: card, start: "top 88%", once: true },
+        delay: (i % 2) * 0.1,
       });
     });
 
+    // --- Per-card image parallax (desktop only) ---
+    const isDesktop = window.innerWidth >= 1024;
+    if (isDesktop) {
+      cards.forEach((card) => {
+        const img = card.querySelector(".why-card-img");
+        if (!img) return;
+        gsap.fromTo(
+          img,
+          { yPercent: -8, scale: 1.12 },
+          {
+            yPercent: 8,
+            scale: 1.12,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
+      });
+    }
+
+    // --- Featured card entry ---
     const featured = section.querySelector(".why-featured");
     if (featured) {
-      gsap.set(featured, { clipPath: "inset(8% 8% 8% 8%)", scale: 0.95, opacity: 0 });
+      gsap.set(featured, { clipPath: "inset(6% 6% 6% 6%)", scale: 0.97, opacity: 0 });
       gsap.to(featured, {
         clipPath: "inset(0% 0% 0% 0%)", scale: 1, opacity: 1,
         duration: 1.2, ease: "heavy",
-        scrollTrigger: { trigger: section, start: "top 72%", once: true },
-        delay: 0.3,
+        scrollTrigger: { trigger: featured, start: "top 82%", once: true },
       });
     }
   }, { scope: sectionRef });
@@ -89,85 +110,98 @@ export function WhyUsSection() {
   return (
     <section className="section-padding section-py" ref={sectionRef}>
       <div className="container-xl">
-        <div className="mx-auto mb-16 max-w-2xl text-center md:mb-20">
-          <span className="reveal-header-child tag mb-6 inline-flex">
-            {t(whyUs.tag, lang)}
-          </span>
-          <h2 className="reveal-header-child font-display text-display-lg text-heading">
-            {t(whyUs.title, lang)}
-          </h2>
-          <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">
-            {t(whyUs.subtitle, lang)}
-          </p>
-        </div>
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
+          {/* STICKY HEADER COLUMN */}
+          <div ref={headerRef} className="lg:sticky lg:top-28 lg:self-start">
+            <span className="reveal-header-child tag mb-6 inline-flex">
+              {t(whyUs.tag, lang)}
+            </span>
+            <h2 className="reveal-header-child font-display text-display-lg text-heading">
+              {t(whyUs.title, lang)}
+            </h2>
+            <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">
+              {t(whyUs.subtitle, lang)}
+            </p>
+            <div className="reveal-header-child mt-8 hidden lg:block">
+              <Link to="/contact" className="btn-ghost">
+                {t(whyUs.featured.cta, lang)}
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+            </div>
+          </div>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:grid-rows-2">
-          {whyUs.cards.map((card, i) => (
-            <div
-              key={i}
-              className="why-card group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30 hover:shadow-[0_20px_60px_-15px_rgba(232,168,56,0.15)]"
-            >
-              <div className="relative h-40 overflow-hidden md:h-44">
+          {/* CARDS COLUMN */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {whyUs.cards.map((card, i) => (
+              <article
+                key={i}
+                className="why-card group relative overflow-hidden rounded-2xl border border-surface-border aspect-[4/5] sm:aspect-[5/6] transition-all duration-500 hover:border-brand/40 hover:shadow-[0_24px_70px_-20px_rgba(232,168,56,0.25)]"
+              >
                 <img
                   src={CARD_IMAGES[i]}
                   alt={t(card.title, lang)}
-                  className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                  className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-card/80 to-transparent" />
-              </div>
-              <div className="p-5">
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 text-brand transition-transform duration-500 group-hover:-translate-y-1">
-                  {ICONS[i]}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+                <div className="absolute inset-x-0 top-0 flex items-start justify-between p-5">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-md transition-all duration-500 group-hover:bg-brand/90 group-hover:text-dark">
+                    {ICONS[i]}
+                  </div>
+                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white backdrop-blur-md">
+                    {t(card.tag, lang)}
+                  </span>
                 </div>
-                <span className="font-display text-label uppercase tracking-wider text-brand">
-                  {t(card.tag, lang)}
-                </span>
-                <h3 className="mt-2 font-display text-display-sm text-heading">
-                  {t(card.title, lang)}
-                </h3>
-                <p className="mt-2 font-body text-body-sm text-heading/50">
-                  {t(card.desc, lang)}
-                </p>
-              </div>
-            </div>
-          ))}
+                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                  <h3 className="font-display text-2xl font-semibold text-white md:text-display-sm">
+                    {t(card.title, lang)}
+                  </h3>
+                  <p className="mt-2 font-body text-body-sm text-white/70">
+                    {t(card.desc, lang)}
+                  </p>
+                </div>
+              </article>
+            ))}
 
-          <div className="why-featured group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30 sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:col-start-3 lg:row-start-1">
-            <div className="relative min-h-[200px] flex-1 overflow-hidden lg:min-h-[260px]">
+            {/* FEATURED FULL-BLEED */}
+            <article className="why-featured group relative col-span-1 overflow-hidden rounded-2xl border border-surface-border transition-all duration-500 hover:border-brand/40 sm:col-span-2 aspect-[16/10]">
               <img
                 src={IMAGES.services.warehouse}
                 alt={t(whyUs.featured.title, lang)}
-                className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-card/70 via-surface-card/20 to-transparent" />
-            </div>
-            <div className="flex flex-shrink-0 flex-col justify-start p-6 lg:p-8">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-                  <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                  <path d="M16.5 6H10a3 3 0 0 0 0 6h4.5a3 3 0 0 1 0 6H7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M8 3.5l1.5 1M16 19.5l-1.5 1" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" opacity="0.4"/>
-                  <circle cx="18.5" cy="8" r="1" fill="currentColor" opacity="0.35"/>
-                  <circle cx="5.5" cy="16" r="1" fill="currentColor" opacity="0.35"/>
-                </svg>
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-black/50 to-transparent" />
+              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-md transition-all duration-500 group-hover:bg-brand/90 group-hover:text-dark">
+                  <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
+                    <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <path d="M16.5 6H10a3 3 0 0 0 0 6h4.5a3 3 0 0 1 0 6H7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white backdrop-blur-md">
+                  {t(whyUs.featured.tag, lang)}
+                </span>
               </div>
-              <span className="font-display text-label uppercase tracking-wider text-brand">
-                {t(whyUs.featured.tag, lang)}
-              </span>
-              <h3 className="mt-2 font-display text-display-md text-heading">
-                {t(whyUs.featured.title, lang)}
-              </h3>
-              <p className="mt-3 font-body text-body-md text-heading/50">
-                {t(whyUs.featured.desc, lang)}
-              </p>
-              <div className="mt-8 flex gap-4">
-                <Link to="/contact" className="btn-primary text-sm">
+              <div className="absolute inset-x-0 bottom-0 max-w-2xl p-6 md:p-8">
+                <h3 className="font-display text-display-sm text-white md:text-display-md">
+                  {t(whyUs.featured.title, lang)}
+                </h3>
+                <p className="mt-3 max-w-lg font-body text-body-md text-white/70">
+                  {t(whyUs.featured.desc, lang)}
+                </p>
+                <Link to="/contact" className="btn-primary mt-6 text-sm">
                   {t(whyUs.featured.cta, lang)}
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </Link>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </div>

@@ -39,25 +39,29 @@ export function HeroSection() {
     const overlay = overlayRef.current;
     if (!section || !content || !grid) return;
 
-    // --- GRID IMAGE DEPTH PARALLAX ---
-    const gridImages = grid.querySelectorAll(".hero-grid-img");
-    gridImages.forEach((img, i) => {
-      const speed = GRID_PARALLAX_SPEEDS[i] || 0;
-      const scaleTarget = GRID_SCALE_TARGETS[i] || 1;
-      if (speed === 0 && scaleTarget === 1) return;
+    const isMobile = window.innerWidth < 768;
 
-      gsap.to(img, {
-        y: speed * 200,
-        scale: scaleTarget,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "50% top",
-          scrub: 1.5,
-        },
+    // --- GRID IMAGE DEPTH PARALLAX (skip on mobile for performance) ---
+    if (!isMobile) {
+      const gridImages = grid.querySelectorAll(".hero-grid-img");
+      gridImages.forEach((img, i) => {
+        const speed = GRID_PARALLAX_SPEEDS[i] || 0;
+        const scaleTarget = GRID_SCALE_TARGETS[i] || 1;
+        if (speed === 0 && scaleTarget === 1) return;
+
+        gsap.to(img, {
+          y: speed * 200,
+          scale: scaleTarget,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "50% top",
+            scrub: 1.5,
+          },
+        });
       });
-    });
+    }
 
     // --- GRADIENT OVERLAY INTENSIFY ---
     if (overlay) {
@@ -89,13 +93,13 @@ export function HeroSection() {
 
     // --- GRID SCALE ON SCROLL ---
     gsap.to(grid, {
-      scale: 1.15,
+      scale: isMobile ? 1.06 : 1.15,
       ease: "none",
       scrollTrigger: {
         trigger: section,
         start: "top top",
         end: "50% top",
-        scrub: 1.5,
+        scrub: isMobile ? 0.5 : 1.5,
       },
     });
 
@@ -190,7 +194,7 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative h-[300svh]">
-      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={{ perspective: "1200px", willChange: "transform" }}>
+      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={{ perspective: "1200px" }}>
         <div ref={gridRef} className="absolute inset-0 z-0">
           <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 md:hidden">
             {[IMAGES.hero[0], IMAGES.hero[2], IMAGES.hero[6], IMAGES.hero[8]].map(

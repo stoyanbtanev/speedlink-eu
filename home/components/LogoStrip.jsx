@@ -4,6 +4,7 @@ import { useLang } from "../../src/context/LanguageContext";
 import { logos, t } from "../../src/data/translations";
 
 const PARTNERS = ["DHL", "DB Schenker", "Maersk", "Kuehne+Nagel", "DSV", "GEFCO"];
+const REPEAT_COUNT = 8;
 
 export function LogoStrip() {
   const { lang } = useLang();
@@ -33,23 +34,26 @@ export function LogoStrip() {
       });
     });
 
+    const halfWidth = track.scrollWidth / 2;
     let isHovering = false;
 
     const tween = gsap.to(track, {
-      x: "-50%",
-      duration: 40, // Base pace is now lower
+      x: -halfWidth,
+      duration: 80,
       ease: "none",
       repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize((x) => parseFloat(x) % halfWidth),
+      },
     });
 
     const handleEnter = () => {
       isHovering = true;
       gsap.to(tween, { timeScale: 0, duration: 0.8, ease: "silk" });
     };
-    
     const handleLeave = () => {
       isHovering = false;
-      gsap.to(tween, { timeScale: 1, duration: 0.8, ease: "silk" });
+      gsap.to(tween, { timeScale: 1, duration: 1.2, ease: "silk" });
     };
 
     track.addEventListener("mouseenter", handleEnter);
@@ -62,21 +66,21 @@ export function LogoStrip() {
         if (isHovering) return;
 
         const velocity = Math.abs(self.getVelocity());
-        let speed = 1 + velocity / 300;
-        speed = Math.min(speed, 6);
-        let signedSpeed = speed * self.direction; // Change direction based on scroll
+        let speed = 1 + velocity / 800;
+        speed = Math.min(speed, 3);
+        const signedSpeed = speed * (self.direction || 1);
 
         gsap.to(tween, {
           timeScale: signedSpeed,
-          duration: 0.1,
+          duration: 0.3,
           overwrite: true,
           onComplete: () => {
             if (!isHovering) {
-              gsap.to(tween, { timeScale: 1, duration: 1.5, ease: "power3.out" });
+              gsap.to(tween, { timeScale: 1, duration: 2, ease: "power3.out" });
             }
-          }
+          },
         });
-      }
+      },
     });
 
     return () => {
@@ -86,7 +90,11 @@ export function LogoStrip() {
     };
   }, { scope: sectionRef });
 
-  const allPartners = [...PARTNERS, ...PARTNERS, ...PARTNERS];
+  const oneSet = [];
+  for (let r = 0; r < REPEAT_COUNT; r++) {
+    PARTNERS.forEach((name) => oneSet.push(name));
+  }
+  const allPartners = [...oneSet, ...oneSet];
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden bg-page py-10 md:py-14">
@@ -104,7 +112,7 @@ export function LogoStrip() {
           {allPartners.map((name, i) => (
             <div
               key={`${name}-${i}`}
-              className="flex-shrink-0 font-display text-lg font-semibold tracking-tight text-heading/20 transition-colors duration-300 hover:text-heading/40 md:text-xl"
+              className="flex-shrink-0 select-none font-display text-lg font-semibold tracking-tight text-heading/20 transition-colors duration-300 hover:text-heading/40 md:text-xl"
             >
               {name}
             </div>

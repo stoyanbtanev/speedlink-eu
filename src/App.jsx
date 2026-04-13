@@ -60,7 +60,7 @@ class ErrorBoundary extends React.Component {
 export default function App() {
   return (
     <>
-      <div className="noise-overlay" />
+      <div className="noise-overlay hidden sm:block" />
       <ScrollToTop />
       <Navbar />
       <main className="min-h-svh">

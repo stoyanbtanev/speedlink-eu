@@ -82,16 +82,16 @@ export function Navbar() {
       }`}
     >
       <div className="section-padding">
-        <div className="container-xl flex h-16 items-center justify-between md:h-20">
+        <div className="container-xl flex h-20 items-center justify-between md:h-24">
           <Link to="/" className="flex items-center gap-3" aria-label="SpeedLink Home">
             <img
               src="/images/logo.png"
               alt="SpeedLink logo"
-              width={40}
-              height={40}
-              className="logo-img h-11 w-11 object-contain"
+              width={56}
+              height={56}
+              className="logo-img h-14 w-14 object-contain md:h-16 md:w-16"
             />
-            <span className={`font-display text-lg font-semibold tracking-tight transition-colors duration-300 ${logoText}`}>
+            <span className={`font-display text-xl font-semibold tracking-tight transition-colors duration-300 md:text-2xl ${logoText}`}>
               SpeedLink<span className="text-brand">.</span>
             </span>
           </Link>
