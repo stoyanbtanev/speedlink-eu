@@ -152,7 +152,7 @@ function StatsSection() {
               {lang === "bg" ? "Твърда оферта до 24 часа. Без задължение." : "Firm quote within 24 hours. No obligation."}
             </p>
           </div>
-          <Link to="/контакт" className="btn-primary flex-shrink-0">
+          <Link to="/contact" className="btn-primary flex-shrink-0">
             {lang === "bg" ? "Поискай оферта" : "Get a quote"}
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />

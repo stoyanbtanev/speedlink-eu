@@ -163,7 +163,7 @@ export function WhyUsSection() {
                 {t(whyUs.featured.desc, lang)}
               </p>
               <div className="mt-8 flex gap-4">
-                <Link to="/контакт" className="btn-primary text-sm">
+                <Link to="/contact" className="btn-primary text-sm">
                   {t(whyUs.featured.cta, lang)}
                 </Link>
               </div>

@@ -22,9 +22,9 @@ export function Navbar() {
 
   const links = [
     { to: "/", label: nav.home },
-    { to: "/услуги", label: nav.services },
-    { to: "/отзиви", label: nav.reviews },
-    { to: "/контакт", label: nav.contact },
+    { to: "/services", label: nav.services },
+    { to: "/reviews", label: nav.reviews },
+    { to: "/contact", label: nav.contact },
   ];
 
   const isActive = (path) => decodeURIComponent(location.pathname) === path;
@@ -109,7 +109,7 @@ export function Navbar() {
               </svg>
               {t(nav.language, lang)}
             </button>
-            <Link to="/контакт" className="btn-primary text-xs">
+            <Link to="/contact" className="btn-primary text-xs">
               {t(nav.quote, lang)}
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -177,7 +177,7 @@ export function Navbar() {
                 >
                   {t(nav.language, lang)}
                 </button>
-                <Link to="/контакт" className="btn-primary flex-1 text-xs">
+                <Link to="/contact" className="btn-primary flex-1 text-xs">
                   {t(nav.quote, lang)}
                 </Link>
               </div>

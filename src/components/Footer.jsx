@@ -73,9 +73,9 @@ export function Footer() {
 
   const links = [
     { to: "/", label: nav.home },
-    { to: "/услуги", label: nav.services },
-    { to: "/отзиви", label: nav.reviews },
-    { to: "/контакт", label: nav.contact },
+    { to: "/services", label: nav.services },
+    { to: "/reviews", label: nav.reviews },
+    { to: "/contact", label: nav.contact },
   ];
 
   return (

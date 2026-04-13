@@ -27,13 +27,13 @@ export function Footer4() {
               <Link to="/">Начало</Link>
             </li>
             <li className="font-semibold">
-              <Link to="/услуги">Услуги</Link>
+              <Link to="/services">Услуги</Link>
             </li>
             <li className="font-semibold">
-              <Link to="/отзиви">Отзиви</Link>
+              <Link to="/reviews">Отзиви</Link>
             </li>
             <li className="font-semibold">
-              <Link to="/контакт">Контакт</Link>
+              <Link to="/contact">Контакт</Link>
             </li>
             <li className="font-semibold">
               <a href="#">+359 877 404 599</a>

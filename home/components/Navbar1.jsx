@@ -108,19 +108,19 @@ export function Navbar1() {
           className="overflow-hidden px-[5%] lg:flex lg:items-center lg:px-0 lg:[--height-closed:auto] lg:[--height-open:auto]"
         >
           <Link
-            to="/услуги"
+            to="/services"
             className="block py-3 text-md first:pt-7 lg:px-4 lg:py-2 lg:text-base first:lg:pt-2"
           >
             Услуги
           </Link>
           <Link
-            to="/отзиви"
+            to="/reviews"
             className="block py-3 text-md first:pt-7 lg:px-4 lg:py-2 lg:text-base first:lg:pt-2"
           >
             Отзиви
           </Link>
           <Link
-            to="/контакт"
+            to="/contact"
             className="block py-3 text-md first:pt-7 lg:px-4 lg:py-2 lg:text-base first:lg:pt-2"
           >
             Контакт

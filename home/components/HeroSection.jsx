@@ -212,8 +212,8 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[300svh]">
-      <div ref={stickyRef} className="sticky top-0 h-[100svh] overflow-hidden" style={{ perspective: "1200px" }}>
+    <section ref={sectionRef} className="relative h-[300dvh]">
+      <div ref={stickyRef} className="sticky top-0 h-dvh overflow-hidden" style={{ perspective: "1200px" }}>
         <div ref={gridRef} className="absolute inset-0 z-0">
           <img
             src={IMAGES.hero[4]}
@@ -253,7 +253,7 @@ export function HeroSection() {
 
               <h1
                 ref={h1Ref}
-                className="mx-auto max-w-4xl font-display text-display-xl text-white"
+                className="mx-auto max-w-4xl font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-display-xl"
                 style={{ visibility: "hidden" }}
               >
                 {splitChars(titleText)}
@@ -272,7 +272,7 @@ export function HeroSection() {
                 className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
                 style={{ opacity: 0 }}
               >
-                <Link to="/контакт" className="btn-primary">
+                <Link to="/contact" className="btn-primary">
                   {t(hero.cta1, lang)}
                   <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
                     <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>

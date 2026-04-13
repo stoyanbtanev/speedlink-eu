@@ -74,7 +74,7 @@ export function CtaDualSection() {
                 {t(ctaDual.ship.desc, lang)}
               </p>
               <div className="mt-8 flex gap-3">
-                <Link to="/контакт" className="btn-primary text-sm">
+                <Link to="/contact" className="btn-primary text-sm">
                   {t(ctaDual.ship.cta1, lang)}
                 </Link>
                 <a href="tel:+359877404599" className="btn-secondary text-sm">

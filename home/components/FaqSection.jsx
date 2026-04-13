@@ -102,7 +102,7 @@ export function FaqSection() {
                 <p className="mt-2 font-body text-body-sm text-heading/40">
                   {t(faq.stillHaveDesc, lang)}
                 </p>
-                <Link to="/контакт" className="btn-primary mt-6 w-full text-sm">
+                <Link to="/contact" className="btn-primary mt-6 w-full text-sm">
                   {t(faq.cta, lang)}
                 </Link>
               </div>

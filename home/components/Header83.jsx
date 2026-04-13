@@ -35,8 +35,8 @@ export function Header83() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="section" className="relative h-[300svh]">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
+    <section ref={sectionRef} id="section" className="relative h-[300dvh]">
+      <div className="sticky top-0 h-dvh overflow-hidden">
         <div
           ref={contentRef}
           className="flex h-full items-center justify-center"

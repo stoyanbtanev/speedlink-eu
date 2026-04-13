@@ -82,7 +82,7 @@ function ServicesGrid() {
             <span className="tag mb-4 inline-flex w-fit">{t(servicesPage.featured.tag, lang)}</span>
             <h3 className="font-display text-display-md text-heading">{t(servicesPage.featured.title, lang)}</h3>
             <p className="mt-4 font-body text-body-md text-heading/50">{t(servicesPage.featured.desc, lang)}</p>
-            <Link to="/контакт" className="btn-primary mt-8 w-fit text-sm">{t(servicesPage.featured.cta, lang)}</Link>
+            <Link to="/contact" className="btn-primary mt-8 w-fit text-sm">{t(servicesPage.featured.cta, lang)}</Link>
           </div>
         </div>
       </div>
@@ -156,8 +156,8 @@ function AboutSection() {
             <h2 className="font-display text-display-lg text-heading">{t(servicesPage.aboutTitle, lang)}</h2>
             <p className="mt-6 font-body text-body-lg leading-relaxed text-heading/50">{t(servicesPage.aboutDesc, lang)}</p>
             <div className="mt-8 flex gap-4">
-              <Link to="/контакт" className="btn-primary">{lang === "bg" ? "Запитай" : "Inquire"}</Link>
-              <Link to="/отзиви" className="btn-secondary">{lang === "bg" ? "Отзиви" : "Reviews"}</Link>
+              <Link to="/contact" className="btn-primary">{lang === "bg" ? "Запитай" : "Inquire"}</Link>
+              <Link to="/reviews" className="btn-secondary">{lang === "bg" ? "Отзиви" : "Reviews"}</Link>
             </div>
           </div>
           <div className="relative overflow-hidden rounded-2xl">
