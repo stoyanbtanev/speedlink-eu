@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { ScrollTrigger } from "./lib/gsap-config";
-import { CustomCursor } from "./components/CustomCursor";
 import HomePage from "../начало";
 import ServicesPage from "../услуги";
 import ReviewsPage from "../отзиви";
@@ -22,7 +21,6 @@ export default function App() {
   return (
     <>
       <div className="noise-overlay" />
-      <CustomCursor />
       <ScrollToTop />
       <Navbar />
       <main className="min-h-[100svh]">
