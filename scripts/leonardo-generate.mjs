@@ -5,12 +5,12 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUTPUT_DIR = path.join(__dirname, "..", "public", "images");
 
-const API_KEY = process.env.LEONARDO_API_KEY || "YOUR_KEY_HERE";
+const API_KEY = process.env.LEONARDO_API_KEY || "9f3bed64-d4ba-42e6-b8e9-a10756cda51a";
 const API_V2 = "https://cloud.leonardo.ai/api/rest/v2/generations";
 const API_V1_GET = "https://cloud.leonardo.ai/api/rest/v1/generations";
 
-// Nano Banana (gemini-2.5-flash-image) — great quality, cost-effective
-const MODEL = "gemini-2.5-flash-image";
+// Nano Banana 2 — near-Pro quality at Flash speed ($0.039/img)
+const MODEL = "nano-banana-2";
 
 // Photography style UUID for realistic images
 const STYLE_PHOTO = "111dc692-d470-4eec-b791-3475abac4c46";
@@ -20,47 +20,47 @@ const SIZE = { width: 1024, height: 1024 };
 
 const IMAGES = [
   // Hero grid (3×3) — each cell ~400px → MEDIUM
-  { id: "hero-1", ...SIZE, prompt: "Aerial view of a massive modern logistics warehouse at dawn, warm orange sunlight streaming through glass panels, rows of shipping containers and trucks, professional commercial photography, cinematic lighting" },
-  { id: "hero-2", ...SIZE, prompt: "Close-up of a cargo ship bow cutting through deep blue ocean waves, golden hour lighting, dramatic perspective from water level, shipping containers stacked on deck, professional marine photography" },
-  { id: "hero-3", ...SIZE, prompt: "Modern European highway at sunset with a fleet of clean white freight trucks driving in formation, orange sky reflecting off truck surfaces, motion blur on road, professional automotive photography" },
-  { id: "hero-4", ...SIZE, prompt: "Inside a high-tech logistics control center, multiple screens showing world maps and shipping routes, operators at workstations, blue and orange ambient lighting, futuristic corporate environment" },
-  { id: "hero-5", ...SIZE, prompt: "Dramatic wide shot of a busy international port at twilight, cranes loading containers onto ships, warm amber port lights reflecting on water, industrial scale and beauty, cinematic composition" },
-  { id: "hero-6", ...SIZE, prompt: "A cargo airplane being loaded at a modern airport terminal at night, bright floodlights creating dramatic shadows, ground crew working efficiently, professional aviation photography" },
-  { id: "hero-7", ...SIZE, prompt: "Overhead drone shot of a rail freight terminal, colorful shipping containers arranged in geometric patterns, train tracks converging, warm afternoon light casting long shadows" },
-  { id: "hero-8", ...SIZE, prompt: "Professional business handshake in front of a logistics operations board, blurred warehouse background with forklifts, warm natural lighting, corporate partnership concept" },
-  { id: "hero-9", ...SIZE, prompt: "A modern automated warehouse interior with robotic sorting systems, conveyor belts moving packages, LED strip lighting in orange and white, futuristic logistics technology" },
+  { id: "hero-1", ...SIZE, prompt: "Aerial drone view of a massive modern logistics warehouse complex at dawn, warm orange sunlight streaming through glass panels, rows of unmarked shipping containers and plain white trucks, no text no logos no branding no people, professional commercial photography, cinematic lighting, photorealistic" },
+  { id: "hero-2", ...SIZE, prompt: "Close-up of a plain unmarked cargo ship bow cutting through deep blue ocean waves at golden hour, warm light on the hull, shipping containers stacked on deck seen from water level, no text no logos no writing no people no branding on ship, professional marine photography, photorealistic" },
+  { id: "hero-3", ...SIZE, prompt: "Modern European highway at sunset with clean plain white freight trucks driving in formation, no markings no logos no text on trucks, orange sky reflecting off truck surfaces, motion blur on road, professional automotive photography, photorealistic" },
+  { id: "hero-4", ...SIZE, prompt: "Empty unmanned high-tech logistics control center room with multiple glowing screens showing abstract world maps and shipping route lines, no people no text no readable writing on screens, blue and orange ambient LED lighting, futuristic corporate environment, professional interior photography, photorealistic" },
+  { id: "hero-5", ...SIZE, prompt: "Dramatic wide shot of a busy international container port at twilight, massive gantry cranes silhouetted against gradient sky, warm amber port lights reflecting on calm water, no people visible, industrial scale and beauty, cinematic composition, photorealistic" },
+  { id: "hero-6", ...SIZE, prompt: "A large cargo airplane parked at a modern airport tarmac at night, bright floodlights creating dramatic shadows, cargo loading equipment positioned near open cargo door, no people no ground crew visible, no text no logos on aircraft, professional aviation photography, photorealistic" },
+  { id: "hero-7", ...SIZE, prompt: "Overhead drone shot of a rail freight terminal, colorful unmarked shipping containers arranged in geometric patterns, train tracks converging in perspective, warm afternoon light casting long shadows, no people no text no logos, professional aerial photography, photorealistic" },
+  { id: "hero-8", ...SIZE, prompt: "Close-up of a modern tablet device on a warehouse desk showing an abstract logistics dashboard with colorful charts and a route map, blurred warehouse aisle with shelving in background, warm natural side lighting, no people no readable text no logos, professional product photography, photorealistic" },
+  { id: "hero-9", ...SIZE, prompt: "A modern automated warehouse interior with robotic arms and conveyor belts moving plain cardboard packages, orange LED strip accents along ceiling, autonomous mobile robots on floor, no people no text no logos no branding on boxes, futuristic logistics technology, photorealistic" },
 
   // Service cards — ~800px display → MEDIUM
-  { id: "service-ftl", ...SIZE, prompt: "A powerful European freight truck full truckload driving through scenic Alpine mountain pass, dramatic clouds, road winding through green valleys, warm golden sunlight, professional automotive photography" },
-  { id: "service-ltl", ...SIZE, prompt: "Inside a clean modern distribution center, workers scanning and sorting mixed pallets of goods for partial load shipments, organized shelving systems, warm overhead lighting" },
-  { id: "service-ocean", ...SIZE, prompt: "Massive container ship entering a Mediterranean port, turquoise water, stacked colorful containers, port cranes in background, dramatic sky with golden hour clouds" },
-  { id: "service-air", ...SIZE, prompt: "Cargo aircraft on tarmac with nose cargo door open, freight being loaded on roller system, ground crew in high-vis vests, dramatic sunset sky behind, cinematic lighting" },
-  { id: "service-customs", ...SIZE, prompt: "Professional customs clearance office, organized desk with shipping documents stamps and laptop showing trade data, EU flag visible, warm professional lighting, clean modern office" },
-  { id: "service-warehouse", ...SIZE, prompt: "Expansive modern bonded warehouse interior, floor-to-ceiling shelving with organized palletized goods, electric forklifts in motion, bright LED industrial lighting with warm accent" },
+  { id: "service-ftl", ...SIZE, prompt: "A powerful plain white European freight truck driving through a scenic Alpine mountain pass at golden hour, dramatic clouds, winding road through green valleys, no text no logos no branding on truck, truck has clean unmarked trailer, professional automotive photography, photorealistic" },
+  { id: "service-ltl", ...SIZE, prompt: "Inside a clean modern distribution center, organized shelving systems with mixed pallets of goods, conveyor rollers, scanning equipment on workstations, bright overhead lighting, completely empty of people, no text no logos no branding, professional interior photography, photorealistic" },
+  { id: "service-ocean", ...SIZE, prompt: "Massive unmarked container ship entering a Mediterranean port, turquoise water, stacked colorful plain containers without logos, port cranes in background, dramatic golden hour sky with clouds, no text no people no branding, professional marine photography, photorealistic" },
+  { id: "service-air", ...SIZE, prompt: "Front view of a large cargo aircraft on tarmac with nose cargo door open, freight pallets on roller loading system leading into cargo hold, dramatic sunset sky behind, no people no ground crew, no text no logos no airline branding on aircraft, cinematic lighting, photorealistic" },
+  { id: "service-customs", ...SIZE, prompt: "Professional customs clearance desk with stacks of shipping documents, rubber stamps, an open laptop showing abstract colorful charts, EU flag on small desk stand, warm office lighting through window, no people no readable text on documents, clean modern office environment, photorealistic" },
+  { id: "service-warehouse", ...SIZE, prompt: "Expansive modern warehouse interior, floor-to-ceiling pallet racking with organized goods, electric forklifts parked in wide central aisle, bright LED industrial lighting with warm accent, polished concrete floor, no people no text no logos, professional architectural photography, photorealistic" },
 
   // Industry cards — ~300px display → SMALL
-  { id: "industry-ecommerce", ...SIZE, prompt: "Modern e-commerce fulfillment center, workers packing boxes on conveyor belts, branded shipping boxes stacked neatly, screens showing order dashboards, warm efficient lighting" },
-  { id: "industry-automotive", ...SIZE, prompt: "Automotive parts being loaded onto specialized transport truck, engine components on pallets, clean industrial facility, precision manufacturing meets logistics, warm lighting" },
-  { id: "industry-pharma", ...SIZE, prompt: "Temperature-controlled pharmaceutical logistics cold room, insulated shipping containers with blue cold chain indicators, workers in lab coats checking shipments, clean sterile environment" },
-  { id: "industry-chemical", ...SIZE, prompt: "Specialized chemical tanker trucks at an industrial chemical plant, safety markings and hazmat placards visible, professional industrial safety protocols, dramatic architecture" },
+  { id: "industry-ecommerce", ...SIZE, prompt: "Modern e-commerce fulfillment center with automated conveyor belt system, plain unmarked cardboard boxes moving along rollers, robotic sorting arms, organized shelving, warm efficient lighting, no people no text no logos no branding on boxes, professional interior photography, photorealistic" },
+  { id: "industry-automotive", ...SIZE, prompt: "Close-up of precision automotive engine components and parts arranged on wooden pallets inside a clean industrial facility, specialized transport crates, mechanical parts gleaming under warm directional lighting, no people no text no logos, professional industrial photography, photorealistic" },
+  { id: "industry-pharma", ...SIZE, prompt: "Temperature-controlled pharmaceutical cold storage room, rows of white insulated shipping containers on pallets, blue cold chain temperature indicators on containers, digital temperature display on wall, clean sterile environment, no people no text no logos, professional interior photography, photorealistic" },
+  { id: "industry-chemical", ...SIZE, prompt: "Row of stainless steel chemical tanker trucks parked at an industrial refinery at dusk, complex pipe infrastructure and distillation towers in background, orange safety cones, no people no readable text no company names no branding, dramatic industrial architecture, photorealistic" },
 
   // Gallery — large horizontal scroll → LARGE
-  { id: "gallery-1", ...SIZE, prompt: "Panoramic shot of the Bosphorus strait with cargo ships passing through, Istanbul skyline in background, golden hour lighting, bridges spanning the waterway, professional landscape photography" },
-  { id: "gallery-2", ...SIZE, prompt: "Busy European train station freight terminal in Germany, modern locomotives pulling container wagons, overhead electric lines, clean platform architecture, professional railway photography" },
-  { id: "gallery-3", ...SIZE, prompt: "Sofia Bulgaria cityscape at blue hour with modern business district, illuminated office buildings, highway with truck traffic in foreground, Vitosha mountain backdrop" },
-  { id: "gallery-4", ...SIZE, prompt: "Rotterdam port Netherlands massive container terminal, enormous gantry cranes working simultaneously, reflection on calm harbor water, dramatic sunset sky" },
-  { id: "gallery-5", ...SIZE, prompt: "Silk Road logistics scene with modern truck caravan crossing vast Central Asian steppe, dramatic endless horizon, warm amber light, dust trails, epic sense of scale" },
+  { id: "gallery-1", ...SIZE, prompt: "Panoramic aerial shot of the Bosphorus strait with cargo ships passing through, Istanbul skyline silhouette in background, golden hour lighting, suspension bridges spanning the waterway, no people, professional landscape photography, photorealistic" },
+  { id: "gallery-2", ...SIZE, prompt: "European freight train terminal at blue hour, modern red locomotive pulling unmarked container wagons, overhead electric catenary lines, clean platform architecture, rail infrastructure, no people no text no logos no branding on train, professional railway photography, photorealistic" },
+  { id: "gallery-3", ...SIZE, prompt: "Sofia Bulgaria cityscape at blue hour with modern business district, illuminated glass office buildings, highway with vehicle light trails in foreground, Vitosha mountain silhouette backdrop, no people no text no signs, professional cityscape photography, photorealistic" },
+  { id: "gallery-4", ...SIZE, prompt: "Rotterdam port Netherlands massive container terminal at sunset, enormous red gantry cranes working, colorful containers stacked high, perfect reflection on calm harbor water, dramatic pink and purple sunset sky, no people no text, photorealistic" },
+  { id: "gallery-5", ...SIZE, prompt: "Epic aerial shot of a modern truck caravan of plain white trucks crossing vast Central Asian golden steppe grasslands, dramatic endless horizon, warm amber sunset light, dust trails behind vehicles, no text no logos no branding on trucks, epic sense of scale, photorealistic" },
 
   // Stats background → MEDIUM
-  { id: "stats", ...SIZE, prompt: "Professional team of logistics managers reviewing operations on a large digital display board, diverse team in modern office, warm collaborative atmosphere, data visualizations on screens" },
+  { id: "stats", ...SIZE, prompt: "Empty modern executive boardroom with a large wall-mounted display showing abstract colorful data visualizations and a glowing world map with route lines, sleek conference table with tablets, floor-to-ceiling windows with city view, warm natural light, no people no readable text on screen, professional interior photography, photorealistic" },
 
   // Page headers — full-width backgrounds → LARGE
-  { id: "header-services", ...SIZE, prompt: "Wide cinematic shot of freight trucks lined up at a modern logistics hub loading dock at sunrise, warm orange light flooding the scene, professional and efficient atmosphere, architectural photography" },
-  { id: "header-reviews", ...SIZE, prompt: "Happy logistics professionals shaking hands at a modern bright office, shipping operations visible through floor-to-ceiling windows behind them, warm natural light, genuine smiles" },
-  { id: "header-contact", ...SIZE, prompt: "Modern glass office building exterior of a European logistics company at golden hour, clean architecture with warm interior lighting visible, landscaped entrance, inviting professional atmosphere" },
+  { id: "header-services", ...SIZE, prompt: "Wide cinematic shot of plain white freight trucks lined up at modern logistics hub loading docks at sunrise, warm orange light flooding the scene, glass and steel building facade, no people no text no logos no branding on trucks, professional architectural photography, photorealistic" },
+  { id: "header-reviews", ...SIZE, prompt: "Modern bright corporate office interior with floor-to-ceiling windows overlooking a container port with cranes, empty meeting area with sleek furniture, warm golden natural light streaming in, no people, documents and tablets on table, professional interior photography, photorealistic" },
+  { id: "header-contact", ...SIZE, prompt: "Modern glass office building exterior at golden hour, clean contemporary architecture with warm interior lighting visible through windows, landscaped entrance with ornamental grasses, no company signs no text no logos no branding on building, inviting professional atmosphere, photorealistic" },
 
   // Contact map → SMALL
-  { id: "contact-map", ...SIZE, prompt: "Stylized dark-themed map of Sofia Bulgaria centered, showing city streets and districts, minimal design with orange accent highlights on key locations, modern cartographic illustration style" },
+  { id: "contact-map", ...SIZE, prompt: "Stylized dark navy blue abstract city map illustration, glowing orange street grid lines and route highlights, minimal geometric design, no city name no district labels no text no words no letters, small orange dot markers at key intersections, modern cartographic illustration style, dark background" },
 ];
 
 // ---- API helpers ----
@@ -148,7 +148,7 @@ async function main() {
     !fs.existsSync(path.join(OUTPUT_DIR, `${img.id}.png`))
   );
 
-  console.log(`\n🚀 SpeedLink Image Generator — Leonardo AI (Nano Banana)`);
+  console.log(`\n🚀 SpeedLink Image Generator — Leonardo AI (Nano Banana 2)`);
   console.log(`   Model: ${MODEL}`);
   console.log(`   Images: ${IMAGES.length} total, ${existing.length} already exist, ${pending.length} to generate\n`);
 

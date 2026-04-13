@@ -1,53 +1,75 @@
-import React, { useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { gsap, useGSAP } from "../src/lib/gsap-config";
 import { useLang } from "../src/context/LanguageContext";
+import { useTheme } from "../src/context/ThemeContext";
 import { contactPage, faq, t } from "../src/data/translations";
 import { IMAGES } from "../src/data/images";
 import { PageHeader } from "../src/components/PageHeader";
+import { LeafletMap } from "../src/components/LeafletMap";
 
 function ContactForm() {
   const { lang } = useLang();
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { theme } = useTheme();
+  const sectionRef = useRef(null);
+
+  useGSAP(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const formCol = section.querySelector(".contact-form-col");
+    if (formCol) {
+      gsap.set(formCol, { y: 50, opacity: 0 });
+      gsap.to(formCol, {
+        y: 0, opacity: 1, duration: 1.1, ease: "silk",
+        scrollTrigger: { trigger: section, start: "top 80%", once: true },
+      });
+    }
+
+    const sideCol = section.querySelector(".contact-side-col");
+    if (sideCol) {
+      gsap.set(sideCol, { x: 50, opacity: 0 });
+      gsap.to(sideCol, {
+        x: 0, opacity: 1, duration: 1.1, ease: "silk",
+        scrollTrigger: { trigger: section, start: "top 80%", once: true },
+        delay: 0.2,
+      });
+    }
+  }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py" ref={ref}>
+    <section className="section-padding section-py" ref={sectionRef}>
       <div className="container-xl">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-7"
-          >
+          <div className="contact-form-col lg:col-span-7">
             <span className="tag mb-6 inline-flex">{t(contactPage.formTag, lang)}</span>
-            <h2 className="font-display text-display-md text-white">{t(contactPage.formTitle, lang)}</h2>
-            <p className="mt-3 font-body text-body-lg text-white/50">{t(contactPage.formSubtitle, lang)}</p>
+            <h2 className="font-display text-display-md text-heading">{t(contactPage.formTitle, lang)}</h2>
+            <p className="mt-3 font-body text-body-lg text-heading/50">{t(contactPage.formSubtitle, lang)}</p>
 
             <form className="mt-10 space-y-6" onSubmit={(e) => e.preventDefault()}>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-white/40">{t(contactPage.firstName, lang)}</label>
-                  <input type="text" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand/50" />
+                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.firstName, lang)}</label>
+                  <input type="text" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
                 </div>
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-white/40">{t(contactPage.lastName, lang)}</label>
-                  <input type="text" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand/50" />
+                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.lastName, lang)}</label>
+                  <input type="text" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
                 </div>
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-white/40">{t(contactPage.email, lang)}</label>
-                  <input type="email" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand/50" />
+                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.email, lang)}</label>
+                  <input type="email" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
                 </div>
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-white/40">{t(contactPage.phone, lang)}</label>
-                  <input type="tel" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand/50" />
+                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.phone, lang)}</label>
+                  <input type="tel" className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
                 </div>
               </div>
               <div>
-                <label className="mb-2 block font-display text-label uppercase tracking-wider text-white/40">{t(contactPage.serviceLabel, lang)}</label>
-                <select className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-white/70 outline-none transition-colors focus:border-brand/50">
+                <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.serviceLabel, lang)}</label>
+                <select className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading/70 outline-none transition-colors focus:border-brand/50">
                   <option value="">{lang === "bg" ? "Изберете услуга" : "Select a service"}</option>
                   {contactPage.serviceOptions.map((opt) => (
                     <option key={opt.value} value={opt.value}>{t(opt.label, lang)}</option>
@@ -55,8 +77,8 @@ function ContactForm() {
                 </select>
               </div>
               <div>
-                <label className="mb-2 block font-display text-label uppercase tracking-wider text-white/40">{t(contactPage.roleLabel, lang)}</label>
-                <select className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-white/70 outline-none transition-colors focus:border-brand/50">
+                <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.roleLabel, lang)}</label>
+                <select className="w-full rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading/70 outline-none transition-colors focus:border-brand/50">
                   <option value="">{lang === "bg" ? "Изберете роля" : "Select role"}</option>
                   {contactPage.roles.map((role) => (
                     <option key={role.value} value={role.value}>{t(role.label, lang)}</option>
@@ -64,12 +86,12 @@ function ContactForm() {
                 </select>
               </div>
               <div>
-                <label className="mb-2 block font-display text-label uppercase tracking-wider text-white/40">{t(contactPage.message, lang)}</label>
-                <textarea rows="4" placeholder={t(contactPage.messagePlaceholder, lang)} className="w-full resize-none rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand/50" />
+                <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.message, lang)}</label>
+                <textarea rows="4" placeholder={t(contactPage.messagePlaceholder, lang)} className="w-full resize-none rounded-xl border border-surface-border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50" />
               </div>
               <div className="flex items-start gap-3">
                 <input type="checkbox" id="terms" className="mt-1 h-4 w-4 rounded border-surface-border bg-surface-card accent-brand" />
-                <label htmlFor="terms" className="font-body text-body-sm text-white/50">{t(contactPage.terms, lang)}</label>
+                <label htmlFor="terms" className="font-body text-body-sm text-heading/50">{t(contactPage.terms, lang)}</label>
               </div>
               <button type="submit" className="btn-primary w-full sm:w-auto">
                 {t(contactPage.send, lang)}
@@ -78,19 +100,14 @@ function ContactForm() {
                 </svg>
               </button>
             </form>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-5"
-          >
+          <div className="contact-side-col lg:col-span-5">
             <div className="sticky top-32 space-y-6">
               <div className="glass-card p-8">
                 <span className="tag mb-6 inline-flex">{t(contactPage.directTag, lang)}</span>
-                <h3 className="font-display text-display-sm text-white">{t(contactPage.directTitle, lang)}</h3>
-                <p className="mt-3 font-body text-body-md text-white/50">{t(contactPage.directSubtitle, lang)}</p>
+                <h3 className="font-display text-display-sm text-heading">{t(contactPage.directTitle, lang)}</h3>
+                <p className="mt-3 font-body text-body-md text-heading/50">{t(contactPage.directSubtitle, lang)}</p>
 
                 <div className="mt-8 space-y-5">
                   {[
@@ -106,9 +123,9 @@ function ContactForm() {
                       </div>
                       <div>
                         {info.href ? (
-                          <a href={info.href} className="font-body text-body-md text-white transition-colors hover:text-brand">{info.label}</a>
+                          <a href={info.href} className="font-body text-body-md text-heading transition-colors hover:text-brand">{info.label}</a>
                         ) : (
-                          <p className="font-body text-body-md text-white">{info.label}</p>
+                          <p className="font-body text-body-md text-heading">{info.label}</p>
                         )}
                       </div>
                     </div>
@@ -116,11 +133,9 @@ function ContactForm() {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-2xl">
-                <img src={IMAGES.contactMap} alt={t(contactPage.officeAddress, lang)} className="aspect-[4/3] img-cover" loading="lazy" />
-              </div>
+              <LeafletMap lang={lang} theme={theme} />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -130,22 +145,44 @@ function ContactForm() {
 function ContactFaq() {
   const { lang } = useLang();
   const [openIndex, setOpenIndex] = useState(0);
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const faqRef = useRef(null);
+
+  useGSAP(() => {
+    const section = faqRef.current;
+    if (!section) return;
+
+    const headerEls = section.querySelectorAll(".reveal-header-child");
+    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.to(headerEls, {
+      y: 0, opacity: 1, duration: 1.1, ease: "silk",
+      stagger: { each: 0.1, ease: "power2.out" },
+      scrollTrigger: { trigger: section, start: "top 80%", once: true },
+    });
+
+    const faqItems = section.querySelectorAll(".cfaq-item");
+    faqItems.forEach((item, i) => {
+      gsap.set(item, { x: 30, opacity: 0 });
+      gsap.to(item, {
+        x: 0, opacity: 1, duration: 0.9, ease: "silk",
+        scrollTrigger: { trigger: section, start: "top 75%", once: true },
+        delay: 0.1 * i,
+      });
+    });
+  }, { scope: faqRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={ref}>
+    <section className="section-padding section-py border-t border-surface-border" ref={faqRef}>
       <div className="container-xl">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="font-display text-display-lg text-white">{t(faq.title, lang)}</h2>
-          <p className="mt-4 font-body text-body-lg text-white/50">{t(faq.subtitle, lang)}</p>
+          <h2 className="reveal-header-child font-display text-display-lg text-heading">{t(faq.title, lang)}</h2>
+          <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">{t(faq.subtitle, lang)}</p>
         </div>
         <div className="mx-auto max-w-3xl">
           {faq.items.map((item, i) => (
-            <div key={i} className="border-b border-surface-border">
+            <div key={i} className="cfaq-item border-b border-surface-border">
               <button onClick={() => setOpenIndex(openIndex === i ? -1 : i)} className="flex w-full items-center justify-between gap-4 py-6 text-left">
-                <span className="font-display text-lg font-medium text-white">{t(item.q, lang)}</span>
-                <motion.div animate={{ rotate: openIndex === i ? 45 : 0 }} transition={{ duration: 0.25 }} className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-white/40">
+                <span className="font-display text-lg font-medium text-heading">{t(item.q, lang)}</span>
+                <motion.div animate={{ rotate: openIndex === i ? 45 : 0 }} transition={{ duration: 0.25 }} className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40">
                   <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
@@ -154,7 +191,7 @@ function ContactFaq() {
               <AnimatePresence initial={false}>
                 {openIndex === i && (
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
-                    <p className="pb-6 font-body text-body-md leading-relaxed text-white/50">{t(item.a, lang)}</p>
+                    <p className="pb-6 font-body text-body-md leading-relaxed text-heading/50">{t(item.a, lang)}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

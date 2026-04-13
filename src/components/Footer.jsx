@@ -1,10 +1,75 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { gsap, useGSAP } from "../lib/gsap-config";
 import { useLang } from "../context/LanguageContext";
 import { nav, footer, t } from "../data/translations";
 
 export function Footer() {
   const { lang } = useLang();
+  const footerRef = useRef(null);
+
+  useGSAP(() => {
+    const el = footerRef.current;
+    if (!el) return;
+
+    const divider = el.querySelector(".footer-divider-top");
+    if (divider) {
+      gsap.set(divider, { scaleX: 0 });
+      gsap.to(divider, {
+        scaleX: 1, duration: 1, ease: "silk", transformOrigin: "center",
+        scrollTrigger: { trigger: el, start: "top 92%", once: true },
+      });
+    }
+
+    const logoBlock = el.querySelector(".footer-logo");
+    if (logoBlock) {
+      gsap.set(logoBlock, { y: 40, opacity: 0 });
+      gsap.to(logoBlock, {
+        y: 0, opacity: 1, duration: 1.1, ease: "silk",
+        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+      });
+    }
+
+    const navLinks = el.querySelectorAll(".footer-nav-link");
+    navLinks.forEach((link, i) => {
+      gsap.set(link, { x: -20, opacity: 0 });
+      gsap.to(link, {
+        x: 0, opacity: 1, duration: 0.8, ease: "silk",
+        scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        delay: 0.06 * i,
+      });
+    });
+
+    const contactItems = el.querySelectorAll(".footer-contact");
+    contactItems.forEach((item, i) => {
+      gsap.set(item, { x: -20, opacity: 0 });
+      gsap.to(item, {
+        x: 0, opacity: 1, duration: 0.8, ease: "silk",
+        scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        delay: 0.15 + 0.06 * i,
+      });
+    });
+
+    const socials = el.querySelectorAll(".footer-social");
+    socials.forEach((icon, i) => {
+      gsap.set(icon, { scale: 0, rotation: -15 });
+      gsap.to(icon, {
+        scale: 1, rotation: 0, duration: 0.6, ease: "elasticSubtle",
+        scrollTrigger: { trigger: el, start: "top 85%", once: true },
+        delay: 0.3 + 0.08 * i,
+      });
+    });
+
+    const bottomBar = el.querySelector(".footer-bottom");
+    if (bottomBar) {
+      gsap.set(bottomBar, { opacity: 0 });
+      gsap.to(bottomBar, {
+        opacity: 1, duration: 0.8, ease: "silk",
+        scrollTrigger: { trigger: el, start: "top 80%", once: true },
+        delay: 0.6,
+      });
+    }
+  }, { scope: footerRef });
 
   const links = [
     { to: "/", label: nav.home },
@@ -14,20 +79,21 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-surface-border bg-dark">
+    <footer ref={footerRef} className="relative border-t border-surface-border bg-page">
+      <div className="footer-divider-top absolute left-0 right-0 top-0 h-px bg-brand/20" />
       <div className="section-padding section-py">
         <div className="container-xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
-            <div className="lg:col-span-4">
+            <div className="footer-logo lg:col-span-4">
               <Link to="/" className="mb-6 flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand">
                   <span className="font-display text-lg font-bold text-dark">S</span>
                 </div>
-                <span className="font-display text-lg font-semibold tracking-tight text-white">
+                <span className="font-display text-lg font-semibold tracking-tight text-heading">
                   SpeedLink<span className="text-brand">.</span>
                 </span>
               </Link>
-              <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-white/50">
+              <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">
                 {lang === "bg"
                   ? "Логистични решения от България за Европа и Азия. Бързи оферти, прозрачни цени, доказана надеждност."
                   : "Logistics solutions from Bulgaria for Europe and Asia. Fast quotes, transparent pricing, proven reliability."}
@@ -35,7 +101,7 @@ export function Footer() {
             </div>
 
             <div className="lg:col-span-2">
-              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-white/40">
+              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-muted">
                 {lang === "bg" ? "Навигация" : "Navigation"}
               </h4>
               <ul className="flex flex-col gap-3">
@@ -43,7 +109,7 @@ export function Footer() {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="font-body text-sm text-white/60 transition-colors duration-300 hover:text-brand"
+                      className="footer-nav-link font-body text-sm text-heading/60 transition-colors duration-300 hover:text-brand"
                     >
                       {t(link.label, lang)}
                     </Link>
@@ -53,28 +119,28 @@ export function Footer() {
             </div>
 
             <div className="lg:col-span-3">
-              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-white/40">
+              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-muted">
                 {lang === "bg" ? "Контакт" : "Contact"}
               </h4>
               <ul className="flex flex-col gap-3">
                 <li>
-                  <a href="tel:+359877404599" className="font-body text-sm text-white/60 transition-colors hover:text-brand">
+                  <a href="tel:+359877404599" className="footer-contact font-body text-sm text-heading/60 transition-colors hover:text-brand">
                     +359 877 404 599
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:info@speedlink-eu.com" className="font-body text-sm text-white/60 transition-colors hover:text-brand">
+                  <a href="mailto:info@speedlink-eu.com" className="footer-contact font-body text-sm text-heading/60 transition-colors hover:text-brand">
                     info@speedlink-eu.com
                   </a>
                 </li>
-                <li className="font-body text-sm text-white/60">
+                <li className="footer-contact font-body text-sm text-heading/60">
                   {lang === "bg" ? "София, България" : "Sofia, Bulgaria"}
                 </li>
               </ul>
             </div>
 
             <div className="lg:col-span-3">
-              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-white/40">
+              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-muted">
                 {lang === "bg" ? "Следвайте ни" : "Follow us"}
               </h4>
               <div className="flex gap-3">
@@ -87,7 +153,7 @@ export function Footer() {
                     key={social.label}
                     href="#"
                     aria-label={social.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border text-white/40 transition-all duration-300 hover:border-brand/40 hover:text-brand"
+                    className="footer-social flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-all duration-300 hover:border-brand/40 hover:text-brand"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d={social.icon} />
@@ -100,11 +166,11 @@ export function Footer() {
 
           <div className="divider mt-12 lg:mt-16" />
 
-          <div className="mt-6 flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="font-body text-xs text-white/30">
+          <div className="footer-bottom mt-6 flex flex-col items-center justify-between gap-4 md:flex-row">
+            <p className="font-body text-xs text-heading/30">
               {t(footer.copyright, lang)}
             </p>
-            <p className="font-body text-xs text-white/30">
+            <p className="font-body text-xs text-heading/30">
               {lang === "bg" ? "Изработка: " : "Built by "}
               <a href="https://tanev.design" className="text-brand/60 transition-colors hover:text-brand" target="_blank" rel="noopener noreferrer">
                 tanev.design

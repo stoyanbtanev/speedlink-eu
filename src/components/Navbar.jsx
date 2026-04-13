@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLang } from "../context/LanguageContext";
+import { useTheme } from "../context/ThemeContext";
 import { nav, t } from "../data/translations";
 
 export function Navbar() {
   const { lang, toggleLang } = useLang();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -25,13 +27,18 @@ export function Navbar() {
     { to: "/контакт", label: nav.contact },
   ];
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => decodeURIComponent(location.pathname) === path;
+
+  const textBase = scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white";
+  const textActive = "text-brand";
+  const logoText = scrolled ? "text-heading" : "text-white";
+  const hamburgerBg = scrolled ? "bg-heading" : "bg-white";
 
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-500 ease-out-expo ${
         scrolled
-          ? "bg-dark/80 shadow-lg shadow-black/20 backdrop-blur-xl"
+          ? "bg-nav-scrolled/80 shadow-lg shadow-black/10 backdrop-blur-xl"
           : "bg-transparent"
       }`}
     >
@@ -41,7 +48,7 @@ export function Navbar() {
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand">
               <span className="font-display text-lg font-bold text-dark">S</span>
             </div>
-            <span className="font-display text-lg font-semibold tracking-tight text-white">
+            <span className={`font-display text-lg font-semibold tracking-tight transition-colors duration-300 ${logoText}`}>
               SpeedLink<span className="text-brand">.</span>
             </span>
           </Link>
@@ -52,9 +59,7 @@ export function Navbar() {
                 key={link.to}
                 to={link.to}
                 className={`relative rounded-lg px-4 py-2 font-body text-sm font-medium transition-colors duration-300 ${
-                  isActive(link.to)
-                    ? "text-brand"
-                    : "text-white/70 hover:text-white"
+                  isActive(link.to) ? textActive : textBase
                 }`}
               >
                 {t(link.label, lang)}
@@ -71,19 +76,45 @@ export function Navbar() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <button
-              onClick={toggleLang}
-              className="flex h-9 items-center gap-1.5 rounded-lg border border-surface-border px-3 font-display text-xs font-semibold uppercase tracking-wider text-white/70 transition-all duration-300 hover:border-brand/40 hover:text-white"
+              onClick={toggleTheme}
+              className={`flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border transition-all duration-300 hover:border-brand/40 ${
+                scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white"
+              }`}
+              aria-label="Toggle theme"
             >
-              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              {theme === "dark" ? (
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                  <path d="M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+                </svg>
+              ) : (
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <path d="M20.5 12.5A8.5 8.5 0 1 1 11.5 3.5a6.5 6.5 0 0 0 9 9z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+                  <circle cx="15" cy="9" r="0.8" fill="currentColor" opacity="0.3"/>
+                  <circle cx="12" cy="14" r="1.2" fill="currentColor" opacity="0.2"/>
+                </svg>
+              )}
+            </button>
+            <button
+              onClick={toggleLang}
+              className={`flex h-9 items-center gap-1.5 rounded-lg border border-surface-border px-3 font-display text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:border-brand/40 ${
+                scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white"
+              }`}
+            >
+              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.4"/>
+                <ellipse cx="12" cy="12" rx="3.8" ry="9.5" stroke="currentColor" strokeWidth="1" opacity="0.6"/>
+                <path d="M3.5 8.5h17M3.5 15.5h17" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" opacity="0.4"/>
               </svg>
               {t(nav.language, lang)}
             </button>
             <Link to="/контакт" className="btn-primary text-xs">
               {t(nav.quote, lang)}
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="5" cy="12" r="0.7" fill="currentColor" opacity="0.3"/>
               </svg>
             </Link>
           </div>
@@ -94,12 +125,12 @@ export function Navbar() {
             aria-label="Toggle menu"
           >
             <motion.span
-              className="block h-0.5 w-5 rounded-full bg-white"
+              className={`block h-0.5 w-5 rounded-full ${hamburgerBg}`}
               animate={isOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.25 }}
             />
             <motion.span
-              className="block h-0.5 w-5 rounded-full bg-white"
+              className={`block h-0.5 w-5 rounded-full ${hamburgerBg}`}
               animate={isOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.25 }}
             />
@@ -114,7 +145,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-surface-border bg-dark/95 backdrop-blur-xl lg:hidden"
+            className="overflow-hidden border-t border-surface-border bg-menu/95 backdrop-blur-xl lg:hidden"
           >
             <div className="section-padding flex flex-col gap-2 py-6">
               {links.map((link, i) => (
@@ -129,7 +160,7 @@ export function Navbar() {
                     className={`block rounded-xl px-4 py-3 font-display text-lg font-medium transition-colors ${
                       isActive(link.to)
                         ? "bg-brand/10 text-brand"
-                        : "text-white/80 hover:bg-white/5 hover:text-white"
+                        : "text-heading/80 hover:bg-heading/5 hover:text-heading"
                     }`}
                   >
                     {t(link.label, lang)}
@@ -137,6 +168,9 @@ export function Navbar() {
                 </motion.div>
               ))}
               <div className="mt-4 flex gap-3 px-4">
+                <button onClick={toggleTheme} className="btn-secondary flex-1 text-xs">
+                  {theme === "dark" ? "☀ Light" : "☾ Dark"}
+                </button>
                 <button
                   onClick={toggleLang}
                   className="btn-secondary flex-1 text-xs"

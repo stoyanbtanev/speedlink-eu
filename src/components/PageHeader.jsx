@@ -1,37 +1,58 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { gsap, useGSAP } from "../lib/gsap-config";
 
 export function PageHeader({ title, subtitle, image }) {
+  const sectionRef = useRef(null);
+
+  useGSAP(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const img = section.querySelector(".ph-img");
+    if (img) {
+      gsap.set(img, { scale: 1.12 });
+      gsap.to(img, { scale: 1, duration: 1.8, ease: "heavy" });
+    }
+
+    const h1 = section.querySelector(".ph-title");
+    if (h1) {
+      gsap.set(h1, { y: 60, opacity: 0, clipPath: "inset(0 0 100% 0)" });
+      gsap.to(h1, {
+        y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)",
+        duration: 1, ease: "silk", delay: 0.15,
+      });
+    }
+
+    const p = section.querySelector(".ph-subtitle");
+    if (p) {
+      gsap.set(p, { y: 30, opacity: 0, filter: "blur(2px)" });
+      gsap.to(p, {
+        y: 0, opacity: 1, filter: "blur(0px)",
+        duration: 0.9, ease: "silk", delay: 0.35,
+      });
+    }
+  }, { scope: sectionRef });
+
   return (
-    <section className="relative flex min-h-[50vh] items-end overflow-hidden md:min-h-[60vh]">
+    <section ref={sectionRef} className="relative flex min-h-[50svh] items-end overflow-hidden md:min-h-[60svh]">
       <div className="absolute inset-0">
         <img
           src={image}
           alt=""
-          className="img-cover"
+          className="ph-img img-cover"
           loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/30" />
       </div>
       <div className="section-padding relative z-10 pb-16 pt-40 md:pb-24 md:pt-48">
         <div className="container-xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-2xl font-display text-display-lg text-white"
-          >
+          <h1 className="ph-title max-w-2xl font-display text-display-lg text-white">
             {title}
-          </motion.h1>
+          </h1>
           {subtitle && (
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-4 max-w-lg font-body text-body-lg text-white/60"
-            >
+            <p className="ph-subtitle mt-4 max-w-lg font-body text-body-lg text-white/60">
               {subtitle}
-            </motion.p>
+            </p>
           )}
         </div>
       </div>

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
+import { gsap, useGSAP } from "../src/lib/gsap-config";
 import { useLang } from "../src/context/LanguageContext";
 import { servicesPage, faq, ctaDual, t } from "../src/data/translations";
 import { IMAGES } from "../src/data/images";
@@ -10,25 +10,54 @@ const SERVICE_IMAGES = [IMAGES.services.ftl, IMAGES.services.ltl, IMAGES.service
 
 function ServicesGrid() {
   const { lang } = useLang();
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef(null);
+
+  useGSAP(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const headerEls = section.querySelectorAll(".reveal-header-child");
+    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.to(headerEls, {
+      y: 0, opacity: 1, duration: 1.1, ease: "silk",
+      stagger: { each: 0.1, ease: "power2.out" },
+      scrollTrigger: { trigger: section, start: "top 82%", once: true },
+    });
+
+    const cards = section.querySelectorAll(".svc-card");
+    cards.forEach((card, i) => {
+      gsap.set(card, { y: 60, opacity: 0, scale: 0.94 });
+      gsap.to(card, {
+        y: 0, opacity: 1, scale: 1,
+        duration: 1.1, ease: "silk",
+        scrollTrigger: { trigger: section, start: "top 72%", once: true },
+        delay: 0.14 * i,
+      });
+    });
+
+    const featured = section.querySelector(".svc-featured");
+    if (featured) {
+      gsap.set(featured, { y: 50, opacity: 0 });
+      gsap.to(featured, {
+        y: 0, opacity: 1, duration: 1.2, ease: "heavy",
+        scrollTrigger: { trigger: section, start: "top 60%", once: true },
+      });
+    }
+  }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py" ref={ref}>
+    <section className="section-padding section-py" ref={sectionRef}>
       <div className="container-xl">
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="tag mb-6 inline-flex">{t(servicesPage.tag, lang)}</span>
-          <h2 className="font-display text-display-lg text-white">{t(servicesPage.title, lang)}</h2>
-          <p className="mt-4 font-body text-body-lg text-white/50">{t(servicesPage.subtitle, lang)}</p>
+          <span className="reveal-header-child tag mb-6 inline-flex">{t(servicesPage.tag, lang)}</span>
+          <h2 className="reveal-header-child font-display text-display-lg text-heading">{t(servicesPage.title, lang)}</h2>
+          <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">{t(servicesPage.subtitle, lang)}</p>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {servicesPage.cards.map((card, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 * i }}
-              className="group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30"
+              className="svc-card group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30"
             >
               <div className="relative h-52 overflow-hidden">
                 <img src={SERVICE_IMAGES[i]} alt={t(card.title, lang)} className="img-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
@@ -38,29 +67,24 @@ function ServicesGrid() {
                 </span>
               </div>
               <div className="p-8">
-                <h3 className="font-display text-display-sm text-white">{t(card.title, lang)}</h3>
-                <p className="mt-3 font-body text-body-md text-white/50">{t(card.desc, lang)}</p>
+                <h3 className="font-display text-display-sm text-heading">{t(card.title, lang)}</h3>
+                <p className="mt-3 font-body text-body-md text-heading/50">{t(card.desc, lang)}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2"
-        >
+        <div className="svc-featured mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="glass-card overflow-hidden">
             <img src={IMAGES.services.customs} alt={t(servicesPage.featured.title, lang)} className="aspect-video img-cover" loading="lazy" />
           </div>
           <div className="glass-card flex flex-col justify-center p-8 md:p-12">
             <span className="tag mb-4 inline-flex w-fit">{t(servicesPage.featured.tag, lang)}</span>
-            <h3 className="font-display text-display-md text-white">{t(servicesPage.featured.title, lang)}</h3>
-            <p className="mt-4 font-body text-body-md text-white/50">{t(servicesPage.featured.desc, lang)}</p>
+            <h3 className="font-display text-display-md text-heading">{t(servicesPage.featured.title, lang)}</h3>
+            <p className="mt-4 font-body text-body-md text-heading/50">{t(servicesPage.featured.desc, lang)}</p>
             <Link to="/контакт" className="btn-primary mt-8 w-fit text-sm">{t(servicesPage.featured.cta, lang)}</Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -68,32 +92,52 @@ function ServicesGrid() {
 
 function WhyChoose() {
   const { lang } = useLang();
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef(null);
+
+  useGSAP(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const headerEls = section.querySelectorAll(".reveal-header-child");
+    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.to(headerEls, {
+      y: 0, opacity: 1, duration: 1.1, ease: "silk",
+      stagger: { each: 0.1, ease: "power2.out" },
+      scrollTrigger: { trigger: section, start: "top 82%", once: true },
+    });
+
+    const cards = section.querySelectorAll(".why-card");
+    cards.forEach((card, i) => {
+      gsap.set(card, { y: 50, opacity: 0, scale: 0.92 });
+      gsap.to(card, {
+        y: 0, opacity: 1, scale: 1,
+        duration: 1, ease: "silk",
+        scrollTrigger: { trigger: section, start: "top 72%", once: true },
+        delay: 0.15 * i,
+      });
+    });
+  }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={ref}>
+    <section className="section-padding section-py border-t border-surface-border" ref={sectionRef}>
       <div className="container-xl">
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="tag mb-6 inline-flex">{t(servicesPage.whyTag, lang)}</span>
-          <h2 className="font-display text-display-lg text-white">{t(servicesPage.whyTitle, lang)}</h2>
-          <p className="mt-4 font-body text-body-lg text-white/50">{t(servicesPage.whySubtitle, lang)}</p>
+          <span className="reveal-header-child tag mb-6 inline-flex">{t(servicesPage.whyTag, lang)}</span>
+          <h2 className="reveal-header-child font-display text-display-lg text-heading">{t(servicesPage.whyTitle, lang)}</h2>
+          <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">{t(servicesPage.whySubtitle, lang)}</p>
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 md:gap-6">
           {servicesPage.whyCards.map((card, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.12 * i }}
-              className="glass-card p-8 text-center"
+              className="why-card glass-card px-5 py-6 text-center sm:px-6 sm:py-7"
             >
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand/10">
-                <span className="font-display text-2xl font-bold text-brand">{i + 1}</span>
+              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-brand/10 sm:mb-4 sm:h-12 sm:w-12">
+                <span className="font-display text-lg font-bold text-brand sm:text-xl">{i + 1}</span>
               </div>
-              <h3 className="font-display text-display-sm text-white">{t(card.title, lang)}</h3>
-              <p className="mt-3 font-body text-body-md text-white/50">{t(card.desc, lang)}</p>
-            </motion.div>
+              <h3 className="font-display text-lg font-semibold text-heading sm:text-xl">{t(card.title, lang)}</h3>
+              <p className="mt-2 font-body text-body-sm text-heading/50 sm:text-body-md">{t(card.desc, lang)}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -109,8 +153,8 @@ function AboutSection() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div>
             <span className="tag mb-6 inline-flex">{t(servicesPage.aboutTag, lang)}</span>
-            <h2 className="font-display text-display-lg text-white">{t(servicesPage.aboutTitle, lang)}</h2>
-            <p className="mt-6 font-body text-body-lg leading-relaxed text-white/50">{t(servicesPage.aboutDesc, lang)}</p>
+            <h2 className="font-display text-display-lg text-heading">{t(servicesPage.aboutTitle, lang)}</h2>
+            <p className="mt-6 font-body text-body-lg leading-relaxed text-heading/50">{t(servicesPage.aboutDesc, lang)}</p>
             <div className="mt-8 flex gap-4">
               <Link to="/контакт" className="btn-primary">{lang === "bg" ? "Запитай" : "Inquire"}</Link>
               <Link to="/отзиви" className="btn-secondary">{lang === "bg" ? "Отзиви" : "Reviews"}</Link>

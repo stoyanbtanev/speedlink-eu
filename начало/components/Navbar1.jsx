@@ -98,7 +98,7 @@ export function Navbar1() {
         </div>
         <motion.div
           variants={{
-            open: { height: "var(--height-open, 100dvh)" },
+            open: { height: "var(--height-open, 100svh)" },
             close: { height: "var(--height-closed, 0)" },
           }}
           initial="close"
