@@ -46,11 +46,10 @@
     scroll-behavior: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-overflow-scrolling: touch;
   }
 
   html, body {
-    overflow-x: hidden;
+    overflow-x: clip;
     overscroll-behavior: none;
     -webkit-text-size-adjust: 100%;
   }
@@ -59,9 +58,6 @@
     font-family: "Plus Jakarta Sans", system-ui, sans-serif;
     background-color: rgb(var(--c-page));
     color: rgb(var(--c-heading));
-  }
-
-  body.theme-transitioning {
     transition: background-color 0.4s ease, color 0.4s ease;
   }
 

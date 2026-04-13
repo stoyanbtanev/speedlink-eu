@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLang } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { nav, t } from "../data/translations";
-import { ScrollTrigger } from "../lib/gsap-config";
 
 export function Navbar() {
   const { lang, toggleLang } = useLang();
@@ -26,34 +25,20 @@ export function Navbar() {
   useEffect(() => {
     if (isOpen) {
       scrollLockRef.current = window.scrollY;
-      document.documentElement.style.setProperty("--scroll-lock-top", `-${scrollLockRef.current}px`);
-      document.body.style.overflow = "hidden";
       document.body.style.position = "fixed";
-      document.body.style.top = `var(--scroll-lock-top)`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
+      document.body.style.top = `-${scrollLockRef.current}px`;
+      document.body.style.width = "100%";
     } else {
       const savedY = scrollLockRef.current;
-      document.body.style.overflow = "";
       document.body.style.position = "";
       document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.documentElement.style.removeProperty("--scroll-lock-top");
-      window.scrollTo({ top: savedY, behavior: "instant" });
-      requestAnimationFrame(() => {
-        if (typeof ScrollTrigger !== "undefined") {
-          ScrollTrigger.refresh();
-        }
-      });
+      document.body.style.width = "";
+      window.scrollTo(0, savedY);
     }
     return () => {
-      document.body.style.overflow = "";
       document.body.style.position = "";
       document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.documentElement.style.removeProperty("--scroll-lock-top");
+      document.body.style.width = "";
     };
   }, [isOpen]);
 
@@ -69,16 +54,14 @@ export function Navbar() {
   const textBase = scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white";
   const textActive = "text-brand";
   const logoText = scrolled ? "text-heading" : "text-white";
-  const hamburgerBg = isOpen ? "bg-heading" : scrolled ? "bg-heading" : "bg-white";
+  const hamburgerBg = scrolled ? "bg-heading" : "bg-white";
 
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-500 ease-out-expo ${
-        isOpen
-          ? "bg-menu shadow-lg shadow-black/10"
-          : scrolled
-            ? "bg-nav-scrolled/80 shadow-lg shadow-black/10 backdrop-blur-xl"
-            : "bg-transparent"
+        scrolled
+          ? "bg-nav-scrolled/80 shadow-lg shadow-black/10 backdrop-blur-xl"
+          : "bg-transparent"
       }`}
     >
       <div className="section-padding">
@@ -188,7 +171,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-surface-border bg-menu backdrop-blur-xl lg:hidden"
+            className="overflow-hidden border-t border-surface-border bg-menu/95 backdrop-blur-xl lg:hidden"
           >
             <div className="section-padding flex flex-col gap-2 py-6">
               {links.map((link, i) => (

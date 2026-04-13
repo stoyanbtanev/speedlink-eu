@@ -190,7 +190,7 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative h-[300svh]">
-      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={{ perspective: "1200px", willChange: "transform" }}>
+      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={{ perspective: "1200px" }}>
         <div ref={gridRef} className="absolute inset-0 z-0">
           <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 md:hidden">
             {[IMAGES.hero[0], IMAGES.hero[2], IMAGES.hero[6], IMAGES.hero[8]].map(
@@ -227,18 +227,18 @@ export function HeroSection() {
 
         <div
           ref={contentRef}
-          className="relative z-10 flex h-full items-center justify-center pt-16 md:pt-20 pb-4"
+          className="relative z-10 flex h-full items-center justify-center"
           style={{ transformOrigin: "center bottom" }}
         >
           <div className="section-padding w-full">
             <div className="container-xl text-center">
               <div ref={tagRef} style={{ opacity: 0 }}>
-                <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
+                <span className="tag mb-8 inline-flex">{t(hero.tag, lang)}</span>
               </div>
 
               <h1
                 ref={h1Ref}
-                className="mx-auto max-w-4xl px-4 font-display text-[2rem] font-bold leading-[1.1] text-white sm:text-5xl md:text-display-xl sm:px-0"
+                className="mx-auto max-w-4xl px-4 font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-display-xl sm:px-0"
                 style={{ visibility: "hidden" }}
               >
                 {splitChars(titleText)}
@@ -246,7 +246,7 @@ export function HeroSection() {
 
               <p
                 ref={subtitleRef}
-                className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-white/60 sm:text-body-lg sm:px-0 sm:mt-6"
+                className="mx-auto mt-4 max-w-xl px-6 font-body text-body-lg text-white/60 sm:px-0 sm:mt-6"
                 style={{ opacity: 0 }}
               >
                 {t(hero.subtitle, lang)}
@@ -254,7 +254,7 @@ export function HeroSection() {
 
               <div
                 ref={ctaRef}
-                className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row sm:mt-10 sm:gap-4"
+                className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:mt-10"
                 style={{ opacity: 0 }}
               >
                 <Link to="/contact" className="btn-primary">
@@ -277,7 +277,7 @@ export function HeroSection() {
 
               <div
                 ref={statsRef}
-                className="hero-stats mt-4 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-white/30 sm:gap-8"
+                className="hero-stats mt-8 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-white/30 sm:gap-8"
                 style={{ opacity: 0 }}
               >
                 <div className="flex items-center gap-2">
