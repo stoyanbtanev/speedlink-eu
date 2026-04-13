@@ -20,6 +20,28 @@ export function Navbar() {
 
   useEffect(() => { setIsOpen(false); }, [location.pathname]);
 
+  const scrollLockRef = React.useRef(0);
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollLockRef.current = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollLockRef.current}px`;
+      document.body.style.width = "100%";
+    } else {
+      const savedY = scrollLockRef.current;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, savedY);
+    }
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+    };
+  }, [isOpen]);
+
   const links = [
     { to: "/", label: nav.home },
     { to: "/services", label: nav.services },
@@ -50,7 +72,7 @@ export function Navbar() {
               alt="SpeedLink logo"
               width={40}
               height={40}
-              className="logo-img h-9 w-9 object-contain"
+              className="logo-img h-11 w-11 object-contain"
             />
             <span className={`font-display text-lg font-semibold tracking-tight transition-colors duration-300 ${logoText}`}>
               SpeedLink<span className="text-brand">.</span>

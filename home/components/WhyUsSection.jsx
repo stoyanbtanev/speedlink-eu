@@ -134,7 +134,7 @@ export function WhyUsSection() {
           ))}
 
           <div className="why-featured group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30 sm:col-span-2 lg:col-span-2 lg:row-span-2 lg:col-start-3 lg:row-start-1">
-            <div className="relative h-48 overflow-hidden lg:h-64">
+            <div className="relative min-h-[200px] flex-1 overflow-hidden lg:min-h-[260px]">
               <img
                 src={IMAGES.services.warehouse}
                 alt={t(whyUs.featured.title, lang)}
@@ -143,7 +143,7 @@ export function WhyUsSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-surface-card/70 via-surface-card/20 to-transparent" />
             </div>
-            <div className="flex flex-1 flex-col justify-center p-6 lg:p-8">
+            <div className="flex flex-shrink-0 flex-col justify-start p-6 lg:p-8">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-brand">
                 <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
                   <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
