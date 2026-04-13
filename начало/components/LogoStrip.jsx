@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { gsap, useGSAP } from "../../src/lib/gsap-config";
+import { gsap, useGSAP, ScrollTrigger } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { logos, t } from "../../src/data/translations";
 
@@ -33,22 +33,56 @@ export function LogoStrip() {
       });
     });
 
+    let isHovering = false;
+
     const tween = gsap.to(track, {
       x: "-50%",
-      duration: 30,
+      duration: 40, // Base pace is now lower
       ease: "none",
       repeat: -1,
     });
 
-    const handleEnter = () => gsap.to(tween, { timeScale: 0, duration: 0.8, ease: "silk" });
-    const handleLeave = () => gsap.to(tween, { timeScale: 1, duration: 0.8, ease: "silk" });
+    const handleEnter = () => {
+      isHovering = true;
+      gsap.to(tween, { timeScale: 0, duration: 0.8, ease: "silk" });
+    };
+    
+    const handleLeave = () => {
+      isHovering = false;
+      gsap.to(tween, { timeScale: 1, duration: 0.8, ease: "silk" });
+    };
 
     track.addEventListener("mouseenter", handleEnter);
     track.addEventListener("mouseleave", handleLeave);
 
+    const st = ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: (self) => {
+        if (isHovering) return;
+
+        const velocity = Math.abs(self.getVelocity());
+        let speed = 1 + velocity / 300;
+        speed = Math.min(speed, 6);
+        let signedSpeed = speed * self.direction; // Change direction based on scroll
+
+        gsap.to(tween, {
+          timeScale: signedSpeed,
+          duration: 0.1,
+          overwrite: true,
+          onComplete: () => {
+            if (!isHovering) {
+              gsap.to(tween, { timeScale: 1, duration: 1.5, ease: "power3.out" });
+            }
+          }
+        });
+      }
+    });
+
     return () => {
       track.removeEventListener("mouseenter", handleEnter);
       track.removeEventListener("mouseleave", handleLeave);
+      if (st) st.kill();
     };
   }, { scope: sectionRef });
 
