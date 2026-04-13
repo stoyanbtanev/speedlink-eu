@@ -1,81 +1,75 @@
-# SpeedLink EU 🚚
+# SpeedLink EU
 
-> Premium logistics website — bilingual (BG/EN), AI-generated imagery, dark theme.
+Marketing site for a European logistics company. Single-page React app, four routes, bilingual (Bulgarian / English), dark by default.
 
-![SpeedLink EU](public/images/header-services.jpg)
+Built on Vite + React 18, Tailwind for styling, GSAP + Framer Motion for the scroll and reveal animations. Deployed on Vercel.
 
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Framework | React 18 + Vite |
-| Styling | Tailwind CSS + Relume UI |
-| Animations | Framer Motion |
-| Routing | React Router DOM v7 |
-| i18n | Custom BG/EN context |
-| AI Images | Leonardo AI — Nano Banana (Gemini 2.5 Flash Image) |
-
-## Features
-
-- **Bilingual** — Bulgarian & English with instant language toggle
-- **Premium dark theme** — `#0e0e0e` base, `#E8A838` brand orange
-- **AI-generated imagery** — 29 custom images via Leonardo AI (Nano Banana)
-- **Framer Motion** — scroll-triggered animations, staggered entrances
-- **Fully responsive** — mobile-first, tested down to 375px
-- **Pages** — Home, Services, Reviews, Contact
-
-## Pages
-
-```
-/           → Home (начало)
-/услуги     → Services
-/отзиви     → Reviews
-/контакт    → Contact
-```
-
-## Getting Started
+## Running it locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Build for production:
+Dev server is at http://localhost:5173.
+
+## Build
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Image Generation
+Output goes to `dist/`.
 
-Images were generated via the Leonardo AI API using the **Nano Banana** model (`gemini-2.5-flash-image`). To regenerate:
+## Routes
 
-```bash
-LEONARDO_API_KEY=your_key node scripts/leonardo-generate.mjs
-```
+- `/` — home
+- `/services`
+- `/reviews`
+- `/contact`
 
-Images are saved to `public/images/` and referenced in `src/data/images.js`.
+Language toggle swaps all copy in place via a small context in `src/context/LanguageContext.jsx`. No route changes per language.
 
-## Project Structure
+## Project layout
 
 ```
 src/
-├── context/          # LanguageContext (BG/EN i18n)
-├── data/
-│   ├── images.js     # Image paths (local or Unsplash fallback)
-│   └── translations.js
-├── components/       # Shared: Navbar, Footer, PageHeader
-├── index.css         # Design tokens, utility classes
-начало/               # Home page
-услуги/               # Services page
-отзиви/               # Reviews page
-контакт/              # Contact page
-public/images/        # AI-generated images (1024×1024 JPG)
-scripts/
-└── leonardo-generate.mjs  # Image generation script
+  App.jsx              routing + scroll-to-top + error boundary
+  main.jsx             entry
+  components/          Navbar, Footer, PageHeader, LeafletMap
+  context/             Language + Theme providers
+  data/                translations.js (BG/EN strings) and images.js
+  hooks/               small reusable bits (counter, magnetic, reveal, parallax)
+  lib/gsap-config.js   GSAP plugin registration + custom eases
+  index.css            tokens, utility classes, a few @layer rules
+
+home/      services/      reviews/      contact/
+  each has its own components/ folder and an index.jsx
 ```
+
+Page folders (`home`, `services`, etc.) live at the root alongside `src/` so each page owns its own section components without polluting a shared tree.
+
+## Images
+
+All imagery in `public/images/` was generated with Leonardo AI (Nano Banana / Gemini 2.5 Flash Image). The generation script is in `scripts/leonardo-generate.mjs` — needs a `LEONARDO_API_KEY` env var if you want to regenerate:
+
+```bash
+LEONARDO_API_KEY=xxx node scripts/leonardo-generate.mjs
+```
+
+Paths are wired up in `src/data/images.js` — edit there if you change filenames.
+
+## Styling notes
+
+- Brand orange: `#E8A838`. Dark surface: `#0a0a0a`.
+- Design tokens live in `:root` of `index.css` and are consumed by Tailwind via CSS variables (`rgb(var(--c-heading))` pattern).
+- Theme toggling flips a `data-theme` attribute on `<html>`.
+
+## Deploy
+
+`vercel.json` handles SPA rewrites. Just push — Vercel picks up the Vite preset.
 
 ---
 
-Built by [tanev.design](https://tanev.design) · Stoyan Tanev
+Stoyan Tanev · [tanev.design](https://tanev.design)
