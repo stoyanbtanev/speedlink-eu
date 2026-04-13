@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeedLink EU — Image Generator (Puter.js)</title>
+  <script src="https://js.puter.com/v2/"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #0a0a0a; color: #fff; padding: 2rem; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    .subtitle { color: #888; margin-bottom: 2rem; }
+    .controls { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; align-items: center; }
+    button { padding: 0.75rem 1.5rem; border: none; border-radius: 0.75rem; font-weight: 600; cursor: pointer; font-size: 0.875rem; }
+    .btn-primary { background: #E8A838; color: #0a0a0a; }
+    .btn-primary:hover { background: #f0b84d; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-secondary { background: transparent; color: #fff; border: 1px solid #333; }
+    .btn-secondary:hover { border-color: #E8A838; }
+    select { padding: 0.75rem 1rem; border-radius: 0.75rem; background: #1a1a1a; color: #fff; border: 1px solid #333; font-size: 0.875rem; }
+    .progress { background: #1a1a1a; border-radius: 0.5rem; height: 0.5rem; margin-bottom: 2rem; overflow: hidden; }
+    .progress-bar { height: 100%; background: #E8A838; border-radius: 0.5rem; transition: width 0.3s; width: 0%; }
+    .status { color: #888; font-size: 0.875rem; margin-bottom: 1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .card { background: #141414; border: 1px solid #222; border-radius: 1rem; overflow: hidden; }
+    .card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .card-body { padding: 1rem; }
+    .card-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .card-prompt { font-size: 0.75rem; color: #666; line-height: 1.4; margin-bottom: 0.75rem; max-height: 3em; overflow: hidden; }
+    .card-status { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; display: inline-block; }
+    .card-status.pending { background: #1a1a1a; color: #666; }
+    .card-status.generating { background: #E8A83820; color: #E8A838; }
+    .card-status.done { background: #22c55e20; color: #22c55e; }
+    .card-status.error { background: #ef444420; color: #ef4444; }
+    .card-actions { margin-top: 0.75rem; display: flex; gap: 0.5rem; }
+    .card-actions button { padding: 0.375rem 0.75rem; font-size: 0.75rem; }
+    .placeholder { width: 100%; aspect-ratio: 16/9; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #333; font-size: 0.875rem; }
+    .spinner { display: inline-block; width: 1rem; height: 1rem; border: 2px solid #E8A83840; border-top-color: #E8A838; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 0.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <h1>SpeedLink EU — Image Generator</h1>
+  <p class="subtitle">Powered by Puter.js · Free models · Auto-fallback on rate limit</p>
+
+  <div class="controls">
+    <select id="modelSelect">
+      <option value="black-forest-labs/FLUX.1-schnell-Free" selected>FLUX.1 Schnell Free (truly free)</option>
+      <option value="dall-e-2">DALL·E 2 (free tier)</option>
+      <option value="stabilityai/stable-diffusion-3-medium">Stable Diffusion 3 Medium</option>
+      <option value="black-forest-labs/FLUX.1-schnell">FLUX.1 Schnell</option>
+      <option value="google/imagen-4.0-fast">Imagen 4 Fast (may cost credits)</option>
+      <option value="google/imagen-4.0-preview">Imagen 4 Preview (may cost credits)</option>
+      <option value="gpt-image-1">GPT Image 1 (may cost credits)</option>
+      <option value="dall-e-3">DALL·E 3 HD (may cost credits)</option>
+      <option value="google/imagen-4.0-ultra">Imagen 4 Ultra (costs credits)</option>
+    </select>
+    <button class="btn-primary" id="generateAll" onclick="generateAll()">Generate All (skip done)</button>
+    <button class="btn-secondary" onclick="stopGeneration()">Stop</button>
+    <button class="btn-secondary" onclick="downloadAll()">Download All</button>
+    <button class="btn-secondary" onclick="copyDataFile()">Copy images.js</button>
+    <span id="counter" style="color:#888;font-size:0.8rem;"></span>
+  </div>
+
+  <div id="statusText" class="status"></div>
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const IMAGE_PROMPTS = [
+      // Hero images (9 for the 3x3 grid)
+      { id: "hero-1", filename: "hero-1.webp", prompt: "Aerial view of a massive modern logistics warehouse at dawn, warm orange sunlight streaming through glass panels, rows of shipping containers and trucks, professional commercial photography, ultra sharp, cinematic lighting, 8K" },
+      { id: "hero-2", filename: "hero-2.webp", prompt: "Close-up of a cargo ship bow cutting through deep blue ocean waves, golden hour lighting, dramatic perspective from water level, shipping containers stacked on deck, professional marine photography, ultra detailed, 8K" },
+      { id: "hero-3", filename: "hero-3.webp", prompt: "Modern European highway at sunset with a fleet of clean white freight trucks driving in formation, orange sky reflecting off truck surfaces, motion blur on road, professional automotive photography, ultra sharp, 8K" },
+      { id: "hero-4", filename: "hero-4.webp", prompt: "Inside a high-tech logistics control center, multiple screens showing world maps and shipping routes, operators at workstations, blue and orange ambient lighting, futuristic corporate environment, professional photography, 8K" },
+      { id: "hero-5", filename: "hero-5.webp", prompt: "Dramatic wide shot of a busy international port at twilight, cranes loading containers onto ships, warm amber port lights reflecting on water, industrial scale and beauty, professional photography, ultra detailed, cinematic, 8K" },
+      { id: "hero-6", filename: "hero-6.webp", prompt: "A cargo airplane being loaded at a modern airport terminal at night, bright floodlights creating dramatic shadows, ground crew working efficiently, professional aviation photography, ultra sharp, 8K" },
+      { id: "hero-7", filename: "hero-7.webp", prompt: "Overhead drone shot of a rail freight terminal, colorful shipping containers arranged in geometric patterns, train tracks converging, warm afternoon light casting long shadows, professional aerial photography, 8K" },
+      { id: "hero-8", filename: "hero-8.webp", prompt: "Professional business handshake in front of a logistics operations board, blurred warehouse background with forklifts, warm natural lighting, corporate partnership concept, professional portrait photography, 8K" },
+      { id: "hero-9", filename: "hero-9.webp", prompt: "A modern automated warehouse interior with robotic sorting systems, conveyor belts moving packages, LED strip lighting in orange and white, futuristic logistics technology, professional industrial photography, 8K" },
+
+      // Service images
+      { id: "service-ftl", filename: "service-ftl.webp", prompt: "A powerful European freight truck (full truckload) driving through scenic Alpine mountain pass, dramatic clouds, road winding through green valleys, warm golden sunlight, professional automotive photography, ultra detailed, 8K" },
+      { id: "service-ltl", filename: "service-ltl.webp", prompt: "Inside a clean modern distribution center, workers scanning and sorting mixed pallets of goods for partial load shipments, organized shelving systems, warm overhead lighting, professional logistics photography, 8K" },
+      { id: "service-ocean", filename: "service-ocean.webp", prompt: "Massive container ship entering a Mediterranean port, turquoise water, stacked colorful containers, port cranes in background, dramatic sky with golden hour clouds, professional maritime photography, ultra sharp, 8K" },
+      { id: "service-air", filename: "service-air.webp", prompt: "Cargo aircraft on tarmac with nose cargo door open, freight being loaded on roller system, ground crew in high-vis vests, dramatic sunset sky behind, professional aviation photography, cinematic lighting, 8K" },
+      { id: "service-customs", filename: "service-customs.webp", prompt: "Professional customs clearance office, organized desk with shipping documents stamps and laptop showing trade data, EU flag visible, warm professional lighting, clean modern office environment, 8K" },
+      { id: "service-warehouse", filename: "service-warehouse.webp", prompt: "Expansive modern bonded warehouse interior, floor-to-ceiling shelving with organized palletized goods, electric forklifts in motion, bright LED industrial lighting with warm accent, professional architecture photography, 8K" },
+
+      // Industry images
+      { id: "industry-ecommerce", filename: "industry-ecommerce.webp", prompt: "Modern e-commerce fulfillment center, workers packing boxes on conveyor belts, branded shipping boxes stacked neatly, screens showing order dashboards, warm efficient lighting, professional logistics photography, 8K" },
+      { id: "industry-automotive", filename: "industry-automotive.webp", prompt: "Automotive parts being loaded onto specialized transport truck, engine components on pallets, clean industrial facility, precision manufacturing meets logistics, professional industrial photography, warm lighting, 8K" },
+      { id: "industry-pharma", filename: "industry-pharma.webp", prompt: "Temperature-controlled pharmaceutical logistics cold room, insulated shipping containers with blue cold chain indicators, workers in lab coats checking shipments, clean sterile environment, professional healthcare photography, 8K" },
+      { id: "industry-chemical", filename: "industry-chemical.webp", prompt: "Specialized chemical tanker trucks at an industrial chemical plant, safety markings and hazmat placards visible, professional industrial safety protocols, dramatic industrial architecture, professional photography, 8K" },
+
+      // Gallery / Network images
+      { id: "gallery-1", filename: "gallery-1.webp", prompt: "Panoramic shot of the Bosphorus strait with cargo ships passing through, Istanbul skyline in background, golden hour lighting, bridges spanning the waterway, professional travel photography meets logistics, ultra wide, 8K" },
+      { id: "gallery-2", filename: "gallery-2.webp", prompt: "Busy European train station freight terminal in Germany, modern locomotives pulling container wagons, overhead electric lines, clean platform architecture, professional railway photography, 8K" },
+      { id: "gallery-3", filename: "gallery-3.webp", prompt: "Sofia Bulgaria cityscape at blue hour with modern business district, illuminated office buildings, highway with truck traffic in foreground, Vitosha mountain backdrop, professional urban photography, 8K" },
+      { id: "gallery-4", filename: "gallery-4.webp", prompt: "Rotterdam port Netherlands massive container terminal, enormous gantry cranes working simultaneously, reflection on calm harbor water, dramatic sunset sky, professional industrial landscape photography, ultra wide, 8K" },
+      { id: "gallery-5", filename: "gallery-5.webp", prompt: "Silk Road logistics scene with modern truck caravan crossing vast Central Asian steppe, dramatic endless horizon, warm amber light, dust trails, epic sense of scale and adventure, professional landscape photography, 8K" },
+
+      // Stats background
+      { id: "stats", filename: "stats.webp", prompt: "Professional team of logistics managers reviewing operations on a large digital display board, diverse team in modern office, warm collaborative atmosphere, data visualizations on screens, professional corporate photography, 8K" },
+
+      // Page headers
+      { id: "header-services", filename: "header-services.webp", prompt: "Wide cinematic shot of freight trucks lined up at a modern logistics hub loading dock at sunrise, warm orange light flooding the scene, professional and efficient atmosphere, architectural photography, ultra wide, 8K" },
+      { id: "header-reviews", filename: "header-reviews.webp", prompt: "Happy logistics professionals shaking hands at a modern bright office, shipping operations visible through floor-to-ceiling windows behind them, warm natural light, genuine smiles, professional corporate portrait photography, 8K" },
+      { id: "header-contact", filename: "header-contact.webp", prompt: "Modern glass office building exterior of a European logistics company at golden hour, clean architecture with warm interior lighting visible, landscaped entrance, inviting professional atmosphere, architectural photography, 8K" },
+
+      // Contact map placeholder
+      { id: "contact-map", filename: "contact-map.webp", prompt: "Stylized dark-themed map of Sofia Bulgaria centered, showing city streets and districts, minimal design with orange accent highlights on key locations, modern cartographic illustration style, clean and elegant, 8K" },
+    ];
+
+    const state = {};
+    let generating = false;
+    let stopRequested = false;
+
+    function stopGeneration() {
+      stopRequested = true;
+      updateStatus('Stopping after current image...');
+    }
+
+    function updateCounter() {
+      const done = Object.values(state).filter(s => s.status === 'done').length;
+      document.getElementById('counter').textContent = `${done}/${IMAGE_PROMPTS.length} done`;
+    }
+
+    function init() {
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+      IMAGE_PROMPTS.forEach((item) => {
+        state[item.id] = { status: "pending", dataUrl: null };
+        const card = document.createElement("div");
+        card.className = "card";
+        card.id = `card-${item.id}`;
+        card.innerHTML = `
+          <div class="placeholder" id="img-${item.id}">Pending</div>
+          <div class="card-body">
+            <div class="card-title">${item.id}</div>
+            <div class="card-prompt">${item.prompt}</div>
+            <span class="card-status pending" id="status-${item.id}">Pending</span>
+            <div class="card-actions">
+              <button class="btn-secondary" onclick="generateOne('${item.id}')">Generate</button>
+              <button class="btn-secondary" onclick="downloadOne('${item.id}')" id="dl-${item.id}" disabled>Download</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    const FREE_FALLBACK_CHAIN = [
+      "black-forest-labs/FLUX.1-schnell-Free",
+      "dall-e-2",
+      "stabilityai/stable-diffusion-3-medium",
+    ];
+
+    function getModel() {
+      const model = document.getElementById("modelSelect").value;
+      const opts = { model };
+      if (model === "gpt-image-1" || model === "gpt-image-1.5") opts.quality = "high";
+      if (model === "dall-e-3") opts.quality = "hd";
+      return opts;
+    }
+
+    async function generateOne(id) {
+      const item = IMAGE_PROMPTS.find((p) => p.id === id);
+      if (!item) return;
+
+      const statusEl = document.getElementById(`status-${id}`);
+      const imgContainer = document.getElementById(`img-${id}`);
+      const dlBtn = document.getElementById(`dl-${id}`);
+
+      state[id].status = "generating";
+      statusEl.className = "card-status generating";
+      statusEl.innerHTML = '<span class="spinner"></span>Generating...';
+      imgContainer.innerHTML = '<span class="spinner"></span>Generating...';
+
+      const tryModel = async (opts) => {
+        const imgEl = await puter.ai.txt2img(item.prompt, opts);
+        imgEl.style.width = "100%";
+        imgEl.style.aspectRatio = "16/9";
+        imgEl.style.objectFit = "cover";
+        imgEl.style.display = "block";
+        imgContainer.replaceWith(imgEl);
+        imgEl.id = `img-${id}`;
+        const canvas = document.createElement("canvas");
+        await new Promise((resolve) => {
+          if (imgEl.complete) return resolve();
+          imgEl.onload = resolve;
+          setTimeout(resolve, 8000);
+        });
+        canvas.width = imgEl.naturalWidth || 1024;
+        canvas.height = imgEl.naturalHeight || 1024;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(imgEl, 0, 0, canvas.width, canvas.height);
+        state[id].dataUrl = canvas.toDataURL("image/webp", 0.92);
+        state[id].status = "done";
+        statusEl.className = "card-status done";
+        statusEl.textContent = `Done (${canvas.width}×${canvas.height}) [${opts.model.split('/').pop()}]`;
+        dlBtn.disabled = false;
+        updateCounter();
+      };
+
+      try {
+        await tryModel(getModel());
+      } catch (err) {
+        const errMsg = (err.message || String(err)).toLowerCase();
+        if (errMsg.includes('balance') || errMsg.includes('fund') || errMsg.includes('limit') || errMsg.includes('rate') || errMsg.includes('quota')) {
+          console.warn(`Model hit limit for ${id}, trying fallbacks...`);
+          let succeeded = false;
+          for (const fallback of FREE_FALLBACK_CHAIN) {
+            try {
+              statusEl.innerHTML = `<span class="spinner"></span>Retrying (${fallback.split('/').pop()})...`;
+              await tryModel({ model: fallback });
+              succeeded = true;
+              break;
+            } catch (e2) {
+              console.warn(`Fallback ${fallback} also failed:`, e2);
+            }
+          }
+          if (!succeeded) {
+            state[id].status = "error";
+            statusEl.className = "card-status error";
+            statusEl.textContent = `All models exhausted`;
+            console.error(`All models failed for ${id}`);
+          }
+        } else {
+          state[id].status = "error";
+          statusEl.className = "card-status error";
+          statusEl.textContent = `Error: ${err.message || err}`;
+          console.error(`Error generating ${id}:`, err);
+        }
+      }
+    }
+
+    async function generateAll() {
+      if (generating) return;
+      generating = true;
+      const btn = document.getElementById("generateAll");
+      btn.disabled = true;
+      btn.textContent = "Generating...";
+
+      const total = IMAGE_PROMPTS.length;
+      let done = 0;
+
+      stopRequested = false;
+      for (const item of IMAGE_PROMPTS) {
+        if (stopRequested) break;
+        if (state[item.id].status === "done") {
+          done++;
+          document.getElementById("progressBar").style.width = `${(done / total) * 100}%`;
+          continue;
+        }
+        updateStatus(`Generating ${done + 1}/${total}: ${item.id}...`);
+        await generateOne(item.id);
+        done++;
+        document.getElementById("progressBar").style.width = `${(done / total) * 100}%`;
+        // Delay between requests to avoid rate limits
+        await new Promise((r) => setTimeout(r, 2500));
+      }
+
+      const finalDone = Object.values(state).filter(s => s.status === 'done').length;
+      updateStatus(stopRequested ? `Stopped. ${finalDone}/${total} done.` : `All ${finalDone} images generated!`);
+      generating = false;
+      stopRequested = false;
+      btn.disabled = false;
+      btn.textContent = "Generate All (skip done)";
+    }
+
+    function updateStatus(text) {
+      document.getElementById("statusText").textContent = text;
+    }
+
+    function downloadOne(id) {
+      const item = IMAGE_PROMPTS.find((p) => p.id === id);
+      if (!state[id].dataUrl) return;
+      const a = document.createElement("a");
+      a.href = state[id].dataUrl;
+      a.download = item.filename;
+      a.click();
+    }
+
+    function downloadAll() {
+      IMAGE_PROMPTS.forEach((item) => {
+        if (state[item.id].dataUrl) {
+          setTimeout(() => downloadOne(item.id), 200);
+        }
+      });
+    }
+
+    function copyDataFile() {
+      const lines = IMAGE_PROMPTS.map((item) => {
+        const key = item.id.replace(/-/g, "_").replace(/^(\d)/, "_$1");
+        return `  "${item.id}": "/images/${item.filename}",`;
+      });
+      const code = `// Generated image paths for SpeedLink EU\n// Place downloaded images in public/images/\nexport const GENERATED_IMAGES = {\n${lines.join("\n")}\n};\n`;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Copied images.js mapping to clipboard!");
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
