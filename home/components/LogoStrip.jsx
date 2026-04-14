@@ -39,7 +39,7 @@ export function LogoStrip() {
 
     const tween = gsap.to(track, {
       x: -halfWidth,
-      duration: 80,
+      duration: 160,
       ease: "none",
       repeat: -1,
       modifiers: {
@@ -66,7 +66,7 @@ export function LogoStrip() {
       onUpdate: (self) => {
         if (isHovering) return;
         const velocity = Math.abs(self.getVelocity());
-        const speed = Math.min(1 + velocity / 800, 3);
+        const speed = Math.min(1 + velocity / 3000, 1.8);
         tween.timeScale(speed * (self.direction || 1));
 
         clearTimeout(decayTimeout);

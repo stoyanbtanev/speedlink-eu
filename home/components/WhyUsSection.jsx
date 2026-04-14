@@ -181,16 +181,18 @@ export function WhyUsSection() {
                 className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-black/50 to-transparent" />
-              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 sm:p-6">
+              <div className="absolute inset-x-0 top-0 flex items-start justify-end p-4 sm:p-6">
+                <span className="rounded-full border border-white/20 bg-black/40 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white">
+                  {t(whyUs.featured.tag, lang)}
+                </span>
+              </div>
+              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-black/50 text-white transition-[background-color,color] duration-500 group-hover:bg-brand/90 group-hover:text-dark">
                   <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
                     <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                     <path d="M16.5 6H10a3 3 0 0 0 0 6h4.5a3 3 0 0 1 0 6H7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span className="rounded-full border border-white/20 bg-black/40 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white">
-                  {t(whyUs.featured.tag, lang)}
-                </span>
               </div>
               <div className="absolute inset-x-0 bottom-0 max-w-2xl p-4 sm:p-6 md:p-8">
                 <h3 className="font-display text-display-sm text-white md:text-display-md">
