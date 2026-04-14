@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "../../src/lib/gsap-config";
+import { useRef } from "react";
+import { gsap, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { gallery, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
@@ -23,6 +23,8 @@ export function GallerySection() {
     });
 
     const scrollContainer = section.querySelector(".gallery-scroll");
+    const cardImages = Array.from(track.querySelectorAll(".gallery-card img")).filter(Boolean);
+
     gsap.to(track, {
       x: () => -(track.scrollWidth - window.innerWidth + 60),
       ease: "none",
@@ -34,24 +36,13 @@ export function GallerySection() {
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const scale = 1 + 0.08 * self.progress;
+          for (let i = 0; i < cardImages.length; i++) {
+            gsap.set(cardImages[i], { scale });
+          }
+        },
       },
-    });
-
-    const cards = track.querySelectorAll(".gallery-card");
-    cards.forEach((card, i) => {
-      const img = card.querySelector("img");
-      if (img) {
-        gsap.to(img, {
-          scale: 1.08,
-          ease: "none",
-          scrollTrigger: {
-            trigger: scrollContainer,
-            start: "top top",
-            end: "bottom top",
-            scrub: 2,
-          },
-        });
-      }
     });
   }, { scope: sectionRef });
 
@@ -81,8 +72,11 @@ export function GallerySection() {
               <img
                 src={src}
                 alt={`SpeedLink network ${i + 1}`}
-                className="img-cover"
+                width={1600}
+                height={1200}
                 loading="lazy"
+                decoding="async"
+                className="img-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/40 to-transparent" />
             </div>

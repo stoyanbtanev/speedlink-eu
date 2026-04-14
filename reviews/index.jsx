@@ -24,9 +24,9 @@ function TestimonialsGrid() {
 
     const cards = section.querySelectorAll(".rev-card");
     cards.forEach((card, i) => {
-      gsap.set(card, { y: 70, opacity: 0, scale: 0.9, filter: "blur(3px)" });
+      gsap.set(card, { y: 70, opacity: 0, scale: 0.9 });
       gsap.to(card, {
-        y: 0, opacity: 1, scale: 1, filter: "blur(0px)",
+        y: 0, opacity: 1, scale: 1,
         duration: 1.2, ease: "silk",
         scrollTrigger: { trigger: section, start: "top 70%", once: true },
         delay: i === 1 ? 0 : 0.18,
@@ -55,7 +55,7 @@ function TestimonialsGrid() {
           {reviewsPage.items.map((item, i) => (
             <div
               key={i}
-              className="rev-card glass-card flex flex-col justify-between p-8 transition-all duration-500 hover:-translate-y-1 hover:border-brand/30"
+              className="rev-card glass-card flex flex-col justify-between p-8 transition-[transform,border-color] duration-500 hover:-translate-y-1 hover:border-brand/30"
             >
               <div>
                 <div className="mb-6 flex gap-1">

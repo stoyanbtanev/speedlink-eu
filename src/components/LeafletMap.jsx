@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -90,31 +90,6 @@ export function LeafletMap({ lang = "bg", theme = "dark" }) {
   return (
     <div className="relative overflow-hidden rounded-2xl">
       <div ref={mapRef} className="aspect-[4/3] w-full sm:aspect-[16/10]" />
-      <style>{`
-        @keyframes leaflet-pulse {
-          0% { transform: scale(0.5); opacity: 1; }
-          100% { transform: scale(2.5); opacity: 0; }
-        }
-        .speedlink-popup .leaflet-popup-content-wrapper {
-          background: ${theme === "dark" ? "#141414" : "#fff"};
-          color: ${theme === "dark" ? "#F5F5F4" : "#0A0A0A"};
-          border: 1px solid ${theme === "dark" ? "#262626" : "#E7E5E4"};
-          border-radius: 12px;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-        }
-        .speedlink-popup .leaflet-popup-tip {
-          background: ${theme === "dark" ? "#141414" : "#fff"};
-          border: 1px solid ${theme === "dark" ? "#262626" : "#E7E5E4"};
-        }
-        .leaflet-control-zoom a {
-          background: ${theme === "dark" ? "#141414 !important" : "#fff !important"};
-          color: ${theme === "dark" ? "#F5F5F4 !important" : "#0A0A0A !important"};
-          border-color: ${theme === "dark" ? "#262626 !important" : "#E7E5E4 !important"};
-        }
-        .leaflet-control-zoom a:hover {
-          background: ${theme === "dark" ? "#1A1A1A !important" : "#F5F5F4 !important"};
-        }
-      `}</style>
     </div>
   );
 }

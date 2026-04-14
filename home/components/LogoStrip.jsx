@@ -49,43 +49,37 @@ export function LogoStrip() {
 
     const handleEnter = () => {
       isHovering = true;
-      gsap.to(tween, { timeScale: 0, duration: 0.8, ease: "silk" });
+      gsap.to(tween, { timeScale: 0, duration: 0.8, ease: "silk", overwrite: true });
     };
     const handleLeave = () => {
       isHovering = false;
-      gsap.to(tween, { timeScale: 1, duration: 1.2, ease: "silk" });
+      gsap.to(tween, { timeScale: 1, duration: 1.2, ease: "silk", overwrite: true });
     };
 
     track.addEventListener("mouseenter", handleEnter);
     track.addEventListener("mouseleave", handleLeave);
 
+    let decayTimeout;
     const st = ScrollTrigger.create({
       start: 0,
       end: "max",
       onUpdate: (self) => {
         if (isHovering) return;
-
         const velocity = Math.abs(self.getVelocity());
-        let speed = 1 + velocity / 800;
-        speed = Math.min(speed, 3);
-        const signedSpeed = speed * (self.direction || 1);
+        const speed = Math.min(1 + velocity / 800, 3);
+        tween.timeScale(speed * (self.direction || 1));
 
-        gsap.to(tween, {
-          timeScale: signedSpeed,
-          duration: 0.3,
-          overwrite: true,
-          onComplete: () => {
-            if (!isHovering) {
-              gsap.to(tween, { timeScale: 1, duration: 2, ease: "power3.out" });
-            }
-          },
-        });
+        clearTimeout(decayTimeout);
+        decayTimeout = setTimeout(() => {
+          gsap.to(tween, { timeScale: 1, duration: 2, ease: "power3.out", overwrite: true });
+        }, 150);
       },
     });
 
     return () => {
       track.removeEventListener("mouseenter", handleEnter);
       track.removeEventListener("mouseleave", handleLeave);
+      clearTimeout(decayTimeout);
       if (st) st.kill();
     };
   }, { scope: sectionRef });

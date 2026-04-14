@@ -25,9 +25,9 @@ export function PageHeader({ title, subtitle, image }) {
 
     const p = section.querySelector(".ph-subtitle");
     if (p) {
-      gsap.set(p, { y: 30, opacity: 0, filter: "blur(2px)" });
+      gsap.set(p, { y: 30, opacity: 0 });
       gsap.to(p, {
-        y: 0, opacity: 1, filter: "blur(0px)",
+        y: 0, opacity: 1,
         duration: 0.9, ease: "silk", delay: 0.35,
       });
     }
@@ -39,8 +39,12 @@ export function PageHeader({ title, subtitle, image }) {
         <img
           src={image}
           alt=""
-          className="ph-img img-cover"
+          width={1920}
+          height={1080}
           loading="eager"
+          fetchpriority="high"
+          decoding="sync"
+          className="ph-img img-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/30" />
       </div>

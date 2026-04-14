@@ -21,9 +21,9 @@ export function TestimonialsSection() {
 
     const cards = section.querySelectorAll(".test-card");
     cards.forEach((card, i) => {
-      gsap.set(card, { y: 80, opacity: 0, scale: 0.88, filter: "blur(4px)" });
+      gsap.set(card, { y: 80, opacity: 0, scale: 0.88 });
       gsap.to(card, {
-        y: 0, opacity: 1, scale: 1, filter: "blur(0px)",
+        y: 0, opacity: 1, scale: 1,
         duration: 1.2, ease: "silk",
         scrollTrigger: { trigger: section, start: "top 70%", once: true },
         delay: i === 1 ? 0 : 0.2,
@@ -67,7 +67,7 @@ export function TestimonialsSection() {
           {testimonials.items.map((item, i) => (
             <div
               key={i}
-              className="test-card glass-card flex flex-col justify-between p-8 transition-all duration-500 hover:-translate-y-1 hover:border-brand/30"
+              className="test-card glass-card flex flex-col justify-between p-8 transition-[transform,border-color] duration-500 hover:-translate-y-1 hover:border-brand/30"
             >
               <div>
                 <div className="mb-6 flex gap-1">

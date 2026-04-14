@@ -98,9 +98,9 @@ export function WhyUsSection() {
     // --- Featured card entry ---
     const featured = section.querySelector(".why-featured");
     if (featured) {
-      gsap.set(featured, { clipPath: "inset(6% 6% 6% 6%)", scale: 0.97, opacity: 0 });
+      gsap.set(featured, { opacity: 0, scale: 0.96 });
       gsap.to(featured, {
-        clipPath: "inset(0% 0% 0% 0%)", scale: 1, opacity: 1,
+        opacity: 1, scale: 1,
         duration: 1.2, ease: "heavy",
         scrollTrigger: { trigger: featured, start: "top 82%", once: true },
       });
@@ -138,20 +138,23 @@ export function WhyUsSection() {
             {whyUs.cards.map((card, i) => (
               <article
                 key={i}
-                className="why-card group relative overflow-hidden rounded-2xl border border-surface-border aspect-[4/5] sm:aspect-[5/6] transition-all duration-500 hover:border-brand/40 hover:shadow-[0_24px_70px_-20px_rgba(232,168,56,0.25)]"
+                className="why-card group relative overflow-hidden rounded-2xl border border-surface-border aspect-[4/5] sm:aspect-[5/6] transition-[border-color,box-shadow,transform] duration-500 hover:border-brand/40 hover:shadow-[0_24px_70px_-20px_rgba(232,168,56,0.25)]"
               >
                 <img
                   src={CARD_IMAGES[i]}
                   alt={t(card.title, lang)}
-                  className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
+                  width={800}
+                  height={1000}
                   loading="lazy"
+                  decoding="async"
+                  className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
                 <div className="absolute inset-x-0 top-0 flex items-start justify-between p-5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-md transition-all duration-500 group-hover:bg-brand/90 group-hover:text-dark">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black/50 text-white transition-[background-color,color] duration-500 group-hover:bg-brand/90 group-hover:text-dark">
                     {ICONS[i]}
                   </div>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white backdrop-blur-md">
+                  <span className="rounded-full border border-white/20 bg-black/40 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white">
                     {t(card.tag, lang)}
                   </span>
                 </div>
@@ -167,22 +170,25 @@ export function WhyUsSection() {
             ))}
 
             {/* FEATURED FULL-BLEED */}
-            <article className="why-featured group relative col-span-1 overflow-hidden rounded-2xl border border-surface-border transition-all duration-500 hover:border-brand/40 sm:col-span-2 aspect-[16/10]">
+            <article className="why-featured group relative col-span-1 overflow-hidden rounded-2xl border border-surface-border transition-[border-color,box-shadow] duration-500 hover:border-brand/40 sm:col-span-2 aspect-[16/10]">
               <img
                 src={IMAGES.services.warehouse}
                 alt={t(whyUs.featured.title, lang)}
-                className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
+                width={1600}
+                height={1000}
                 loading="lazy"
+                decoding="async"
+                className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-black/50 to-transparent" />
               <div className="absolute inset-x-0 top-0 flex items-start justify-between p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-md transition-all duration-500 group-hover:bg-brand/90 group-hover:text-dark">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-black/50 text-white transition-[background-color,color] duration-500 group-hover:bg-brand/90 group-hover:text-dark">
                   <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
                     <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                     <path d="M16.5 6H10a3 3 0 0 0 0 6h4.5a3 3 0 0 1 0 6H7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white backdrop-blur-md">
+                <span className="rounded-full border border-white/20 bg-black/40 px-3 py-1 font-display text-[0.7rem] uppercase tracking-wider text-white">
                   {t(whyUs.featured.tag, lang)}
                 </span>
               </div>

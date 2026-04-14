@@ -101,14 +101,17 @@ export function IndustriesSection() {
           {industries.items.map((item, i) => (
             <div
               key={i}
-              className="ind-card group relative overflow-hidden rounded-2xl border border-surface-border bg-surface-card transition-all duration-500 hover:-translate-y-1.5 hover:border-brand/30"
+              className="ind-card group relative overflow-hidden rounded-2xl border border-surface-border bg-surface-card transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1.5 hover:border-brand/30"
             >
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={INDUSTRY_IMAGES[i]}
                   alt={t(item.title, lang)}
-                  className="img-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  width={800}
+                  height={600}
                   loading="lazy"
+                  decoding="async"
+                  className="img-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
                 <div className="ind-badge absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center rounded-xl bg-brand/20 text-brand backdrop-blur-sm transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-110">

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from "react";
+import { useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { gsap, ScrollTrigger, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
@@ -43,23 +43,24 @@ export function HeroSection() {
 
     // --- GRID IMAGE DEPTH PARALLAX (skip on mobile for performance) ---
     if (!isMobile) {
-      const gridImages = grid.querySelectorAll(".hero-grid-img");
-      gridImages.forEach((img, i) => {
-        const speed = GRID_PARALLAX_SPEEDS[i] || 0;
-        const scaleTarget = GRID_SCALE_TARGETS[i] || 1;
-        if (speed === 0 && scaleTarget === 1) return;
-
-        gsap.to(img, {
-          y: speed * 200,
-          scale: scaleTarget,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "50% top",
-            scrub: 1.5,
-          },
-        });
+      const gridImages = Array.from(grid.querySelectorAll(".hero-grid-img"));
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "50% top",
+        scrub: 1.5,
+        onUpdate: (self) => {
+          const p = self.progress;
+          for (let i = 0; i < gridImages.length; i++) {
+            const speed = GRID_PARALLAX_SPEEDS[i] || 0;
+            const scaleTarget = GRID_SCALE_TARGETS[i] || 1;
+            if (speed === 0 && scaleTarget === 1) continue;
+            gsap.set(gridImages[i], {
+              y: speed * 200 * p,
+              scale: 1 + (scaleTarget - 1) * p,
+            });
+          }
+        },
       });
     }
 
@@ -133,11 +134,10 @@ export function HeroSection() {
 
     // Subtitle: fade up with focus pull
     if (subtitleRef.current) {
-      gsap.set(subtitleRef.current, { y: 30, opacity: 0, filter: "blur(2px)" });
+      gsap.set(subtitleRef.current, { y: 30, opacity: 0 });
       tl.to(subtitleRef.current, {
         y: 0,
         opacity: 1,
-        filter: "blur(0px)",
         duration: 0.9,
         ease: "silk",
       }, "-=0.5");
@@ -203,8 +203,12 @@ export function HeroSection() {
                   <img
                     src={src}
                     alt={`SpeedLink logistics ${i + 1}`}
-                    className="hero-grid-img img-cover"
+                    width={800}
+                    height={600}
+                    fetchpriority={i === 0 ? "high" : undefined}
                     loading={i === 0 ? "eager" : "lazy"}
+                    decoding={i === 0 ? "sync" : "async"}
+                    className="hero-grid-img img-cover"
                   />
                 </div>
               )
@@ -216,8 +220,12 @@ export function HeroSection() {
                 <img
                   src={src}
                   alt={`SpeedLink logistics ${i + 1}`}
-                  className="hero-grid-img img-cover"
+                  width={800}
+                  height={600}
+                  fetchpriority={i === 0 ? "high" : undefined}
                   loading={i < 3 ? "eager" : "lazy"}
+                  decoding={i < 3 ? "sync" : "async"}
+                  className="hero-grid-img img-cover"
                 />
               </div>
             ))}

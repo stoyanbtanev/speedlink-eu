@@ -7,6 +7,19 @@ export default defineConfig({
     transformer: "postcss",
   },
   build: {
-    cssMinify: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react-router") || id.includes("/react-dom/") || id.includes("/react/") || id.includes("scheduler")) {
+              return "vendor-react";
+            }
+            if (id.includes("gsap") || id.includes("@gsap")) {
+              return "vendor-gsap";
+            }
+          }
+        },
+      },
+    },
   },
 });

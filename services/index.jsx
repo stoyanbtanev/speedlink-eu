@@ -57,10 +57,10 @@ function ServicesGrid() {
           {servicesPage.cards.map((card, i) => (
             <div
               key={i}
-              className="svc-card group glass-card overflow-hidden transition-all duration-500 hover:border-brand/30"
+              className="svc-card group glass-card overflow-hidden transition-[border-color,box-shadow] duration-500 hover:border-brand/30"
             >
               <div className="relative h-52 overflow-hidden">
-                <img src={SERVICE_IMAGES[i]} alt={t(card.title, lang)} className="img-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                <img src={SERVICE_IMAGES[i]} alt={t(card.title, lang)} width={1200} height={675} loading="lazy" decoding="async" className="img-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
                 <span className="absolute bottom-4 left-4 rounded-lg bg-brand/20 px-3 py-1 font-display text-xs font-bold text-brand backdrop-blur-sm">
                   {typeof card.tag === "string" ? card.tag : t(card.tag, lang)}
@@ -76,7 +76,7 @@ function ServicesGrid() {
 
         <div className="svc-featured mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="glass-card overflow-hidden">
-            <img src={IMAGES.services.customs} alt={t(servicesPage.featured.title, lang)} className="aspect-video img-cover" loading="lazy" />
+            <img src={IMAGES.services.customs} alt={t(servicesPage.featured.title, lang)} width={1600} height={900} loading="lazy" decoding="async" className="aspect-video img-cover" />
           </div>
           <div className="glass-card flex flex-col justify-center p-8 md:p-12">
             <span className="tag mb-4 inline-flex w-fit">{t(servicesPage.featured.tag, lang)}</span>
@@ -161,7 +161,7 @@ function AboutSection() {
             </div>
           </div>
           <div className="relative overflow-hidden rounded-2xl">
-            <img src={IMAGES.services.warehouse} alt="SpeedLink warehouse" className="aspect-[4/3] img-cover" loading="lazy" />
+            <img src={IMAGES.services.warehouse} alt="SpeedLink warehouse" width={1200} height={900} loading="lazy" decoding="async" className="aspect-[4/3] img-cover" />
             <div className="absolute inset-0 bg-gradient-to-tr from-dark/30 to-transparent" />
           </div>
         </div>

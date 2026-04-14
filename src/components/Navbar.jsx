@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 import { useLang } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { nav, t } from "../data/translations";
 import { ScrollTrigger } from "../lib/gsap-config";
+
+const ROUTE_IMPORTERS = {
+  "/": () => import("../../home"),
+  "/services": () => import("../../services"),
+  "/reviews": () => import("../../reviews"),
+  "/contact": () => import("../../contact"),
+};
+
+function prefetchRoute(to) {
+  const importer = ROUTE_IMPORTERS[to];
+  if (importer) importer();
+}
 
 export function Navbar() {
   const { lang, toggleLang } = useLang();
@@ -73,7 +84,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-500 ease-out-expo ${
+      className={`fixed top-0 z-50 w-full transition-[background-color,box-shadow,backdrop-filter] duration-500 ease-out-expo ${
         isOpen
           ? "bg-menu shadow-lg shadow-black/10"
           : scrolled
@@ -87,9 +98,11 @@ export function Navbar() {
             <img
               src="/images/logo.png"
               alt="SpeedLink logo"
-              width={56}
-              height={56}
-              className="logo-img h-14 w-14 object-contain md:h-16 md:w-16"
+              width={1201}
+              height={880}
+              decoding="async"
+              fetchpriority="high"
+              className="logo-img block h-10 w-auto shrink-0 object-contain sm:h-11 md:h-12 lg:h-14"
             />
             <span className={`font-display text-xl font-semibold tracking-tight transition-colors duration-300 md:text-2xl ${logoText}`}>
               SpeedLink<span className="text-brand">.</span>
@@ -101,17 +114,15 @@ export function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
+                onMouseEnter={() => prefetchRoute(link.to)}
+                onFocus={() => prefetchRoute(link.to)}
                 className={`relative rounded-lg px-4 py-2 font-body text-sm font-medium transition-colors duration-300 ${
                   isActive(link.to) ? textActive : textBase
                 }`}
               >
                 {t(link.label, lang)}
                 {isActive(link.to) && (
-                  <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-brand"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
+                  <div className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-brand" />
                 )}
               </Link>
             ))}
@@ -120,7 +131,7 @@ export function Navbar() {
           <div className="hidden items-center gap-3 lg:flex">
             <button
               onClick={toggleTheme}
-              className={`flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border transition-all duration-300 hover:border-brand/40 ${
+              className={`flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border transition-[color,border-color] duration-300 hover:border-brand/40 ${
                 scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white"
               }`}
               aria-label="Toggle theme"
@@ -141,7 +152,7 @@ export function Navbar() {
             </button>
             <button
               onClick={toggleLang}
-              className={`flex h-9 items-center gap-1.5 rounded-lg border border-surface-border px-3 font-display text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:border-brand/40 ${
+              className={`flex h-9 items-center gap-1.5 rounded-lg border border-surface-border px-3 font-display text-xs font-semibold uppercase tracking-wider transition-[color,border-color] duration-300 hover:border-brand/40 ${
                 scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white"
               }`}
             >
@@ -152,7 +163,7 @@ export function Navbar() {
               </svg>
               {t(nav.language, lang)}
             </button>
-            <Link to="/contact" className="btn-primary text-xs">
+            <Link to="/contact" onMouseEnter={() => prefetchRoute("/contact")} className="btn-primary text-xs">
               {t(nav.quote, lang)}
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -167,67 +178,62 @@ export function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            <motion.span
-              className={`block h-0.5 w-5 rounded-full ${hamburgerBg}`}
-              animate={isOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25 }}
+            <span
+              className={`block h-0.5 w-5 origin-center rounded-full ${hamburgerBg} transition-transform duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                isOpen ? "translate-y-[5px] rotate-45" : ""
+              }`}
             />
-            <motion.span
-              className={`block h-0.5 w-5 rounded-full ${hamburgerBg}`}
-              animate={isOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25 }}
+            <span
+              className={`block h-0.5 w-5 origin-center rounded-full ${hamburgerBg} transition-transform duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                isOpen ? "-translate-y-[3px] -rotate-45" : ""
+              }`}
             />
           </button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-surface-border bg-menu backdrop-blur-xl lg:hidden"
-          >
-            <div className="section-padding flex flex-col gap-2 py-6">
-              {links.map((link, i) => (
-                <motion.div
-                  key={link.to}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.06, duration: 0.3 }}
-                >
-                  <Link
-                    to={link.to}
-                    className={`block rounded-xl px-4 py-3 font-display text-lg font-medium transition-colors ${
-                      isActive(link.to)
-                        ? "bg-brand/10 text-brand"
-                        : "text-heading/80 hover:bg-heading/5 hover:text-heading"
-                    }`}
-                  >
-                    {t(link.label, lang)}
-                  </Link>
-                </motion.div>
-              ))}
-              <div className="mt-4 flex gap-3 px-4">
-                <button onClick={toggleTheme} className="btn-secondary flex-1 text-xs">
-                  {theme === "dark" ? "☀ Light" : "☾ Dark"}
-                </button>
-                <button
-                  onClick={toggleLang}
-                  className="btn-secondary flex-1 text-xs"
-                >
-                  {t(nav.language, lang)}
-                </button>
-                <Link to="/contact" className="btn-primary flex-1 text-xs">
-                  {t(nav.quote, lang)}
-                </Link>
-              </div>
+      <div
+        className="grid border-t border-surface-border bg-menu backdrop-blur-xl overflow-hidden transition-[grid-template-rows,opacity] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden"
+        style={{
+          gridTemplateRows: isOpen ? "1fr" : "0fr",
+          opacity: isOpen ? 1 : 0,
+          pointerEvents: isOpen ? "auto" : "none",
+        }}
+        aria-hidden={!isOpen}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div className="section-padding flex flex-col gap-2 py-6">
+            {links.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                onMouseEnter={() => prefetchRoute(link.to)}
+                className={`block rounded-xl px-4 py-3 font-display text-lg font-medium transition-colors ${
+                  isActive(link.to)
+                    ? "bg-brand/10 text-brand"
+                    : "text-heading/80 hover:bg-heading/5 hover:text-heading"
+                }`}
+              >
+                {t(link.label, lang)}
+              </Link>
+            ))}
+            <div className="mt-4 flex gap-3 px-4">
+              <button onClick={toggleTheme} className="btn-secondary flex-1 text-xs">
+                {theme === "dark" ? "☀ Light" : "☾ Dark"}
+              </button>
+              <button
+                onClick={toggleLang}
+                className="btn-secondary flex-1 text-xs"
+              >
+                {t(nav.language, lang)}
+              </button>
+              <Link to="/contact" onMouseEnter={() => prefetchRoute("/contact")} className="btn-primary flex-1 text-xs">
+                {t(nav.quote, lang)}
+              </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      </div>
     </header>
   );
 }

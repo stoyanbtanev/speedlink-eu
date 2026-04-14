@@ -89,9 +89,11 @@ export function Footer() {
                 <img
                   src="/images/logo.png"
                   alt="SpeedLink logo"
-                  width={36}
-                  height={36}
-                  className="logo-img h-8 w-8 object-contain"
+                  width={1201}
+                  height={880}
+                  decoding="async"
+                  loading="lazy"
+                  className="logo-img block h-8 w-auto shrink-0 object-contain sm:h-9 md:h-10"
                 />
                 <span className="font-display text-lg font-semibold tracking-tight text-heading">
                   SpeedLink<span className="text-brand">.</span>
@@ -157,7 +159,7 @@ export function Footer() {
                     key={social.label}
                     href="#"
                     aria-label={social.label}
-                    className="footer-social flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-all duration-300 hover:border-brand/40 hover:text-brand"
+                    className="footer-social flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-[color,border-color] duration-300 hover:border-brand/40 hover:text-brand"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d={social.icon} />

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { gsap, useGSAP } from "../../src/lib/gsap-config";
+import { gsap, ScrollTrigger, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { ctaDual, t } from "../../src/data/translations";
 
@@ -45,14 +45,31 @@ export function CtaDualSection() {
       });
     });
 
-    [glowLeftRef, glowRightRef].forEach((ref) => {
-      if (ref.current) {
-        gsap.to(ref.current, {
+    const tweens = [glowLeftRef, glowRightRef]
+      .map((ref) => {
+        if (!ref.current) return null;
+        return gsap.to(ref.current, {
           x: 20, y: -15, duration: 8,
           repeat: -1, yoyo: true, ease: "breathe",
+          paused: true,
         });
-      }
+      })
+      .filter(Boolean);
+
+    const visST = ScrollTrigger.create({
+      trigger: section,
+      start: "top bottom",
+      end: "bottom top",
+      onEnter: () => tweens.forEach((tw) => tw.play()),
+      onLeave: () => tweens.forEach((tw) => tw.pause()),
+      onEnterBack: () => tweens.forEach((tw) => tw.play()),
+      onLeaveBack: () => tweens.forEach((tw) => tw.pause()),
     });
+
+    return () => {
+      tweens.forEach((tw) => tw.kill());
+      visST.kill();
+    };
   }, { scope: sectionRef });
 
   return (

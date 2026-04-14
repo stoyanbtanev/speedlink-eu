@@ -29,4 +29,11 @@ CustomEase.create("heavy", "M0,0 C0.15,0.005 0.14,0.425 0.26,0.64 0.38,0.855 0.5
 // "Elastic-Subtle" — micro-bounce, not cartoonish.
 CustomEase.create("elasticSubtle", "M0,0 C0.28,0.84 0.42,1.04 0.58,1.02 0.72,1.005 0.86,0.998 1,1");
 
+if (typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  gsap.globalTimeline.timeScale(20);
+}
+
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 export { gsap, ScrollTrigger, CustomEase, useGSAP };

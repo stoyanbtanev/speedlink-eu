@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { Suspense, useState, useRef } from "react";
 import { gsap, useGSAP } from "../src/lib/gsap-config";
 import { useLang } from "../src/context/LanguageContext";
 import { useTheme } from "../src/context/ThemeContext";
 import { contactPage, faq, t } from "../src/data/translations";
 import { IMAGES } from "../src/data/images";
 import { PageHeader } from "../src/components/PageHeader";
-import { LeafletMap } from "../src/components/LeafletMap";
+
+const LeafletMap = React.lazy(() =>
+  import("../src/components/LeafletMap").then((m) => ({ default: m.LeafletMap }))
+);
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -193,7 +195,13 @@ function ContactForm() {
                 </div>
               </div>
 
-              <LeafletMap lang={lang} theme={theme} />
+              <Suspense
+                fallback={
+                  <div className="aspect-[4/3] w-full animate-pulse rounded-2xl bg-surface-card sm:aspect-[16/10]" />
+                }
+              >
+                <LeafletMap lang={lang} theme={theme} />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -238,25 +246,29 @@ function ContactFaq() {
           <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">{t(faq.subtitle, lang)}</p>
         </div>
         <div className="mx-auto max-w-3xl">
-          {faq.items.map((item, i) => (
-            <div key={i} className="cfaq-item border-b border-surface-border">
-              <button onClick={() => setOpenIndex(openIndex === i ? -1 : i)} className="flex w-full items-center justify-between gap-4 py-6 text-left">
-                <span className="font-display text-lg font-medium text-heading">{t(item.q, lang)}</span>
-                <motion.div animate={{ rotate: openIndex === i ? 45 : 0 }} transition={{ duration: 0.25 }} className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40">
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-                  </svg>
-                </motion.div>
-              </button>
-              <AnimatePresence initial={false}>
-                {openIndex === i && (
-                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+          {faq.items.map((item, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <div key={i} className="cfaq-item border-b border-surface-border">
+                <button onClick={() => setOpenIndex(isOpen ? -1 : i)} className="flex w-full items-center justify-between gap-4 py-6 text-left">
+                  <span className="font-display text-lg font-medium text-heading">{t(item.q, lang)}</span>
+                  <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-transform duration-250 ${isOpen ? "rotate-45" : ""}`}>
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </div>
+                </button>
+                <div
+                  className="grid overflow-hidden transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+                >
+                  <div className="min-h-0 overflow-hidden">
                     <p className="pb-6 font-body text-body-md leading-relaxed text-heading/50">{t(item.a, lang)}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

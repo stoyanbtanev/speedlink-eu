@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { faq, t } from "../../src/data/translations";
@@ -13,32 +12,25 @@ function FaqItem({ question, answer, isOpen, onClick }) {
         className="flex w-full items-center justify-between gap-4 py-6 text-left transition-colors duration-300 hover:text-brand"
       >
         <span className="font-display text-lg font-medium text-heading">{question}</span>
-        <motion.div
-          animate={{ rotate: isOpen ? 45 : 0 }}
-          transition={{ duration: 0.35, ease: [0.28, 0.84, 0.42, 1.04] }}
-          className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40"
+        <div
+          className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-transform duration-350 ease-[cubic-bezier(0.28,0.84,0.42,1.04)] ${isOpen ? "rotate-45" : ""}`}
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-        </motion.div>
+        </div>
       </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden"
-          >
-            <p className="pb-6 font-body text-body-md leading-relaxed text-heading/50">
-              {answer}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className="grid overflow-hidden transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <p className="pb-6 font-body text-body-md leading-relaxed text-heading/50">
+            {answer}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -62,9 +54,9 @@ export function FaqSection() {
 
     const contactCard = section.querySelector(".faq-contact-card");
     if (contactCard) {
-      gsap.set(contactCard, { clipPath: "inset(10% 10% 10% 10%)", opacity: 0 });
+      gsap.set(contactCard, { opacity: 0, scale: 0.96 });
       gsap.to(contactCard, {
-        clipPath: "inset(0% 0% 0% 0%)", opacity: 1,
+        opacity: 1, scale: 1,
         duration: 1, ease: "heavy",
         scrollTrigger: { trigger: section, start: "top 75%", once: true },
         delay: 0.3,

@@ -1,22 +1,29 @@
-import React, { useLayoutEffect } from "react";
+import React, { Suspense, useLayoutEffect } from "react";
 import { Routes, Route, useLocation, Link } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { ScrollTrigger } from "./lib/gsap-config";
 import { useLang } from "./context/LanguageContext";
-import HomePage from "../home";
-import ServicesPage from "../services";
-import ReviewsPage from "../reviews";
-import ContactPage from "../contact";
+
+const HomePage = React.lazy(() => import("../home"));
+const ServicesPage = React.lazy(() => import("../services"));
+const ReviewsPage = React.lazy(() => import("../reviews"));
+const ContactPage = React.lazy(() => import("../contact"));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    const raf = requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
     });
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+    };
   }, [pathname]);
   return null;
 }
@@ -57,6 +64,14 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+function RouteFallback() {
+  return (
+    <div className="flex min-h-svh items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <>
@@ -65,13 +80,15 @@ export default function App() {
       <Navbar />
       <main className="min-h-svh">
         <ErrorBoundary>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/reviews" element={<ReviewsPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/reviews" element={<ReviewsPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </ErrorBoundary>
       </main>
       <Footer />
