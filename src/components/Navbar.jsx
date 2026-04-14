@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
@@ -23,18 +23,26 @@ export function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const isDesktop = useIsDesktop();
+  const headerRef = useRef(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    let prev = false;
+    const onScroll = () => {
+      const now = window.scrollY > 40;
+      if (now !== prev) {
+        prev = now;
+        headerRef.current?.toggleAttribute("data-scrolled", now);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => { setIsOpen(false); }, [location.pathname]);
 
-  const scrollLockRef = React.useRef(0);
+  const scrollLockRef = useRef(0);
 
   useEffect(() => {
     if (isOpen) {
@@ -79,21 +87,20 @@ export function Navbar() {
 
   const isActive = (path) => decodeURIComponent(location.pathname) === path;
 
-  const textBase = scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white";
+  const textBase = "text-white/70 hover:text-white group-data-[scrolled]:text-heading/70 group-data-[scrolled]:hover:text-heading";
   const textActive = "text-brand";
-  const logoText = scrolled ? "text-heading" : "text-white";
-  const hamburgerBg = isOpen ? "bg-heading" : scrolled ? "bg-heading" : "bg-white";
+  const logoText = "text-white group-data-[scrolled]:text-heading";
+  const hamburgerBg = isOpen ? "bg-heading" : "bg-white group-data-[scrolled]:bg-heading";
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-[background-color,box-shadow] duration-500 ease-out-expo ${
+      ref={headerRef}
+      className={`group fixed top-0 z-50 w-full transition-[background-color,box-shadow] duration-500 ease-out-expo ${
         isOpen
           ? "bg-menu shadow-lg shadow-black/10"
-          : scrolled
-            ? isDesktop
-              ? "bg-nav-scrolled/80 shadow-lg shadow-black/10 backdrop-blur-xl"
-              : "bg-nav-scrolled shadow-lg shadow-black/10"
-            : "bg-transparent"
+          : isDesktop
+            ? "bg-transparent data-[scrolled]:bg-nav-scrolled/80 data-[scrolled]:shadow-lg data-[scrolled]:shadow-black/10 data-[scrolled]:backdrop-blur-xl"
+            : "bg-transparent data-[scrolled]:bg-nav-scrolled data-[scrolled]:shadow-lg data-[scrolled]:shadow-black/10"
       }`}
     >
       <div className="section-padding">
@@ -135,9 +142,7 @@ export function Navbar() {
           <div className="hidden items-center gap-3 lg:flex">
             <button
               onClick={toggleTheme}
-              className={`flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border transition-[color,border-color] duration-300 hover:border-brand/40 ${
-                scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white"
-              }`}
+              className={`flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border transition-[color,border-color] duration-300 hover:border-brand/40 ${textBase}`}
               aria-label="Toggle theme"
             >
               {theme === "dark" ? (
@@ -156,9 +161,7 @@ export function Navbar() {
             </button>
             <button
               onClick={toggleLang}
-              className={`flex h-9 items-center gap-1.5 rounded-lg border border-surface-border px-3 font-display text-xs font-semibold uppercase tracking-wider transition-[color,border-color] duration-300 hover:border-brand/40 ${
-                scrolled ? "text-heading/70 hover:text-heading" : "text-white/70 hover:text-white"
-              }`}
+              className={`flex h-9 items-center gap-1.5 rounded-lg border border-surface-border px-3 font-display text-xs font-semibold uppercase tracking-wider transition-[color,border-color] duration-300 hover:border-brand/40 ${textBase}`}
             >
               <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.4"/>
