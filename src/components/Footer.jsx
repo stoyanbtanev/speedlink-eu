@@ -85,7 +85,7 @@ export function Footer() {
         <div className="container-xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
             <div className="footer-logo lg:col-span-4">
-              <Link to="/" className="mb-6 flex items-center gap-3" aria-label="SpeedLink Home">
+              <Link to="/" className="mb-6 flex items-center gap-2" aria-label="SpeedLink Home">
                 <img
                   src="/images/logo.png"
                   alt="SpeedLink logo"
@@ -93,7 +93,7 @@ export function Footer() {
                   height={880}
                   decoding="async"
                   loading="lazy"
-                  className="logo-img block h-8 w-auto shrink-0 object-contain sm:h-9 md:h-10"
+                  className="block h-7 w-auto shrink-0 object-contain md:h-8"
                 />
                 <span className="font-display text-2xl uppercase tracking-widest text-heading">
                   SpeedLink<span className="text-accent">.</span>

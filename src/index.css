@@ -447,9 +447,7 @@
     transform: translateZ(0);
   }
 
-  .logo-img {
-    filter: brightness(0) saturate(100%) invert(69%) sepia(85%) saturate(500%) hue-rotate(3deg) brightness(103%) contrast(101%);
-  }
+
 
   .stat-card {
     position: relative;
