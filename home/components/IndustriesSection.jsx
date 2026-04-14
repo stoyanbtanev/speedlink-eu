@@ -53,11 +53,11 @@ export function IndustriesSection() {
     if (!section) return;
 
     const headerEls = section.querySelectorAll(".reveal-header-child");
-    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.set(headerEls, { y: 36, opacity: 0 });
     gsap.to(headerEls, {
       y: 0, opacity: 1, duration: 1.1, ease: "silk",
       stagger: { each: 0.1, ease: "power2.out" },
-      scrollTrigger: { trigger: section, start: "top 82%", once: true },
+      scrollTrigger: { trigger: section, start: "top 80%", once: true },
     });
 
     const cards = section.querySelectorAll(".ind-card");

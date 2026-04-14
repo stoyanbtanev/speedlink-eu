@@ -6,14 +6,14 @@ import { faq, t } from "../../src/data/translations";
 
 function FaqItem({ question, answer, isOpen, onClick }) {
   return (
-    <div className="faq-item border-b border-surface-border">
+    <div className="faq-item border-b border-surface-border" data-open={isOpen ? "true" : undefined}>
       <button
         onClick={onClick}
         className="flex w-full items-center justify-between gap-4 py-6 text-left transition-colors duration-300 hover:text-brand"
       >
         <span className="font-display text-lg font-medium text-heading">{question}</span>
         <div
-          className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-transform duration-350 ease-[cubic-bezier(0.28,0.84,0.42,1.04)] ${isOpen ? "rotate-45" : ""}`}
+          className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? "rotate-45" : ""}`}
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -45,7 +45,7 @@ export function FaqSection() {
     if (!section) return;
 
     const leftCol = section.querySelectorAll(".faq-left-child");
-    gsap.set(leftCol, { y: 50, opacity: 0 });
+    gsap.set(leftCol, { y: 36, opacity: 0 });
     gsap.to(leftCol, {
       y: 0, opacity: 1, duration: 1.1, ease: "silk",
       stagger: 0.12,

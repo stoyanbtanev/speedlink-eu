@@ -20,26 +20,26 @@ export function StatsSection() {
     if (!section) return;
 
     const headerEls = section.querySelectorAll(".reveal-header-child");
-    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.set(headerEls, { y: 36, opacity: 0 });
     gsap.to(headerEls, {
       y: 0, opacity: 1, duration: 1.1, ease: "silk",
       stagger: { each: 0.1, ease: "power2.out" },
-      scrollTrigger: { trigger: section, start: "top 82%", once: true },
+      scrollTrigger: { trigger: section, start: "top 80%", once: true },
     });
 
     const imagePanel = section.querySelector(".stats-image");
     if (imagePanel) {
-      gsap.set(imagePanel, { clipPath: "inset(100% 0 0 0)" });
+      gsap.set(imagePanel, { clipPath: "inset(8% 8% 8% 8%)" });
       const img = imagePanel.querySelector("img");
       if (img) gsap.set(img, { scale: 1.15 });
 
       gsap.to(imagePanel, {
-        clipPath: "inset(0% 0 0 0)", duration: 1.2, ease: "heavy",
+        clipPath: "inset(0% 0% 0% 0%)", duration: 1.4, ease: "heavy",
         scrollTrigger: { trigger: section, start: "top 72%", once: true },
       });
       if (img) {
         gsap.to(img, {
-          scale: 1, duration: 1.4, ease: "heavy",
+          scale: 1, duration: 1.6, ease: "heavy",
           scrollTrigger: { trigger: section, start: "top 72%", once: true },
         });
       }
@@ -53,6 +53,7 @@ export function StatsSection() {
         duration: 1.1, ease: "silk",
         scrollTrigger: { trigger: section, start: "top 72%", once: true },
         delay: 0.18 * i,
+        onStart: () => card.classList.add("is-visible"),
       });
 
       const counterEl = card.querySelector(".stat-counter");

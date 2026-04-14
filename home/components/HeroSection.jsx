@@ -28,6 +28,7 @@ export function HeroSection() {
   const tagRef = useRef(null);
   const h1Ref = useRef(null);
   const subtitleRef = useRef(null);
+  const ruleRef = useRef(null);
   const ctaRef = useRef(null);
   const statsRef = useRef(null);
   const isDesktop = useIsDesktop();
@@ -141,13 +142,13 @@ export function HeroSection() {
         tl.to(h1Ref.current, { opacity: 1, y: 0, duration: 0.6, ease: "silk" }, "-=0.2");
       } else {
         const chars = h1Ref.current.querySelectorAll(".hero-char");
-        gsap.set(chars, { y: 80, opacity: 0, rotation: -5 });
+        gsap.set(chars, { y: 60, opacity: 0, rotateX: 8 });
         tl.to(chars, {
           y: 0,
           opacity: 1,
-          rotation: 0,
-          duration: 0.8,
-          stagger: { each: 0.025, ease: "power3.inOut" },
+          rotateX: 0,
+          duration: 0.9,
+          stagger: { each: 0.02, ease: "power3.inOut" },
           ease: "silk",
         }, "-=0.2");
       }
@@ -156,6 +157,13 @@ export function HeroSection() {
     if (subtitleRef.current) {
       gsap.set(subtitleRef.current, { y: isMobile ? 15 : 30, opacity: 0 });
       tl.to(subtitleRef.current, { y: 0, opacity: 1, duration: isMobile ? 0.5 : 0.9, ease: "silk" }, "-=0.5");
+    }
+
+    if (ruleRef.current) {
+      tl.to(ruleRef.current, {
+        opacity: 1, scaleX: 1,
+        duration: 0.8, ease: "silk",
+      }, "-=0.3");
     }
 
     if (ctaRef.current) {
@@ -182,7 +190,7 @@ export function HeroSection() {
     }
 
     tl.eventCallback("onComplete", () => {
-      gsap.set([tagRef.current, h1Ref.current, subtitleRef.current, ctaRef.current, statsRef.current].filter(Boolean), { willChange: "auto" });
+      gsap.set([tagRef.current, h1Ref.current, subtitleRef.current, ruleRef.current, ctaRef.current, statsRef.current].filter(Boolean), { willChange: "auto" });
     });
 
   }, { scope: sectionRef, dependencies: [lang] });
@@ -287,6 +295,12 @@ export function HeroSection() {
               >
                 {t(hero.subtitle, lang)}
               </p>
+
+              <div
+                ref={ruleRef}
+                className="mx-auto mt-4 h-px w-24 bg-brand sm:mt-6 sm:w-32"
+                style={{ opacity: 0, transform: "scaleX(0)", transformOrigin: "left" }}
+              />
 
               <div
                 ref={ctaRef}

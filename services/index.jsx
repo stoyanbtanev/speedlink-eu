@@ -17,11 +17,11 @@ function ServicesGrid() {
     if (!section) return;
 
     const headerEls = section.querySelectorAll(".reveal-header-child");
-    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.set(headerEls, { y: 36, opacity: 0 });
     gsap.to(headerEls, {
       y: 0, opacity: 1, duration: 1.1, ease: "silk",
       stagger: { each: 0.1, ease: "power2.out" },
-      scrollTrigger: { trigger: section, start: "top 82%", once: true },
+      scrollTrigger: { trigger: section, start: "top 80%", once: true },
     });
 
     const cards = section.querySelectorAll(".svc-card");
@@ -57,16 +57,25 @@ function ServicesGrid() {
           {servicesPage.cards.map((card, i) => (
             <div
               key={i}
-              className="svc-card group glass-card overflow-hidden transition-[border-color,box-shadow] duration-500 hover:border-brand/30"
+              className="svc-card group glass-card overflow-hidden"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                e.currentTarget.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+                e.currentTarget.style.setProperty("--my", `${e.clientY - rect.top}px`);
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.removeProperty("--mx");
+                e.currentTarget.style.removeProperty("--my");
+              }}
             >
-              <div className="relative h-52 overflow-hidden">
+              <div className="relative z-[2] h-52 overflow-hidden">
                 <img src={SERVICE_IMAGES[i]} alt={t(card.title, lang)} width={1200} height={675} loading="lazy" decoding="async" className="img-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
                 <span className="absolute bottom-4 left-4 rounded-lg bg-brand/30 px-3 py-1 font-display text-xs font-bold text-brand">
                   {typeof card.tag === "string" ? card.tag : t(card.tag, lang)}
                 </span>
               </div>
-              <div className="p-8">
+              <div className="relative z-[2] p-8">
                 <h3 className="font-display text-display-sm text-heading">{t(card.title, lang)}</h3>
                 <p className="mt-3 font-body text-body-md text-heading/50">{t(card.desc, lang)}</p>
               </div>
@@ -99,11 +108,11 @@ function WhyChoose() {
     if (!section) return;
 
     const headerEls = section.querySelectorAll(".reveal-header-child");
-    gsap.set(headerEls, { y: 50, opacity: 0 });
+    gsap.set(headerEls, { y: 36, opacity: 0 });
     gsap.to(headerEls, {
       y: 0, opacity: 1, duration: 1.1, ease: "silk",
       stagger: { each: 0.1, ease: "power2.out" },
-      scrollTrigger: { trigger: section, start: "top 82%", once: true },
+      scrollTrigger: { trigger: section, start: "top 80%", once: true },
     });
 
     const cards = section.querySelectorAll(".why-card");

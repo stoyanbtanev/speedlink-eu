@@ -114,16 +114,39 @@
   }
 
   .noise-overlay {
-    @apply pointer-events-none fixed inset-0 z-[9999] opacity-[0.03];
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    opacity: 0.025;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     contain: strict;
+    mix-blend-mode: overlay;
   }
 
   .glass-card {
-    border-radius: 1rem;
-    border: 1px solid rgb(var(--c-surface-border));
+    position: relative;
+    border: none;
+    box-shadow: inset 0 0 0 1px rgb(var(--c-surface-border));
     background: rgb(var(--c-surface-card));
-    transition: background-color 0.4s ease, border-color 0.4s ease;
+    clip-path: polygon(
+      12px 0%, 100% 0%,
+      100% calc(100% - 12px),
+      calc(100% - 12px) 100%,
+      0% 100%, 0% 12px
+    );
+    transition: clip-path 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease,
+                background-color 0.4s ease;
+  }
+
+  .glass-card:hover {
+    clip-path: polygon(
+      20px 0%, 100% 0%,
+      100% calc(100% - 20px),
+      calc(100% - 20px) 100%,
+      0% 100%, 0% 20px
+    );
   }
 
   @media (min-width: 1024px) {
@@ -141,10 +164,11 @@
   }
   .btn-primary:hover {
     @apply bg-brand-300;
-    box-shadow: 0 10px 15px -3px rgba(232, 168, 56, 0.2);
+    box-shadow: 0 8px 20px -4px rgba(232, 168, 56, 0.25);
+    transform: translateY(-1px);
   }
   .btn-primary:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
   }
 
   .btn-secondary {
@@ -153,11 +177,13 @@
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   }
   .btn-secondary:hover {
-    border-color: rgba(232, 168, 56, 0.5);
-    background-color: rgba(232, 168, 56, 0.1);
+    border-color: rgba(232, 168, 56, 0.4);
+    background-color: rgba(232, 168, 56, 0.06);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.2);
   }
   .btn-secondary:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
   }
 
   .btn-ghost {
@@ -172,8 +198,15 @@
   }
 
   .divider {
-    @apply h-px w-full;
-    background: linear-gradient(to right, transparent, rgb(var(--c-surface-border)), transparent);
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgb(var(--c-surface-border)) 20%,
+      rgb(var(--c-surface-border)) 80%,
+      transparent 100%
+    );
   }
 
 
@@ -215,6 +248,99 @@
 
   .logo-img {
     filter: brightness(0) saturate(100%) invert(72%) sepia(58%) saturate(540%) hue-rotate(2deg) brightness(95%) contrast(92%);
+  }
+
+  .stat-card {
+    position: relative;
+    padding-left: 1.75rem;
+  }
+
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12%;
+    width: 2px;
+    height: 76%;
+    background: #E8A838;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 1.2s cubic-bezier(0.062, 0.165, 0.225, 0.86);
+  }
+
+  .stat-card.is-visible::before {
+    transform: scaleY(1);
+  }
+
+  .stat-counter {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .svc-card:hover {
+    box-shadow: inset 0 0 0 1px rgba(232, 168, 56, 0.3);
+  }
+
+  .svc-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background: radial-gradient(
+      400px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(232, 168, 56, 0.06) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    clip-path: inherit;
+  }
+
+  .svc-card:hover::after {
+    opacity: 1;
+  }
+
+  .faq-item {
+    position: relative;
+  }
+
+  .faq-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #E8A838;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .faq-item[data-open="true"]::before {
+    transform: scaleY(1);
+  }
+
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 20px;
+    height: 2px;
+    background: #E8A838;
+    border-radius: 1px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-link[data-active]::after,
+  .nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
   }
 }
 

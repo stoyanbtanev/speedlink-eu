@@ -33,6 +33,11 @@ export function Navbar() {
       if (now !== prev) {
         prev = now;
         headerRef.current?.toggleAttribute("data-scrolled", now);
+        if (now) {
+          headerRef.current?.style.setProperty("will-change", "backdrop-filter");
+        } else {
+          headerRef.current?.style.removeProperty("will-change");
+        }
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -113,14 +118,12 @@ export function Navbar() {
                 to={link.to}
                 onMouseEnter={() => prefetchRoute(link.to)}
                 onFocus={() => prefetchRoute(link.to)}
-                className={`relative rounded-lg px-4 py-2 font-body text-sm font-medium transition-colors duration-300 ${
+                data-active={isActive(link.to) || undefined}
+                className={`nav-link rounded-lg px-4 py-2 font-body text-sm font-medium transition-colors duration-300 ${
                   isActive(link.to) ? textActive : textBase
                 }`}
               >
                 {t(link.label, lang)}
-                {isActive(link.to) && (
-                  <div className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-brand" />
-                )}
               </Link>
             ))}
           </nav>
