@@ -71,7 +71,7 @@ function ServicesGrid() {
               <div className="relative z-[2] h-52 overflow-hidden">
                 <img src={SERVICE_IMAGES[i]} alt={t(card.title, lang)} width={1200} height={675} loading="lazy" decoding="async" className="img-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
-                <span className="absolute bottom-4 left-4 rounded-lg bg-brand/30 px-3 py-1 font-display text-xs font-bold text-brand">
+                <span className="absolute bottom-4 left-4 border border-accent bg-accent/20 px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-accent">
                   {typeof card.tag === "string" ? card.tag : t(card.tag, lang)}
                 </span>
               </div>
@@ -128,7 +128,7 @@ function WhyChoose() {
   }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={sectionRef}>
+    <section className="section-padding section-py border-t border-border" ref={sectionRef}>
       <div className="container-xl">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <span className="reveal-header-child tag mb-6 inline-flex">{t(servicesPage.whyTag, lang)}</span>
@@ -141,8 +141,8 @@ function WhyChoose() {
               key={i}
               className="why-card glass-card px-5 py-6 text-center sm:px-6 sm:py-7"
             >
-              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-brand/10 sm:mb-4 sm:h-12 sm:w-12">
-                <span className="font-display text-lg font-bold text-brand sm:text-xl">{i + 1}</span>
+              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center border border-accent bg-accent/10 sm:mb-4 sm:h-12 sm:w-12">
+                <span className="font-mono text-lg text-accent sm:text-xl">{i + 1}</span>
               </div>
               <h3 className="font-display text-lg font-semibold text-heading sm:text-xl">{t(card.title, lang)}</h3>
               <p className="mt-2 font-body text-body-sm text-heading/50 sm:text-body-md">{t(card.desc, lang)}</p>
@@ -157,7 +157,7 @@ function WhyChoose() {
 function AboutSection() {
   const { lang } = useLang();
   return (
-    <section className="section-padding section-py border-t border-surface-border">
+    <section className="section-padding section-py border-t border-border">
       <div className="container-xl">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div>
@@ -169,7 +169,7 @@ function AboutSection() {
               <Link to="/reviews" className="btn-secondary">{lang === "bg" ? "Отзиви" : "Reviews"}</Link>
             </div>
           </div>
-          <div className="relative overflow-hidden rounded-2xl">
+          <div className="relative overflow-hidden border border-border">
             <img src={IMAGES.services.warehouse} alt="SpeedLink warehouse" width={1200} height={900} loading="lazy" decoding="async" className="aspect-[4/3] img-cover" />
             <div className="absolute inset-0 bg-gradient-to-tr from-dark/30 to-transparent" />
           </div>

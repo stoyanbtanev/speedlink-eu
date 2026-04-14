@@ -79,8 +79,8 @@ export function Footer() {
   ];
 
   return (
-    <footer ref={footerRef} className="relative border-t border-surface-border bg-page">
-      <div className="footer-divider-top absolute left-0 right-0 top-0 h-px bg-brand/20" />
+    <footer ref={footerRef} className="relative border-t-2 border-accent bg-bg">
+      <div className="footer-divider-top absolute left-0 right-0 top-0 h-px bg-accent/20" />
       <div className="section-padding section-py">
         <div className="container-xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
@@ -95,8 +95,8 @@ export function Footer() {
                   loading="lazy"
                   className="logo-img block h-8 w-auto shrink-0 object-contain sm:h-9 md:h-10"
                 />
-                <span className="font-display text-lg font-semibold tracking-tight text-heading">
-                  SpeedLink<span className="text-brand">.</span>
+                <span className="font-display text-2xl uppercase tracking-widest text-heading">
+                  SpeedLink<span className="text-accent">.</span>
                 </span>
               </Link>
               <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">
@@ -107,7 +107,7 @@ export function Footer() {
             </div>
 
             <div className="lg:col-span-2">
-              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-muted">
+              <h4 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent">
                 {lang === "bg" ? "Навигация" : "Navigation"}
               </h4>
               <ul className="flex flex-col gap-3">
@@ -115,7 +115,7 @@ export function Footer() {
                   <li key={link.to}>
                     <Link
                       to={link.to}
-                      className="footer-nav-link font-body text-sm text-heading/60 transition-colors duration-300 hover:text-brand"
+                      className="footer-nav-link font-body text-sm text-body transition-colors duration-300 hover:text-accent"
                     >
                       {t(link.label, lang)}
                     </Link>
@@ -125,28 +125,28 @@ export function Footer() {
             </div>
 
             <div className="lg:col-span-3">
-              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-muted">
+              <h4 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent">
                 {lang === "bg" ? "Контакт" : "Contact"}
               </h4>
               <ul className="flex flex-col gap-3">
                 <li>
-                  <a href="tel:+359877404599" className="footer-contact font-body text-sm text-heading/60 transition-colors hover:text-brand">
+                  <a href="tel:+359877404599" className="footer-contact font-body text-sm text-body transition-colors hover:text-accent">
                     +359 877 404 599
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:info@speedlink-eu.com" className="footer-contact font-body text-sm text-heading/60 transition-colors hover:text-brand">
+                  <a href="mailto:info@speedlink-eu.com" className="footer-contact font-body text-sm text-body transition-colors hover:text-accent">
                     info@speedlink-eu.com
                   </a>
                 </li>
-                <li className="footer-contact font-body text-sm text-heading/60">
+                <li className="footer-contact font-body text-sm text-body">
                   {lang === "bg" ? "София, България" : "Sofia, Bulgaria"}
                 </li>
               </ul>
             </div>
 
             <div className="lg:col-span-3">
-              <h4 className="mb-4 font-display text-label uppercase tracking-wider text-muted">
+              <h4 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent">
                 {lang === "bg" ? "Следвайте ни" : "Follow us"}
               </h4>
               <div className="flex gap-3">
@@ -159,7 +159,7 @@ export function Footer() {
                     key={social.label}
                     href="#"
                     aria-label={social.label}
-                    className="footer-social flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-[color,border-color] duration-300 hover:border-brand/40 hover:text-brand"
+                    className="footer-social flex h-10 w-10 items-center justify-center border border-border text-muted transition-[color,border-color] duration-300 hover:border-accent/40 hover:text-accent"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d={social.icon} />
@@ -170,15 +170,15 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="divider mt-12 lg:mt-16" />
+          <div className="ind-divider mt-12 lg:mt-16" />
 
-          <div className="footer-bottom mt-6 flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="font-body text-xs text-heading/30">
+          <div className="footer-bottom mt-6 flex flex-col items-center justify-between gap-4 md:flex-row border-t border-border pt-6">
+            <p className="font-mono text-[0.65rem] text-muted uppercase tracking-widest">
               {t(footer.copyright, lang)}
             </p>
-            <p className="font-body text-xs text-heading/30">
+            <p className="font-mono text-[0.65rem] text-muted uppercase tracking-widest">
               {lang === "bg" ? "Изработка: " : "Built by "}
-              <a href="https://tanev.design" className="text-brand/60 transition-colors hover:text-brand" target="_blank" rel="noopener noreferrer">
+              <a href="https://tanev.design" className="text-accent/60 transition-colors hover:text-accent" target="_blank" rel="noopener noreferrer">
                 tanev.design
               </a>
             </p>

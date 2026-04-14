@@ -6,14 +6,14 @@ import { faq, t } from "../../src/data/translations";
 
 function FaqItem({ question, answer, isOpen, onClick }) {
   return (
-    <div className="faq-item border-b border-surface-border" data-open={isOpen ? "true" : undefined}>
+    <div className="faq-item border-b border-border" data-open={isOpen ? "true" : undefined}>
       <button
         onClick={onClick}
-        className="flex w-full items-center justify-between gap-4 py-6 text-left transition-colors duration-300 hover:text-brand"
+        className="flex w-full items-center justify-between gap-4 py-6 text-left transition-colors duration-300 hover:text-accent"
       >
         <span className="font-display text-lg font-medium text-heading">{question}</span>
         <div
-          className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? "rotate-45" : ""}`}
+          className={`flex h-8 w-8 flex-shrink-0 items-center justify-center border border-border text-muted transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? "rotate-45" : ""}`}
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -76,7 +76,7 @@ export function FaqSection() {
   }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={sectionRef}>
+    <section className="section-padding section-py border-t border-border" ref={sectionRef}>
       <div className="container-xl">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
@@ -87,7 +87,7 @@ export function FaqSection() {
               <p className="faq-left-child mt-4 font-body text-body-lg text-heading/50">
                 {t(faq.subtitle, lang)}
               </p>
-              <div className="faq-contact-card mt-8 rounded-2xl border border-surface-border bg-surface-card p-6">
+              <div className="faq-contact-card mt-8 border border-border bg-surface p-6">
                 <h3 className="font-display text-lg font-semibold text-heading">
                   {t(faq.stillHave, lang)}
                 </h3>

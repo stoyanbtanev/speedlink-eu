@@ -34,7 +34,7 @@ export function PageHeader({ title, subtitle, image }) {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative flex min-h-[50svh] items-end overflow-hidden md:min-h-[60svh]">
+    <section ref={sectionRef} className="relative flex min-h-[50svh] items-end overflow-hidden md:min-h-[60svh]" style={{backgroundImage: `linear-gradient(rgb(var(--c-border) / 0.4) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--c-border) / 0.4) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}>
       <div className="absolute inset-0">
         <img
           src={image}
@@ -50,11 +50,11 @@ export function PageHeader({ title, subtitle, image }) {
       </div>
       <div className="section-padding relative z-10 pb-16 pt-40 md:pb-24 md:pt-48">
         <div className="container-xl">
-          <h1 className="ph-title max-w-2xl font-display text-display-lg text-white">
+          <h1 className="ph-title max-w-2xl font-display text-heading uppercase text-[clamp(3.5rem,9vw,8rem)] leading-none">
             {title}
           </h1>
           {subtitle && (
-            <p className="ph-subtitle mt-4 max-w-lg font-body text-body-lg text-white/60">
+            <p className="ph-subtitle mt-4 max-w-lg font-body text-body-lg text-body">
               {subtitle}
             </p>
           )}

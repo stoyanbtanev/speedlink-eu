@@ -88,7 +88,7 @@ export function LeafletMap({ lang = "bg", theme = "dark" }) {
   }, [tileUrl]);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl">
+    <div className="ind-img-wrap border border-border">
       <div ref={mapRef} className="aspect-[4/3] w-full sm:aspect-[16/10]" />
     </div>
   );

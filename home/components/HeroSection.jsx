@@ -280,9 +280,9 @@ export function HeroSection() {
                 <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
               </div>
 
-              <h1
+                <h1
                 ref={h1Ref}
-                className="mx-auto max-w-4xl px-4 font-display text-[2rem] font-bold leading-[1.1] text-white sm:text-5xl md:text-display-xl sm:px-0"
+                className="mx-auto max-w-4xl px-4 font-display text-[2rem] uppercase leading-[1.1] text-heading sm:text-5xl md:text-display-xl sm:px-0"
                 style={{ visibility: "hidden" }}
               >
                 {splitChars(titleText)}
@@ -290,7 +290,7 @@ export function HeroSection() {
 
               <p
                 ref={subtitleRef}
-                className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-white/60 sm:text-body-lg sm:px-0 sm:mt-6"
+                className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-body sm:text-body-lg sm:px-0 sm:mt-6"
                 style={{ opacity: 0 }}
               >
                 {t(hero.subtitle, lang)}
@@ -298,7 +298,7 @@ export function HeroSection() {
 
               <div
                 ref={ruleRef}
-                className="mx-auto mt-4 h-px w-24 bg-brand sm:mt-6 sm:w-32"
+                className="mx-auto mt-4 h-px w-24 bg-accent sm:mt-6 sm:w-32"
                 style={{ opacity: 0, transform: "scaleX(0)", transformOrigin: "left" }}
               />
 
@@ -327,22 +327,22 @@ export function HeroSection() {
 
               <div
                 ref={statsRef}
-                className="hero-stats mt-4 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-white/30 sm:gap-8"
+                className="hero-stats mt-4 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-body sm:gap-8"
                 style={{ opacity: 0 }}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl font-bold text-brand">47</span>
-                  <span className="font-body text-body-sm">{lang === "bg" ? "държави" : "countries"}</span>
+                  <span className="font-display text-2xl text-accent">47</span>
+                  <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "държави" : "countries"}</span>
                 </div>
-                <div className="hero-stats-divider h-4 w-px bg-white/20" />
+                <div className="hero-stats-divider h-4 w-px bg-border" />
                 <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl font-bold text-brand">8,400+</span>
-                  <span className="font-body text-body-sm">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
+                  <span className="font-display text-2xl text-accent">8,400+</span>
+                  <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
                 </div>
-                <div className="hero-stats-divider h-4 w-px bg-white/20" />
+                <div className="hero-stats-divider h-4 w-px bg-border" />
                 <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl font-bold text-brand">15+</span>
-                  <span className="font-body text-body-sm">{lang === "bg" ? "години" : "years"}</span>
+                  <span className="font-display text-2xl text-accent">15+</span>
+                  <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "години" : "years"}</span>
                 </div>
               </div>
             </div>

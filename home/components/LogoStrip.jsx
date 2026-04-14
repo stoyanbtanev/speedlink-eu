@@ -91,10 +91,10 @@ export function LogoStrip() {
   const allPartners = [...oneSet, ...oneSet];
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-page py-10 md:py-14">
-      <div className="logo-border absolute left-0 right-0 top-0 h-px bg-surface-border" />
+    <section ref={sectionRef} className="relative overflow-hidden bg-bg py-10 md:py-14">
+      <div className="logo-border absolute left-0 right-0 top-0 h-px bg-border" />
       <div className="section-padding">
-        <p className="logo-title mb-8 text-center font-display text-label uppercase tracking-wider text-heading/30">
+        <p className="logo-title mb-8 text-center font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">
           {t(logos.title, lang)}
         </p>
       </div>
@@ -106,14 +106,14 @@ export function LogoStrip() {
           {allPartners.map((name, i) => (
             <div
               key={`${name}-${i}`}
-              className="flex-shrink-0 select-none font-display text-lg font-semibold tracking-tight text-heading/20 transition-colors duration-300 hover:text-heading/40 md:text-xl"
+              className="flex-shrink-0 select-none font-mono text-lg uppercase tracking-wider text-muted/40 transition-colors duration-300 hover:text-accent/50 md:text-xl"
             >
               {name}
             </div>
           ))}
         </div>
       </div>
-      <div className="logo-border absolute bottom-0 left-0 right-0 h-px bg-surface-border" />
+      <div className="logo-border absolute bottom-0 left-0 right-0 h-px bg-border" />
     </section>
   );
 }

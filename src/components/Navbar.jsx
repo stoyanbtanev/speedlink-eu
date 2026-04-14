@@ -78,8 +78,8 @@ export function Navbar() {
 
   const isActive = (path) => decodeURIComponent(location.pathname) === path;
 
-  const textBase = "text-white/70 hover:text-white group-data-[scrolled]:text-heading/70 group-data-[scrolled]:hover:text-heading";
-  const textActive = "text-brand";
+  const textBase = "text-white/70 hover:text-white group-data-[scrolled]:text-body group-data-[scrolled]:hover:text-heading";
+  const textActive = "text-accent";
   const logoText = "text-white group-data-[scrolled]:text-heading";
   const hamburgerBg = isOpen ? "bg-heading" : "bg-white group-data-[scrolled]:bg-heading";
 
@@ -88,10 +88,10 @@ export function Navbar() {
       ref={headerRef}
       className={`group fixed top-0 z-50 w-full transition-[background-color,box-shadow] duration-500 ease-out-expo ${
         isOpen
-          ? "bg-menu shadow-lg shadow-black/10"
+          ? "bg-menu border-b border-border"
           : isDesktop
-            ? "bg-transparent data-[scrolled]:bg-nav-scrolled/80 data-[scrolled]:shadow-lg data-[scrolled]:shadow-black/10 data-[scrolled]:backdrop-blur-xl"
-            : "bg-transparent data-[scrolled]:bg-nav-scrolled data-[scrolled]:shadow-lg data-[scrolled]:shadow-black/10"
+            ? "bg-transparent data-[scrolled]:bg-nav-scrolled/95 data-[scrolled]:border-b data-[scrolled]:border-border"
+            : "bg-transparent data-[scrolled]:bg-nav-scrolled data-[scrolled]:border-b data-[scrolled]:border-border"
       }`}
     >
       <div className="section-padding">
@@ -106,8 +106,8 @@ export function Navbar() {
               fetchpriority="high"
               className="logo-img block h-10 w-auto shrink-0 object-contain sm:h-11 md:h-12 lg:h-14"
             />
-            <span className={`font-display text-xl font-semibold tracking-tight transition-colors duration-300 md:text-2xl ${logoText}`}>
-              SpeedLink<span className="text-brand">.</span>
+            <span className={`font-display text-xl uppercase tracking-widest transition-colors duration-300 md:text-2xl ${logoText}`}>
+              SpeedLink<span className="text-accent">.</span>
             </span>
           </Link>
 
@@ -119,7 +119,7 @@ export function Navbar() {
                 onMouseEnter={() => prefetchRoute(link.to)}
                 onFocus={() => prefetchRoute(link.to)}
                 data-active={isActive(link.to) || undefined}
-                className={`nav-link rounded-lg px-4 py-2 font-body text-sm font-medium transition-colors duration-300 ${
+                className={`nav-link px-4 py-2 font-mono text-[0.75rem] uppercase tracking-[0.15em] transition-colors duration-300 ${
                   isActive(link.to) ? textActive : textBase
                 }`}
               >
@@ -131,7 +131,7 @@ export function Navbar() {
           <div className="hidden items-center gap-3 lg:flex">
             <button
               onClick={toggleTheme}
-              className={`flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border transition-[color,border-color] duration-300 hover:border-brand/40 ${textBase}`}
+              className={`flex h-9 w-9 items-center justify-center border border-border transition-[color,border-color] duration-300 hover:border-accent/40 ${textBase}`}
               aria-label="Toggle theme"
             >
               {theme === "dark" ? (
@@ -150,7 +150,7 @@ export function Navbar() {
             </button>
             <button
               onClick={toggleLang}
-              className={`flex h-9 items-center gap-1.5 rounded-lg border border-surface-border px-3 font-display text-xs font-semibold uppercase tracking-wider transition-[color,border-color] duration-300 hover:border-brand/40 ${textBase}`}
+              className={`flex h-9 items-center gap-1.5 border border-border px-3 font-mono text-xs uppercase tracking-wider transition-[color,border-color] duration-300 hover:border-accent/40 ${textBase}`}
             >
               <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="1.4"/>
@@ -189,7 +189,7 @@ export function Navbar() {
       </div>
 
       <div
-        className="grid border-t border-surface-border bg-menu overflow-hidden transition-[grid-template-rows,opacity] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden"
+        className="grid border-t border-border bg-menu overflow-hidden transition-[grid-template-rows,opacity] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden"
         style={{
           gridTemplateRows: isOpen ? "1fr" : "0fr",
           opacity: isOpen ? 1 : 0,
@@ -204,10 +204,10 @@ export function Navbar() {
                 key={link.to}
                 to={link.to}
                 onMouseEnter={() => prefetchRoute(link.to)}
-                className={`block rounded-xl px-4 py-3 font-display text-lg font-medium transition-colors ${
+                className={`block px-4 py-3 font-mono text-base uppercase tracking-wide transition-colors ${
                   isActive(link.to)
-                    ? "bg-brand/10 text-brand"
-                    : "text-heading/80 hover:bg-heading/5 hover:text-heading"
+                    ? "bg-accent/10 text-accent"
+                    : "text-body hover:bg-heading/5 hover:text-heading"
                 }`}
               >
                 {t(link.label, lang)}

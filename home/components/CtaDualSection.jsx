@@ -77,10 +77,10 @@ export function CtaDualSection() {
       <div className="container-xl">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="cta-left glass-card relative overflow-hidden p-8 md:p-12">
-            <div ref={glowLeftRef} className="absolute right-0 top-0 h-40 w-40 rounded-full bg-brand/5 blur-3xl" />
+            <div ref={glowLeftRef} className="absolute right-0 top-0 h-40 w-40 bg-accent/5 blur-3xl" />
             <div className="relative">
-              <div className="cta-icon mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand/10">
-                <svg className="h-7 w-7 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <div className="cta-icon mb-6 flex h-14 w-14 items-center justify-center border border-accent bg-accent/10">
+                <svg className="h-7 w-7 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="1" y="3" width="15" height="13" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
                 </svg>
               </div>
@@ -102,10 +102,10 @@ export function CtaDualSection() {
           </div>
 
           <div className="cta-right glass-card relative overflow-hidden p-8 md:p-12">
-            <div ref={glowRightRef} className="absolute right-0 top-0 h-40 w-40 rounded-full bg-brand/5 blur-3xl" />
+            <div ref={glowRightRef} className="absolute right-0 top-0 h-40 w-40 bg-accent/5 blur-3xl" />
             <div className="relative">
-              <div className="cta-icon mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand/10">
-                <svg className="h-7 w-7 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <div className="cta-icon mb-6 flex h-14 w-14 items-center justify-center border border-accent bg-accent/10">
+                <svg className="h-7 w-7 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                 </svg>
               </div>

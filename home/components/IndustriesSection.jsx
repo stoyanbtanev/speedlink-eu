@@ -83,7 +83,7 @@ export function IndustriesSection() {
   }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={sectionRef}>
+    <section className="section-padding section-py border-t border-border" ref={sectionRef}>
       <div className="container-xl">
         <div className="mx-auto mb-16 max-w-2xl text-center md:mb-20">
           <span className="reveal-header-child tag mb-6 inline-flex">
@@ -101,7 +101,7 @@ export function IndustriesSection() {
           {industries.items.map((item, i) => (
             <div
               key={i}
-              className="ind-card group relative overflow-hidden rounded-2xl border border-surface-border bg-surface-card transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1.5 hover:border-brand/30"
+              className="ind-card group relative overflow-hidden border border-border bg-surface transition-[transform,border-color] duration-500 hover:-translate-y-1.5 hover:border-accent/30"
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -114,7 +114,7 @@ export function IndustriesSection() {
                   className="img-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
-                <div className="ind-badge absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center rounded-xl bg-brand/30 text-brand transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-110">
+                <div className="ind-badge absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center border border-accent bg-accent/20 text-accent transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-110">
                   {INDUSTRY_ICONS[i]}
                 </div>
               </div>

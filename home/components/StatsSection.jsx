@@ -75,7 +75,7 @@ export function StatsSection() {
   }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={sectionRef}>
+    <section className="section-padding section-py border-t border-border" ref={sectionRef}>
       <div className="container-xl">
         <div className="mx-auto mb-16 max-w-2xl text-center md:mb-20">
           <span className="reveal-header-child tag mb-6 inline-flex">{t(stats.tag, lang)}</span>
@@ -88,7 +88,7 @@ export function StatsSection() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-          <div className="stats-image relative overflow-hidden rounded-2xl lg:col-span-3">
+          <div className="stats-image relative overflow-hidden lg:col-span-3">
             <img
               src={IMAGES.stats}
               alt="SpeedLink operations"
@@ -104,10 +104,10 @@ export function StatsSection() {
                 key={i}
                 className="stat-card glass-card flex-1 p-6 md:p-8"
               >
-                <p className="stat-counter font-display text-4xl font-bold text-brand md:text-5xl">
+                <p className="stat-counter font-display text-4xl text-accent md:text-5xl">
                   0
                 </p>
-                <h3 className="mt-2 font-display text-lg font-semibold text-heading">
+                <h3 className="mt-2 font-display text-lg text-heading">
                   {t(item.label, lang)}
                 </h3>
                 <p className="mt-1 font-body text-body-sm text-heading/40">

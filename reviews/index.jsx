@@ -55,12 +55,12 @@ function TestimonialsGrid() {
           {reviewsPage.items.map((item, i) => (
             <div
               key={i}
-              className="rev-card glass-card flex flex-col justify-between p-8 transition-[transform,border-color] duration-500 hover:-translate-y-1 hover:border-brand/30"
+              className="rev-card glass-card flex flex-col justify-between p-8 transition-[transform,border-color] duration-500 hover:-translate-y-1 hover:border-accent/30"
             >
               <div>
                 <div className="mb-6 flex gap-1">
                   {[...Array(5)].map((_, j) => (
-                    <svg key={j} className="rev-star h-5 w-5 text-brand" viewBox="0 0 24 24" fill="currentColor">
+                    <svg key={j} className="rev-star h-5 w-5 text-accent" viewBox="0 0 24 24" fill="currentColor">
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                     </svg>
                   ))}
@@ -69,13 +69,13 @@ function TestimonialsGrid() {
                   &ldquo;{t(item.quote, lang)}&rdquo;
                 </blockquote>
               </div>
-              <div className="mt-8 flex items-center gap-4 border-t border-surface-border pt-6">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand/10 font-display text-sm font-bold text-brand">
+              <div className="mt-8 flex items-center gap-4 border-t border-border pt-6">
+                <div className="flex h-11 w-11 items-center justify-center border border-accent bg-accent/10 font-mono text-sm text-accent">
                   {item.name.charAt(0)}
                 </div>
                 <div>
-                  <p className="font-display text-sm font-semibold text-heading">{item.name}</p>
-                  <p className="font-body text-body-sm text-heading/40">{t(item.role, lang)}</p>
+                  <p className="font-mono text-sm uppercase tracking-wide text-heading">{item.name}</p>
+                  <p className="font-body text-body-sm text-muted">{t(item.role, lang)}</p>
                 </div>
               </div>
             </div>
@@ -124,7 +124,7 @@ function StatsSection() {
   }, { scope: sectionRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={sectionRef}>
+    <section className="section-padding section-py border-t border-border" ref={sectionRef}>
       <div className="container-xl">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <span className="reveal-header-child tag mb-6 inline-flex">{t(reviewsPage.statsTag, lang)}</span>
@@ -137,8 +137,8 @@ function StatsSection() {
               key={i}
               className="stat-card glass-card p-8 text-center"
             >
-              <p className="font-display text-5xl font-bold text-brand md:text-6xl">{item.value}</p>
-              <p className="mt-3 font-display text-lg font-semibold text-heading">{t(item.label, lang)}</p>
+              <p className="font-display text-5xl text-accent md:text-6xl">{item.value}</p>
+              <p className="mt-3 font-mono text-sm uppercase tracking-wider text-heading">{t(item.label, lang)}</p>
             </div>
           ))}
         </div>

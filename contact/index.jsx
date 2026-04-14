@@ -74,8 +74,8 @@ function ContactForm() {
     }
   }, { scope: sectionRef });
 
-  const inputBase = "w-full rounded-xl border bg-surface-card px-4 py-3 font-body text-sm text-heading placeholder-heading/30 outline-none transition-colors focus:border-brand/50";
-  const inputCls = (k) => `${inputBase} ${errors[k] ? "border-red-500/60" : "border-surface-border"}`;
+  const inputBase = "w-full border bg-surface px-4 py-3 font-body text-sm text-heading placeholder-muted outline-none transition-colors focus:border-accent";
+  const inputCls = (k) => `${inputBase} ${errors[k] ? "border-red-500/60" : "border-border"}`;
   const errText = (k) => errors[k] ? <p className="mt-1.5 font-body text-xs text-red-500/80">{errors[k]}</p> : null;
 
   return (
@@ -101,29 +101,29 @@ function ContactForm() {
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.firstName, lang)}</label>
+                  <label className="mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">{t(contactPage.firstName, lang)}</label>
                   <input type="text" autoComplete="given-name" value={values.firstName} onChange={setField("firstName")} className={inputCls("firstName")} />
                   {errText("firstName")}
                 </div>
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.lastName, lang)}</label>
+                  <label className="mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">{t(contactPage.lastName, lang)}</label>
                   <input type="text" autoComplete="family-name" value={values.lastName} onChange={setField("lastName")} className={inputCls("lastName")} />
                   {errText("lastName")}
                 </div>
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.email, lang)}</label>
+                  <label className="mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">{t(contactPage.email, lang)}</label>
                   <input type="email" autoComplete="email" value={values.email} onChange={setField("email")} className={inputCls("email")} />
                   {errText("email")}
                 </div>
                 <div>
-                  <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.phone, lang)}</label>
+                  <label className="mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">{t(contactPage.phone, lang)}</label>
                   <input type="tel" autoComplete="tel" value={values.phone} onChange={setField("phone")} className={inputCls("phone")} />
                 </div>
               </div>
               <div>
-                <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.serviceLabel, lang)}</label>
+                <label className="mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">{t(contactPage.serviceLabel, lang)}</label>
                 <select autoComplete="off" value={values.service} onChange={setField("service")} className={`${inputCls("service")} text-heading/70`}>
                   <option value="">{lang === "bg" ? "Изберете услуга" : "Select a service"}</option>
                   {contactPage.serviceOptions.map((opt) => (
@@ -132,7 +132,7 @@ function ContactForm() {
                 </select>
               </div>
               <div>
-                <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.roleLabel, lang)}</label>
+                <label className="mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">{t(contactPage.roleLabel, lang)}</label>
                 <select autoComplete="off" value={values.role} onChange={setField("role")} className={`${inputCls("role")} text-heading/70`}>
                   <option value="">{lang === "bg" ? "Изберете роля" : "Select role"}</option>
                   {contactPage.roles.map((role) => (
@@ -141,12 +141,12 @@ function ContactForm() {
                 </select>
               </div>
               <div>
-                <label className="mb-2 block font-display text-label uppercase tracking-wider text-muted">{t(contactPage.message, lang)}</label>
+                <label className="mb-2 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">{t(contactPage.message, lang)}</label>
                 <textarea rows="4" autoComplete="off" placeholder={t(contactPage.messagePlaceholder, lang)} value={values.message} onChange={setField("message")} className={`${inputCls("message")} resize-none`} />
                 {errText("message")}
               </div>
               <div className="flex items-start gap-3">
-                <input type="checkbox" id="terms" checked={values.terms} onChange={setField("terms")} className="mt-1 h-4 w-4 rounded border-surface-border bg-surface-card accent-brand" />
+                <input type="checkbox" id="terms" checked={values.terms} onChange={setField("terms")} className="mt-1 h-4 w-4 border-border bg-surface accent-accent" />
                 <label htmlFor="terms" className="font-body text-body-sm text-heading/50">{t(contactPage.terms, lang)}</label>
               </div>
               {errors.terms && <p className="-mt-4 font-body text-xs text-red-500/80">{errors.terms}</p>}
@@ -157,7 +157,7 @@ function ContactForm() {
                 </svg>
               </button>
               {status === "sent" && (
-                <p className="font-body text-sm text-brand">
+                <p className="font-mono text-sm text-accent">
                   {lang === "bg" ? "Благодарим! Ще се свържем до 24 часа." : "Thanks! We will reply within 24 hours."}
                 </p>
               )}
@@ -178,14 +178,14 @@ function ContactForm() {
                     { icon: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z", label: t(contactPage.officeAddress, lang), href: null },
                   ].map((info, i) => (
                     <div key={i} className="flex items-start gap-4">
-                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center border border-accent bg-accent/10 text-accent">
                         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                           <path d={info.icon} />
                         </svg>
                       </div>
                       <div>
                         {info.href ? (
-                          <a href={info.href} className="font-body text-body-md text-heading transition-colors hover:text-brand">{info.label}</a>
+                          <a href={info.href} className="font-body text-body-md text-heading transition-colors hover:text-accent">{info.label}</a>
                         ) : (
                           <p className="font-body text-body-md text-heading">{info.label}</p>
                         )}
@@ -197,7 +197,7 @@ function ContactForm() {
 
               <Suspense
                 fallback={
-                  <div className="aspect-[4/3] w-full animate-pulse rounded-2xl bg-surface-card sm:aspect-[16/10]" />
+                  <div className="aspect-[4/3] w-full animate-pulse border border-border bg-surface sm:aspect-[16/10]" />
                 }
               >
                 <LeafletMap lang={lang} theme={theme} />
@@ -239,7 +239,7 @@ function ContactFaq() {
   }, { scope: faqRef });
 
   return (
-    <section className="section-padding section-py border-t border-surface-border" ref={faqRef}>
+    <section className="section-padding section-py border-t border-border" ref={faqRef}>
       <div className="container-xl">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <h2 className="reveal-header-child font-display text-display-lg text-heading">{t(faq.title, lang)}</h2>
@@ -249,10 +249,10 @@ function ContactFaq() {
           {faq.items.map((item, i) => {
             const isOpen = openIndex === i;
             return (
-              <div key={i} className="cfaq-item border-b border-surface-border">
+              <div key={i} className="cfaq-item border-b border-border">
                 <button onClick={() => setOpenIndex(isOpen ? -1 : i)} className="flex w-full items-center justify-between gap-4 py-6 text-left">
                   <span className="font-display text-lg font-medium text-heading">{t(item.q, lang)}</span>
-                  <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-surface-border text-heading/40 transition-transform duration-250 ${isOpen ? "rotate-45" : ""}`}>
+                  <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center border border-border text-muted transition-transform duration-250 ${isOpen ? "rotate-45" : ""}`}>
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
                     </svg>
