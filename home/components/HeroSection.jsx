@@ -4,6 +4,7 @@ import { gsap, ScrollTrigger, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { hero, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
+import { useIsDesktop } from "../../src/hooks/useIsDesktop";
 
 const GRID_PARALLAX_SPEEDS = [
   -0.15, -0.08, -0.15,
@@ -29,6 +30,7 @@ export function HeroSection() {
   const subtitleRef = useRef(null);
   const ctaRef = useRef(null);
   const statsRef = useRef(null);
+  const isDesktop = useIsDesktop();
 
   const titleText = useMemo(() => t(hero.title, lang), [lang]);
 
@@ -64,107 +66,111 @@ export function HeroSection() {
       });
     }
 
-    // --- GRADIENT OVERLAY INTENSIFY ---
-    if (overlay) {
-      gsap.to(overlay, {
-        opacity: 0.95,
+    if (!isMobile) {
+      // --- GRADIENT OVERLAY INTENSIFY (desktop only) ---
+      if (overlay) {
+        gsap.to(overlay, {
+          opacity: 0.95,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "40% top",
+            scrub: 1,
+          },
+        });
+      }
+
+      // --- CONTENT SCROLL-AWAY (desktop only) ---
+      gsap.to(content, {
+        y: -80,
+        opacity: 0,
+        rotateX: 2,
         ease: "none",
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "40% top",
-          scrub: 1,
+          end: "35% top",
+          scrub: 0.8,
         },
       });
+
+      // --- GRID SCALE ON SCROLL (desktop only) ---
+      gsap.to(grid, {
+        scale: 1.15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "50% top",
+          scrub: 1.5,
+        },
+      });
+    } else {
+      // Mobile: simple static overlay, no scroll-driven animations
+      if (overlay) {
+        gsap.set(overlay, { opacity: 0.85 });
+      }
     }
-
-    // --- CONTENT SCROLL-AWAY ---
-    gsap.to(content, {
-      y: -80,
-      opacity: 0,
-      rotateX: 2,
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "35% top",
-        scrub: 0.8,
-      },
-    });
-
-    // --- GRID SCALE ON SCROLL ---
-    gsap.to(grid, {
-      scale: isMobile ? 1.06 : 1.15,
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "50% top",
-        scrub: isMobile ? 0.5 : 1.5,
-      },
-    });
 
     // --- TEXT REVEAL CHOREOGRAPHY ---
     const tl = gsap.timeline({ delay: 0.15 });
 
-    // Tag: clip-path wipe from left
     if (tagRef.current) {
-      gsap.set(tagRef.current, { clipPath: "inset(0 100% 0 0)", opacity: 1 });
-      tl.to(tagRef.current, {
-        clipPath: "inset(0 0% 0 0)",
-        duration: 0.6,
-        ease: "silk",
-      });
+      if (isMobile) {
+        gsap.set(tagRef.current, { opacity: 0, y: 15 });
+        tl.to(tagRef.current, { opacity: 1, y: 0, duration: 0.5, ease: "silk" });
+      } else {
+        gsap.set(tagRef.current, { clipPath: "inset(0 100% 0 0)", opacity: 1 });
+        tl.to(tagRef.current, { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "silk" });
+      }
     }
 
-    // H1: character wave reveal
     if (h1Ref.current) {
       h1Ref.current.style.visibility = "visible";
-      const chars = h1Ref.current.querySelectorAll(".hero-char");
-      gsap.set(chars, { y: 80, opacity: 0, rotation: -5 });
-      tl.to(chars, {
-        y: 0,
-        opacity: 1,
-        rotation: 0,
-        duration: 0.8,
-        stagger: { each: 0.025, ease: "power3.inOut" },
-        ease: "silk",
-      }, "-=0.2");
+      if (isMobile) {
+        gsap.set(h1Ref.current, { opacity: 0, y: 20 });
+        tl.to(h1Ref.current, { opacity: 1, y: 0, duration: 0.6, ease: "silk" }, "-=0.2");
+      } else {
+        const chars = h1Ref.current.querySelectorAll(".hero-char");
+        gsap.set(chars, { y: 80, opacity: 0, rotation: -5 });
+        tl.to(chars, {
+          y: 0,
+          opacity: 1,
+          rotation: 0,
+          duration: 0.8,
+          stagger: { each: 0.025, ease: "power3.inOut" },
+          ease: "silk",
+        }, "-=0.2");
+      }
     }
 
-    // Subtitle: fade up with focus pull
     if (subtitleRef.current) {
-      gsap.set(subtitleRef.current, { y: 30, opacity: 0 });
-      tl.to(subtitleRef.current, {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        ease: "silk",
-      }, "-=0.5");
+      gsap.set(subtitleRef.current, { y: isMobile ? 15 : 30, opacity: 0 });
+      tl.to(subtitleRef.current, { y: 0, opacity: 1, duration: isMobile ? 0.5 : 0.9, ease: "silk" }, "-=0.5");
     }
 
-    // CTAs: snap in with whip ease
     if (ctaRef.current) {
       const buttons = ctaRef.current.children;
-      gsap.set(buttons, { y: 30, opacity: 0, scale: 0.95 });
+      gsap.set(buttons, { y: isMobile ? 15 : 30, opacity: 0, scale: 0.95 });
       tl.to(buttons, {
         y: 0,
         opacity: 1,
         scale: 1,
-        duration: 0.7,
+        duration: isMobile ? 0.5 : 0.7,
         stagger: 0.08,
         ease: "whip",
       }, "-=0.4");
     }
 
-    // Stats bar: clip-path expand from center
     if (statsRef.current) {
-      gsap.set(statsRef.current, { clipPath: "inset(0 50% 0 50%)", opacity: 1 });
-      tl.to(statsRef.current, {
-        clipPath: "inset(0 0% 0 0%)",
-        duration: 0.8,
-        ease: "silk",
-      }, "-=0.2");
+      if (isMobile) {
+        gsap.set(statsRef.current, { opacity: 0, y: 10 });
+        tl.to(statsRef.current, { opacity: 1, y: 0, duration: 0.4, ease: "silk" }, "-=0.2");
+      } else {
+        gsap.set(statsRef.current, { clipPath: "inset(0 50% 0 50%)", opacity: 1 });
+        tl.to(statsRef.current, { clipPath: "inset(0 0% 0 0%)", duration: 0.8, ease: "silk" }, "-=0.2");
+      }
     }
 
   }, { scope: sectionRef, dependencies: [lang] });
@@ -193,8 +199,8 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[300svh]">
-      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={{ perspective: "1200px" }}>
+    <section ref={sectionRef} className="relative h-[150svh] lg:h-[300svh]">
+      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={isDesktop ? { perspective: "1200px" } : undefined}>
         <div ref={gridRef} className="absolute inset-0 z-0">
           <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 md:hidden">
             {[IMAGES.hero[0], IMAGES.hero[2], IMAGES.hero[6], IMAGES.hero[8]].map(

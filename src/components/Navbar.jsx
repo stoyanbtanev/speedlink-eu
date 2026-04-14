@@ -4,6 +4,7 @@ import { useLang } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { nav, t } from "../data/translations";
 import { ScrollTrigger } from "../lib/gsap-config";
+import { useIsDesktop } from "../hooks/useIsDesktop";
 
 const ROUTE_IMPORTERS = {
   "/": () => import("../../home"),
@@ -23,6 +24,7 @@ export function Navbar() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isDesktop = useIsDesktop();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -84,11 +86,13 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-[background-color,box-shadow,backdrop-filter] duration-500 ease-out-expo ${
+      className={`fixed top-0 z-50 w-full transition-[background-color,box-shadow] duration-500 ease-out-expo ${
         isOpen
           ? "bg-menu shadow-lg shadow-black/10"
           : scrolled
-            ? "bg-nav-scrolled/80 shadow-lg shadow-black/10 backdrop-blur-xl"
+            ? isDesktop
+              ? "bg-nav-scrolled/80 shadow-lg shadow-black/10 backdrop-blur-xl"
+              : "bg-nav-scrolled shadow-lg shadow-black/10"
             : "bg-transparent"
       }`}
     >
@@ -193,7 +197,7 @@ export function Navbar() {
       </div>
 
       <div
-        className="grid border-t border-surface-border bg-menu backdrop-blur-xl overflow-hidden transition-[grid-template-rows,opacity] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden"
+        className="grid border-t border-surface-border bg-menu overflow-hidden transition-[grid-template-rows,opacity] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden"
         style={{
           gridTemplateRows: isOpen ? "1fr" : "0fr",
           opacity: isOpen ? 1 : 0,

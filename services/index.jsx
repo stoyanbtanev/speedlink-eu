@@ -62,7 +62,7 @@ function ServicesGrid() {
               <div className="relative h-52 overflow-hidden">
                 <img src={SERVICE_IMAGES[i]} alt={t(card.title, lang)} width={1200} height={675} loading="lazy" decoding="async" className="img-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
-                <span className="absolute bottom-4 left-4 rounded-lg bg-brand/20 px-3 py-1 font-display text-xs font-bold text-brand backdrop-blur-sm">
+                <span className="absolute bottom-4 left-4 rounded-lg bg-brand/30 px-3 py-1 font-display text-xs font-bold text-brand">
                   {typeof card.tag === "string" ? card.tag : t(card.tag, lang)}
                 </span>
               </div>

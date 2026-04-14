@@ -134,11 +134,11 @@ export function WhyUsSection() {
           </div>
 
           {/* CARDS COLUMN */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {whyUs.cards.map((card, i) => (
               <article
                 key={i}
-                className="why-card group relative overflow-hidden rounded-2xl border border-surface-border aspect-[4/5] sm:aspect-[5/6] transition-[border-color,box-shadow,transform] duration-500 hover:border-brand/40 hover:shadow-[0_24px_70px_-20px_rgba(232,168,56,0.25)]"
+                className="why-card group relative overflow-hidden rounded-2xl border border-surface-border aspect-[3/4] sm:aspect-[4/5] transition-[border-color,box-shadow,transform] duration-500 hover:border-brand/40 hover:shadow-[0_24px_70px_-20px_rgba(232,168,56,0.25)]"
               >
                 <img
                   src={CARD_IMAGES[i]}
@@ -158,11 +158,11 @@ export function WhyUsSection() {
                     {t(card.tag, lang)}
                   </span>
                 </div>
-                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                  <h3 className="font-display text-2xl font-semibold text-white md:text-display-sm">
+                <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 md:p-6">
+                  <h3 className="font-display text-base font-semibold text-white sm:text-2xl md:text-display-sm">
                     {t(card.title, lang)}
                   </h3>
-                  <p className="mt-2 font-body text-body-sm text-white/70">
+                  <p className="mt-1 font-body text-xs text-white/70 sm:mt-2 sm:text-body-sm">
                     {t(card.desc, lang)}
                   </p>
                 </div>
@@ -170,7 +170,7 @@ export function WhyUsSection() {
             ))}
 
             {/* FEATURED FULL-BLEED */}
-            <article className="why-featured group relative col-span-1 overflow-hidden rounded-2xl border border-surface-border transition-[border-color,box-shadow] duration-500 hover:border-brand/40 sm:col-span-2 aspect-[16/10]">
+            <article className="why-featured group relative col-span-2 min-h-[280px] sm:min-h-[320px] overflow-hidden rounded-2xl border border-surface-border transition-[border-color,box-shadow] duration-500 hover:border-brand/40">
               <img
                 src={IMAGES.services.warehouse}
                 alt={t(whyUs.featured.title, lang)}
@@ -181,7 +181,7 @@ export function WhyUsSection() {
                 className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-black/50 to-transparent" />
-              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-6">
+              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 sm:p-6">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-black/50 text-white transition-[background-color,color] duration-500 group-hover:bg-brand/90 group-hover:text-dark">
                   <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
                     <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -192,7 +192,7 @@ export function WhyUsSection() {
                   {t(whyUs.featured.tag, lang)}
                 </span>
               </div>
-              <div className="absolute inset-x-0 bottom-0 max-w-2xl p-6 md:p-8">
+              <div className="absolute inset-x-0 bottom-0 max-w-2xl p-4 sm:p-6 md:p-8">
                 <h3 className="font-display text-display-sm text-white md:text-display-md">
                   {t(whyUs.featured.title, lang)}
                 </h3>

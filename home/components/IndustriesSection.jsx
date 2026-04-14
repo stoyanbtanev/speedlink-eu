@@ -114,7 +114,7 @@ export function IndustriesSection() {
                   className="img-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-card to-transparent" />
-                <div className="ind-badge absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center rounded-xl bg-brand/20 text-brand backdrop-blur-sm transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-110">
+                <div className="ind-badge absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center rounded-xl bg-brand/30 text-brand transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-110">
                   {INDUSTRY_ICONS[i]}
                 </div>
               </div>
