@@ -207,6 +207,9 @@
 
   .img-cover {
     @apply h-full w-full object-cover;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
 
   .logo-img {

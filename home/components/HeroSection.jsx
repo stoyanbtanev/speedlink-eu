@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { gsap, ScrollTrigger, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
@@ -31,6 +31,14 @@ export function HeroSection() {
   const ctaRef = useRef(null);
   const statsRef = useRef(null);
   const isDesktop = useIsDesktop();
+
+  const [lockedH, setLockedH] = useState(null);
+
+  useEffect(() => {
+    if (!isDesktop) {
+      setLockedH(window.innerHeight);
+    }
+  }, [isDesktop]);
 
   const titleText = useMemo(() => t(hero.title, lang), [lang]);
 
@@ -204,8 +212,14 @@ export function HeroSection() {
 
   return (
     <section ref={sectionRef} className="relative h-[150dvh] lg:h-[300dvh]">
-      <div ref={stickyRef} className="sticky top-0 h-dvh overflow-hidden" style={isDesktop ? { perspective: "1200px" } : undefined}>
-        <div ref={gridRef} className="absolute inset-0 z-0">
+      <div
+        ref={stickyRef}
+        className={`sticky top-0 overflow-hidden ${isDesktop ? "h-dvh" : ""}`}
+        style={{
+          ...(isDesktop ? { perspective: "1200px" } : { height: lockedH ? `${lockedH}px` : "100dvh" }),
+        }}
+      >
+        <div ref={gridRef} className="absolute inset-0 z-0" style={!isDesktop && lockedH ? { height: `${lockedH}px` } : undefined}>
           <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 md:hidden">
             {[IMAGES.hero[0], IMAGES.hero[2], IMAGES.hero[6], IMAGES.hero[8]].map(
               (src, i) => (
