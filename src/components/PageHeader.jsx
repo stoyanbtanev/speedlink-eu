@@ -34,7 +34,7 @@ export function PageHeader({ title, subtitle, image }) {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="relative flex min-h-[50svh] items-end overflow-hidden md:min-h-[60svh]">
+    <section ref={sectionRef} className="relative flex min-h-[50dvh] items-end overflow-hidden md:min-h-[60dvh]">
       <div className="absolute inset-0">
         <img
           src={image}

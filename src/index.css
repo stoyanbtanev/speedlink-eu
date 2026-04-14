@@ -13,7 +13,7 @@
     --c-muted: 168 162 158;
     --c-nav-scrolled: 10 10 10;
     --c-menu: 10 10 10;
-    --vh-fallback: 1svh;
+    --vh-fallback: 1dvh;
   }
 
   :root[data-theme="light"] {
@@ -27,7 +27,7 @@
     --c-menu: 250 250 249;
   }
 
-  @supports not (height: 100svh) {
+  @supports not (height: 100dvh) {
     :root {
       --vh-fallback: 1vh;
     }
@@ -38,6 +38,7 @@
   *::after {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
 
   html {
@@ -48,7 +49,9 @@
   }
 
   html, body {
+    overflow-x: hidden;
     overflow-x: clip;
+    max-width: 100vw;
     overscroll-behavior: none;
     -webkit-text-size-adjust: 100%;
   }
@@ -172,9 +175,6 @@
     background: linear-gradient(to right, transparent, rgb(var(--c-surface-border)), transparent);
   }
 
-  .section-padding {
-    contain: content;
-  }
 
   @keyframes leaflet-pulse {
     0% { transform: scale(0.5); opacity: 1; }

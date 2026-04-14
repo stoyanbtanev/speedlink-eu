@@ -173,6 +173,10 @@ export function HeroSection() {
       }
     }
 
+    tl.eventCallback("onComplete", () => {
+      gsap.set([tagRef.current, h1Ref.current, subtitleRef.current, ctaRef.current, statsRef.current].filter(Boolean), { willChange: "auto" });
+    });
+
   }, { scope: sectionRef, dependencies: [lang] });
 
   const splitChars = (text) => {
@@ -199,8 +203,8 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[150svh] lg:h-[300svh]">
-      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden" style={isDesktop ? { perspective: "1200px" } : undefined}>
+    <section ref={sectionRef} className="relative h-[150dvh] lg:h-[300dvh]">
+      <div ref={stickyRef} className="sticky top-0 h-dvh overflow-hidden" style={isDesktop ? { perspective: "1200px" } : undefined}>
         <div ref={gridRef} className="absolute inset-0 z-0">
           <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 md:hidden">
             {[IMAGES.hero[0], IMAGES.hero[2], IMAGES.hero[6], IMAGES.hero[8]].map(

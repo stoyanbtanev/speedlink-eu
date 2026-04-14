@@ -34,7 +34,7 @@ function NotFound() {
     ? { tag: "404", title: "Страницата не е намерена", body: "Линкът може да е грешен или страницата да е преместена.", cta: "Към началото" }
     : { tag: "404", title: "Page not found", body: "The link may be wrong or the page may have moved.", cta: "Back home" };
   return (
-    <section className="section-padding flex min-h-svh items-center justify-center">
+    <section className="section-padding flex min-h-dvh items-center justify-center">
       <div className="container-xl mx-auto max-w-xl text-center">
         <span className="tag mb-6 inline-flex">{copy.tag}</span>
         <h1 className="font-display text-display-lg text-heading">{copy.title}</h1>
@@ -52,7 +52,7 @@ class ErrorBoundary extends React.Component {
   render() {
     if (!this.state.hasError) return this.props.children;
     return (
-      <section className="section-padding flex min-h-svh items-center justify-center">
+      <section className="section-padding flex min-h-dvh items-center justify-center">
         <div className="container-xl mx-auto max-w-xl text-center">
           <span className="tag mb-6 inline-flex">Error</span>
           <h1 className="font-display text-display-md text-heading">Something went wrong.</h1>
@@ -66,7 +66,7 @@ class ErrorBoundary extends React.Component {
 
 function RouteFallback() {
   return (
-    <div className="flex min-h-svh items-center justify-center">
+    <div className="flex min-h-dvh items-center justify-center">
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
     </div>
   );
@@ -78,7 +78,7 @@ export default function App() {
       <div className="noise-overlay hidden sm:block" />
       <ScrollToTop />
       <Navbar />
-      <main className="min-h-svh">
+      <main className="min-h-dvh">
         <ErrorBoundary>
           <Suspense fallback={<RouteFallback />}>
             <Routes>

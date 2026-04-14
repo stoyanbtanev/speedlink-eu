@@ -47,21 +47,11 @@ export function Navbar() {
   useEffect(() => {
     if (isOpen) {
       scrollLockRef.current = window.scrollY;
-      document.documentElement.style.setProperty("--scroll-lock-top", `-${scrollLockRef.current}px`);
       document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.top = `var(--scroll-lock-top)`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
+      document.body.style.touchAction = "none";
     } else {
-      const savedY = scrollLockRef.current;
       document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.documentElement.style.removeProperty("--scroll-lock-top");
-      window.scrollTo({ top: savedY, behavior: "instant" });
+      document.body.style.touchAction = "";
       requestAnimationFrame(() => {
         if (typeof ScrollTrigger !== "undefined") {
           ScrollTrigger.refresh();
@@ -70,11 +60,7 @@ export function Navbar() {
     }
     return () => {
       document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.documentElement.style.removeProperty("--scroll-lock-top");
+      document.body.style.touchAction = "";
     };
   }, [isOpen]);
 
