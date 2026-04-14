@@ -211,12 +211,12 @@ export function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-[150dvh] lg:h-[300dvh]">
+    <section ref={sectionRef} className="relative h-[150svh] lg:h-[300svh]">
       <div
         ref={stickyRef}
-        className={`sticky top-0 overflow-hidden ${isDesktop ? "h-dvh" : ""}`}
+        className={`sticky top-0 overflow-hidden ${isDesktop ? "h-[100svh]" : ""}`}
         style={{
-          ...(isDesktop ? { perspective: "1200px" } : { height: lockedH ? `${lockedH}px` : "100dvh" }),
+          ...(isDesktop ? { perspective: "1200px" } : { height: lockedH ? `${lockedH}px` : "100svh" }),
         }}
       >
         <div ref={gridRef} className="absolute inset-0 z-0" style={!isDesktop && lockedH ? { height: `${lockedH}px` } : undefined}>

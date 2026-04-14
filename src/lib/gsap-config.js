@@ -36,4 +36,11 @@ if (typeof window !== "undefined" &&
 
 ScrollTrigger.config({ ignoreMobileResize: true });
 
+if (typeof window !== "undefined" && "ontouchstart" in window) {
+  ScrollTrigger.normalizeScroll({
+    allowNestedScroll: true,
+    type: "touch",
+  });
+}
+
 export { gsap, ScrollTrigger, CustomEase, useGSAP };
