@@ -96,7 +96,7 @@ export function Navbar() {
     >
       <div className="section-padding">
         <div className="container-xl flex h-20 items-center justify-between md:h-24">
-          <Link to="/" className="flex items-center gap-3" aria-label="SpeedLink Home">
+          <Link to="/" className="flex items-center gap-1.5" aria-label="SpeedLink Home">
             <img
               src="/images/logo.png"
               alt="SpeedLink logo"

@@ -448,7 +448,7 @@
   }
 
   .logo-img {
-    filter: brightness(0) saturate(100%) invert(72%) sepia(58%) saturate(540%) hue-rotate(2deg) brightness(95%) contrast(92%);
+    filter: brightness(0) saturate(100%) invert(69%) sepia(85%) saturate(500%) hue-rotate(3deg) brightness(103%) contrast(101%);
   }
 
   .stat-card {

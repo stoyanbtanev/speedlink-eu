@@ -4,7 +4,7 @@ import { useLang } from "../../src/context/LanguageContext";
 import { logos, t } from "../../src/data/translations";
 
 const PARTNERS = ["DHL", "DB Schenker", "Maersk", "Kuehne+Nagel", "DSV", "GEFCO"];
-const REPEAT_COUNT = 8;
+const REPEAT_COUNT = 4;
 
 export function LogoStrip() {
   const { lang } = useLang();
@@ -35,53 +35,18 @@ export function LogoStrip() {
     });
 
     const halfWidth = track.scrollWidth / 2;
-    let isHovering = false;
+    gsap.set(track, { x: -halfWidth * 0.35 });
 
-    const tween = gsap.to(track, {
-      x: -halfWidth,
-      duration: 160,
+    gsap.to(track, {
+      x: 0,
       ease: "none",
-      repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize((x) => parseFloat(x) % halfWidth),
+      scrollTrigger: {
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.5,
       },
     });
-
-    const handleEnter = () => {
-      isHovering = true;
-      gsap.to(tween, { timeScale: 0, duration: 0.8, ease: "silk", overwrite: true });
-    };
-    const handleLeave = () => {
-      isHovering = false;
-      gsap.to(tween, { timeScale: 1, duration: 1.2, ease: "silk", overwrite: true });
-    };
-
-    track.addEventListener("mouseenter", handleEnter);
-    track.addEventListener("mouseleave", handleLeave);
-
-    let decayTimeout;
-    const st = ScrollTrigger.create({
-      start: 0,
-      end: "max",
-      onUpdate: (self) => {
-        if (isHovering) return;
-        const velocity = Math.abs(self.getVelocity());
-        const speed = Math.min(1 + velocity / 3000, 1.8);
-        tween.timeScale(speed * (self.direction || 1));
-
-        clearTimeout(decayTimeout);
-        decayTimeout = setTimeout(() => {
-          gsap.to(tween, { timeScale: 1, duration: 2, ease: "power3.out", overwrite: true });
-        }, 150);
-      },
-    });
-
-    return () => {
-      track.removeEventListener("mouseenter", handleEnter);
-      track.removeEventListener("mouseleave", handleLeave);
-      clearTimeout(decayTimeout);
-      if (st) st.kill();
-    };
   }, { scope: sectionRef });
 
   const oneSet = [];

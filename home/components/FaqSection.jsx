@@ -6,7 +6,7 @@ import { faq, t } from "../../src/data/translations";
 
 function FaqItem({ question, answer, isOpen, onClick }) {
   return (
-    <div className="faq-item border-b border-border" data-open={isOpen ? "true" : undefined}>
+    <div className="faq-item border-b border-border pl-4" data-open={isOpen ? "true" : undefined}>
       <button
         onClick={onClick}
         className="flex w-full items-center justify-between gap-4 py-6 text-left transition-colors duration-300 hover:text-accent"
@@ -37,7 +37,7 @@ function FaqItem({ question, answer, isOpen, onClick }) {
 
 export function FaqSection() {
   const { lang } = useLang();
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(-1);
   const sectionRef = useRef(null);
 
   useGSAP(() => {
