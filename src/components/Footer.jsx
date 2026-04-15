@@ -73,7 +73,6 @@ export function Footer() {
   const links = [
     { id: "home",     label: nav.home },
     { id: "services", label: nav.services },
-    { id: "reviews",  label: nav.reviews },
     { id: "contact",  label: nav.contact },
   ];
 

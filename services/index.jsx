@@ -97,61 +97,6 @@ function ServicesGrid() {
   );
 }
 
-function WhyChoose() {
-  const { lang } = useLang();
-  const sectionRef = useRef(null);
-
-  useGSAP(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const headerEls = section.querySelectorAll(".reveal-header-child");
-    gsap.set(headerEls, { y: 36, opacity: 0 });
-    gsap.to(headerEls, {
-      y: 0, opacity: 1, duration: 1.1, ease: "silk",
-      stagger: { each: 0.1, ease: "power2.out" },
-      scrollTrigger: { trigger: section, start: "top 80%", once: true },
-    });
-
-    const cards = section.querySelectorAll(".why-card");
-    cards.forEach((card, i) => {
-      gsap.set(card, { y: 50, opacity: 0, scale: 0.92 });
-      gsap.to(card, {
-        y: 0, opacity: 1, scale: 1,
-        duration: 1, ease: "silk",
-        scrollTrigger: { trigger: section, start: "top 72%", once: true },
-        delay: 0.15 * i,
-      });
-    });
-  }, { scope: sectionRef });
-
-  return (
-    <section className="section-padding section-py border-t border-border" ref={sectionRef}>
-      <div className="container-xl">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="reveal-header-child tag mb-6 inline-flex">{t(servicesPage.whyTag, lang)}</span>
-          <h2 className="reveal-header-child font-display text-display-lg text-heading">{t(servicesPage.whyTitle, lang)}</h2>
-          <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">{t(servicesPage.whySubtitle, lang)}</p>
-        </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5 md:gap-6">
-          {servicesPage.whyCards.map((card, i) => (
-            <div
-              key={i}
-              className="why-card glass-card px-5 py-6 text-center sm:px-6 sm:py-7"
-            >
-              <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center border border-accent bg-accent/10 sm:mb-4 sm:h-12 sm:w-12">
-                <span className="font-mono text-lg text-accent sm:text-xl">{i + 1}</span>
-              </div>
-              <h3 className="font-display text-lg font-semibold text-heading sm:text-xl">{t(card.title, lang)}</h3>
-              <p className="mt-2 font-body text-body-sm text-heading/50 sm:text-body-md">{t(card.desc, lang)}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function AboutSection() {
   const { lang } = useLang();
   return (
@@ -181,7 +126,6 @@ export default function Page() {
   return (
     <>
       <ServicesGrid />
-      <WhyChoose />
       <AboutSection />
     </>
   );

@@ -4,6 +4,7 @@ export const nav = {
   home:     { bg: "Начало",   en: "Home" },
   services: { bg: "Услуги",   en: "Services" },
   reviews:  { bg: "Отзиви",   en: "Reviews" },
+  faq:      { bg: "Въпроси",  en: "FAQ" },
   contact:  { bg: "Контакти", en: "Contact" },
   quote:    { bg: "Безплатна оферта", en: "Free Quote" },
   language: { bg: "EN", en: "BG" },

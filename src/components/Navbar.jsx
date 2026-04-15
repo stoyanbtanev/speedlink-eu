@@ -54,24 +54,27 @@ export function Navbar() {
   }, [isOpen]);
 
   useEffect(() => {
-    const ids = ["home", "services", "reviews", "contact"];
-    const observers = ids.map((id) => {
-      const el = document.getElementById(id);
-      if (!el) return null;
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
-        { threshold: 0.3 }
-      );
-      obs.observe(el);
-      return obs;
-    });
-    return () => observers.forEach((o) => o?.disconnect());
+    const ids = ["home", "services", "faq", "contact"];
+    const getActive = () => {
+      const offset = window.innerHeight * 0.4;
+      let active = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= offset) active = id;
+      }
+      return active;
+    };
+    const onScroll = () => setActiveSection(getActive());
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const links = [
     { id: "home",     label: nav.home },
     { id: "services", label: nav.services },
-    { id: "reviews",  label: nav.reviews },
+    { id: "faq",      label: nav.faq },
     { id: "contact",  label: nav.contact },
   ];
 

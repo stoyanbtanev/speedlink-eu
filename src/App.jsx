@@ -4,7 +4,7 @@ import { Footer } from "./components/Footer";
 import { ScrollTrigger } from "./lib/gsap-config";
 import HomePage from "../home";
 import ServicesPage from "../services";
-import ReviewsPage from "../reviews";
+import { FaqSection } from "../home/components/FaqSection";
 import ContactPage from "../contact";
 
 class ErrorBoundary extends React.Component {
@@ -39,7 +39,7 @@ export default function App() {
         <ErrorBoundary>
           <section id="home"><HomePage /></section>
           <section id="services"><ServicesPage /></section>
-          <section id="reviews"><ReviewsPage /></section>
+          <section id="faq"><FaqSection /></section>
           <section id="contact"><ContactPage /></section>
         </ErrorBoundary>
       </main>
