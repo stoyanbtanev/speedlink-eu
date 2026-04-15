@@ -1,30 +1,14 @@
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { gsap, ScrollTrigger, useGSAP } from "../../src/lib/gsap-config";
+import { gsap, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { hero, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
 import { useIsDesktop } from "../../src/hooks/useIsDesktop";
 
-const GRID_PARALLAX_SPEEDS = [
-  -0.15, -0.08, -0.15,
-  -0.08,  0,    -0.08,
-  -0.15, -0.08, -0.15,
-];
-
-const GRID_SCALE_TARGETS = [
-  1.06, 1.04, 1.06,
-  1.04, 1.02, 1.04,
-  1.06, 1.04, 1.06,
-];
-
 export function HeroSection() {
   const { lang } = useLang();
   const sectionRef = useRef(null);
-  const stickyRef = useRef(null);
-  const gridRef = useRef(null);
-  const contentRef = useRef(null);
-  const overlayRef = useRef(null);
   const tagRef = useRef(null);
   const h1Ref = useRef(null);
   const subtitleRef = useRef(null);
@@ -44,85 +28,8 @@ export function HeroSection() {
   const titleText = useMemo(() => t(hero.title, lang), [lang]);
 
   useGSAP(() => {
-    const section = sectionRef.current;
-    const content = contentRef.current;
-    const grid = gridRef.current;
-    const overlay = overlayRef.current;
-    if (!section || !content || !grid) return;
-
     const isMobile = window.innerWidth < 768;
 
-    // --- GRID IMAGE DEPTH PARALLAX (skip on mobile for performance) ---
-    if (!isMobile) {
-      const gridImages = Array.from(grid.querySelectorAll(".hero-grid-img"));
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "50% top",
-        scrub: 1.5,
-        onUpdate: (self) => {
-          const p = self.progress;
-          for (let i = 0; i < gridImages.length; i++) {
-            const speed = GRID_PARALLAX_SPEEDS[i] || 0;
-            const scaleTarget = GRID_SCALE_TARGETS[i] || 1;
-            if (speed === 0 && scaleTarget === 1) continue;
-            gsap.set(gridImages[i], {
-              y: speed * 200 * p,
-              scale: 1 + (scaleTarget - 1) * p,
-            });
-          }
-        },
-      });
-    }
-
-    if (!isMobile) {
-      // --- GRADIENT OVERLAY INTENSIFY (desktop only) ---
-      if (overlay) {
-        gsap.to(overlay, {
-          opacity: 0.95,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "40% top",
-            scrub: 1,
-          },
-        });
-      }
-
-      // --- CONTENT SCROLL-AWAY (desktop only) ---
-      gsap.to(content, {
-        y: -80,
-        opacity: 0,
-        rotateX: 2,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "35% top",
-          scrub: 0.8,
-        },
-      });
-
-      // --- GRID SCALE ON SCROLL (desktop only) ---
-      gsap.to(grid, {
-        scale: 1.15,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "50% top",
-          scrub: 1.5,
-        },
-      });
-    } else {
-      // Mobile: simple static overlay, no scroll-driven animations
-      if (overlay) {
-        gsap.set(overlay, { opacity: 0.85 });
-      }
-    }
-
-    // --- TEXT REVEAL CHOREOGRAPHY ---
     const tl = gsap.timeline({ delay: 0.15 });
 
     if (tagRef.current) {
@@ -218,138 +125,119 @@ export function HeroSection() {
     });
   };
 
+  const heroImages = Array.isArray(IMAGES.hero) ? IMAGES.hero : [];
+  const duplicatedImages = [...heroImages, ...heroImages];
+
   return (
-    <section ref={sectionRef} className="relative h-[150svh] lg:h-[300svh]">
-      <div
-        ref={stickyRef}
-        className={`sticky top-0 overflow-hidden ${isDesktop ? "h-[100svh]" : ""}`}
-        style={{
-          ...(isDesktop ? { perspective: "1200px" } : { height: lockedH ? `${lockedH}px` : "100svh" }),
-        }}
-      >
-        <div ref={gridRef} className="absolute inset-0 z-0" style={!isDesktop && lockedH ? { height: `${lockedH}px` } : undefined}>
-          <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5 md:hidden">
-            {[IMAGES.hero[0], IMAGES.hero[2], IMAGES.hero[6], IMAGES.hero[8]].map(
-              (src, i) => (
-                <div key={i} className="relative overflow-hidden">
-                  <img
-                    src={src}
-                    alt={`SpeedLink logistics ${i + 1}`}
-                    width={800}
-                    height={600}
-                    fetchpriority={i === 0 ? "high" : undefined}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    decoding={i === 0 ? "sync" : "async"}
-                    className="hero-grid-img img-cover"
-                  />
-                </div>
-              )
-            )}
-          </div>
-          <div className="hidden h-full w-full grid-cols-3 grid-rows-3 gap-1 md:grid">
-            {IMAGES.hero.map((src, i) => (
-              <div key={i} className="relative overflow-hidden">
-                <img
-                  src={src}
-                  alt={`SpeedLink logistics ${i + 1}`}
-                  width={800}
-                  height={600}
-                  fetchpriority={i === 0 ? "high" : undefined}
-                  loading={i < 3 ? "eager" : "lazy"}
-                  decoding={i < 3 ? "sync" : "async"}
-                  className="hero-grid-img img-cover"
-                />
-              </div>
-            ))}
-          </div>
-          <div
-            ref={overlayRef}
-            className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/80 to-dark"
-            style={{ opacity: 0.7 }}
-          />
+    <section 
+      ref={sectionRef} 
+      className="relative w-full overflow-hidden bg-dark flex flex-col items-center justify-center text-center px-4"
+      style={{ minHeight: lockedH ? `${lockedH}px` : "100svh" }}
+    >
+      <div className="z-10 flex flex-col items-center pb-24 sm:pb-32 lg:pb-40 w-full max-w-7xl">
+        <div ref={tagRef} style={{ opacity: 0 }}>
+          <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
+        </div>
+
+        <h1
+          ref={h1Ref}
+          className="mx-auto max-w-4xl px-4 font-display text-[2rem] uppercase leading-[1.1] text-[#F5F0E8] sm:text-5xl md:text-display-xl sm:px-0"
+          style={{ visibility: "hidden" }}
+        >
+          {splitChars(titleText)}
+        </h1>
+
+        <p
+          ref={subtitleRef}
+          className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-[#B4AEA5] sm:text-body-lg sm:px-0 sm:mt-6"
+          style={{ opacity: 0 }}
+        >
+          {t(hero.subtitle, lang)}
+        </p>
+
+        <div
+          ref={ruleRef}
+          className="mx-auto mt-4 h-px w-24 bg-accent sm:mt-6 sm:w-32"
+          style={{ opacity: 0, transform: "scaleX(0)", transformOrigin: "left" }}
+        />
+
+        <div
+          ref={ctaRef}
+          className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row sm:mt-10 sm:gap-4"
+          style={{ opacity: 0 }}
+        >
+          <Link to="/contact" className="btn-primary" aria-label={t(hero.cta1, lang)}>
+            {t(hero.cta1, lang)}
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="5" cy="12" r="0.7" fill="currentColor" opacity="0.3"/>
+            </svg>
+          </Link>
+          <a href="tel:+359877404599" className="btn-secondary" aria-label={t(hero.cta2, lang)}>
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+              <path d="M5 4.5C5 3.67 5.67 3 6.5 3h2.7c.46 0 .87.3 1 .74l1.1 3.48a1 1 0 0 1-.35 1.05l-1.6 1.2a12.5 12.5 0 0 0 5.17 5.17l1.2-1.6a1 1 0 0 1 1.05-.35l3.48 1.1c.44.14.74.54.74 1v2.7c0 .83-.67 1.5-1.5 1.5C10.8 19 5 13.2 5 4.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+              <path d="M15 3.5c2.5.5 4.5 2.5 5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+              <path d="M15.5 6.5c1.2.3 2.2 1.3 2.5 2.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.35"/>
+            </svg>
+            {t(hero.cta2, lang)}
+          </a>
         </div>
 
         <div
-          ref={contentRef}
-          className="relative z-10 flex h-full items-center justify-center pt-16 md:pt-20 pb-4"
-          style={{ transformOrigin: "center bottom" }}
+          ref={statsRef}
+          className="hero-stats mt-4 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-body sm:gap-8"
+          style={{ opacity: 0 }}
         >
-          <div className="section-padding w-full">
-            <div className="container-xl text-center">
-              <div ref={tagRef} style={{ opacity: 0 }}>
-                <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
-              </div>
-
-                <h1
-                ref={h1Ref}
-                className="mx-auto max-w-4xl px-4 font-display text-[2rem] uppercase leading-[1.1] text-[#F5F0E8] sm:text-5xl md:text-display-xl sm:px-0"
-                style={{ visibility: "hidden" }}
-              >
-                {splitChars(titleText)}
-              </h1>
-
-              <p
-                ref={subtitleRef}
-                className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-[#B4AEA5] sm:text-body-lg sm:px-0 sm:mt-6"
-                style={{ opacity: 0 }}
-              >
-                {t(hero.subtitle, lang)}
-              </p>
-
-              <div
-                ref={ruleRef}
-                className="mx-auto mt-4 h-px w-24 bg-accent sm:mt-6 sm:w-32"
-                style={{ opacity: 0, transform: "scaleX(0)", transformOrigin: "left" }}
-              />
-
-              <div
-                ref={ctaRef}
-                className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row sm:mt-10 sm:gap-4"
-                style={{ opacity: 0 }}
-              >
-                <Link to="/contact" className="btn-primary">
-                  {t(hero.cta1, lang)}
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="5" cy="12" r="0.7" fill="currentColor" opacity="0.3"/>
-                  </svg>
-                </Link>
-                <a href="tel:+359877404599" className="btn-secondary">
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 4.5C5 3.67 5.67 3 6.5 3h2.7c.46 0 .87.3 1 .74l1.1 3.48a1 1 0 0 1-.35 1.05l-1.6 1.2a12.5 12.5 0 0 0 5.17 5.17l1.2-1.6a1 1 0 0 1 1.05-.35l3.48 1.1c.44.14.74.54.74 1v2.7c0 .83-.67 1.5-1.5 1.5C10.8 19 5 13.2 5 4.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
-                    <path d="M15 3.5c2.5.5 4.5 2.5 5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
-                    <path d="M15.5 6.5c1.2.3 2.2 1.3 2.5 2.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.35"/>
-                  </svg>
-                  {t(hero.cta2, lang)}
-                </a>
-              </div>
-
-              <div
-                ref={statsRef}
-                className="hero-stats mt-4 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-body sm:gap-8"
-                style={{ opacity: 0 }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl text-accent">47</span>
-                  <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "държави" : "countries"}</span>
-                </div>
-                <div className="hero-stats-divider h-4 w-px bg-border" />
-                <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl text-accent">8,400+</span>
-                  <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
-                </div>
-                <div className="hero-stats-divider h-4 w-px bg-border" />
-                <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl text-accent">15+</span>
-                  <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "години" : "years"}</span>
-                </div>
-              </div>
-            </div>
+          <div className="flex items-center gap-2">
+            <span className="font-display text-2xl text-accent">47</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "държави" : "countries"}</span>
+          </div>
+          <div className="hero-stats-divider h-4 w-px bg-border" />
+          <div className="flex items-center gap-2">
+            <span className="font-display text-2xl text-accent">8,400+</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
+          </div>
+          <div className="hero-stats-divider h-4 w-px bg-border" />
+          <div className="flex items-center gap-2">
+            <span className="font-display text-2xl text-accent">15+</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "години" : "years"}</span>
           </div>
         </div>
+      </div>
 
+      {/* MARQUEE IMAGE STRIP */}
+      <div 
+        className="absolute bottom-0 left-0 w-full h-[28vh] md:h-[35vh] lg:h-[40vh] pointer-events-none pb-4" 
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+          maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+        }}
+      >
+        <div className="flex gap-4 sm:gap-6 w-max animate-marquee">
+          {duplicatedImages.map((src, index) => (
+            <div
+              key={index}
+              className="relative aspect-[3/4] h-48 sm:h-56 md:h-64 lg:h-[18rem] flex-shrink-0"
+              style={{
+                transform: `rotate(${index % 2 === 0 ? -2 : 3}deg)`,
+                pointerEvents: 'none',
+              }}
+            >
+              <img
+                src={src}
+                alt={`SpeedLink logistics ${index + 1}`}
+                className="w-full h-full object-cover rounded-xl sm:rounded-2xl shadow-xl shadow-black/40"
+                loading={index < heroImages.length ? "eager" : "lazy"}
+                decoding={index < heroImages.length ? "sync" : "async"}
+                width={400}
+                height={533}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
+
