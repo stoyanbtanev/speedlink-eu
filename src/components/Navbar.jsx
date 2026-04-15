@@ -1,28 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { nav, t } from "../data/translations";
 import { ScrollTrigger } from "../lib/gsap-config";
 import { useIsDesktop } from "../hooks/useIsDesktop";
 
-const ROUTE_IMPORTERS = {
-  "/": () => import("../../home"),
-  "/services": () => import("../../services"),
-  "/reviews": () => import("../../reviews"),
-  "/contact": () => import("../../contact"),
-};
-
-function prefetchRoute(to) {
-  const importer = ROUTE_IMPORTERS[to];
-  if (importer) importer();
-}
-
 export function Navbar() {
   const { lang, toggleLang } = useLang();
   const { theme, toggleTheme } = useTheme();
-  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const isDesktop = useIsDesktop();
   const headerRef = useRef(null);
 
@@ -45,13 +32,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setIsOpen(false); }, [location.pathname]);
-
-  const scrollLockRef = useRef(0);
+  useEffect(() => { setIsOpen(false); }, [activeSection]);
 
   useEffect(() => {
     if (isOpen) {
-      scrollLockRef.current = window.scrollY;
       document.body.style.overflow = "hidden";
       document.body.style.touchAction = "none";
     } else {
@@ -69,18 +53,30 @@ export function Navbar() {
     };
   }, [isOpen]);
 
-  const links = [
-    { to: "/", label: nav.home },
-    { to: "/services", label: nav.services },
-    { to: "/reviews", label: nav.reviews },
-    { to: "/contact", label: nav.contact },
-  ];
+  useEffect(() => {
+    const ids = ["home", "services", "reviews", "contact"];
+    const observers = ids.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { threshold: 0.3 }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach((o) => o?.disconnect());
+  }, []);
 
-  const isActive = (path) => decodeURIComponent(location.pathname) === path;
+  const links = [
+    { id: "home",     label: nav.home },
+    { id: "services", label: nav.services },
+    { id: "reviews",  label: nav.reviews },
+    { id: "contact",  label: nav.contact },
+  ];
 
   const textBase = "text-body hover:text-heading transition-colors duration-300";
   const textActive = "text-accent";
-  const logoText = "text-heading";
   const hamburgerBg = "bg-heading";
 
   return (
@@ -92,7 +88,7 @@ export function Navbar() {
     >
       <div className="px-4 md:px-8 lg:px-12">
         <div className="container-xl flex h-20 items-center justify-between md:h-24">
-          <Link to="/" className="flex items-center -translate-y-[2px]" aria-label="SpeedLink Home">
+          <a href="#home" className="flex items-center -translate-y-[2px]" aria-label="SpeedLink Home">
             {/* Precision crop container: adjusted aspect ratio to show the cabin icon and 'Speedlink Logistics' text, but hide 'worldwide delivery' at the bottom */}
             <div className="relative overflow-hidden w-20 md:w-[6rem] lg:w-[7rem] aspect-[1500/850]">
               <div 
@@ -109,22 +105,21 @@ export function Navbar() {
                 }}
               />
             </div>
-          </Link>
+          </a>
 
           <nav className="hidden items-center gap-1 lg:flex">
             {links.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onMouseEnter={() => prefetchRoute(link.to)}
-                onFocus={() => prefetchRoute(link.to)}
-                data-active={isActive(link.to) || undefined}
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                data-active={activeSection === link.id || undefined}
                 className={`nav-link px-4 py-2 font-mono text-[0.75rem] uppercase tracking-[0.15em] transition-colors duration-300 ${
-                  isActive(link.to) ? textActive : textBase
+                  activeSection === link.id ? textActive : textBase
                 }`}
+                onClick={() => setIsOpen(false)}
               >
                 {t(link.label, lang)}
-              </Link>
+              </a>
             ))}
           </nav>
 
@@ -159,14 +154,14 @@ export function Navbar() {
               </svg>
               {t(nav.language, lang)}
             </button>
-            <Link to="/contact" onMouseEnter={() => prefetchRoute("/contact")} className="btn-primary text-xs">
+            <a href="#contact" className="btn-primary text-xs">
               {t(nav.quote, lang)}
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <circle cx="5" cy="12" r="0.7" fill="currentColor" opacity="0.3"/>
               </svg>
-            </Link>
+            </a>
           </div>
 
           <button
@@ -200,18 +195,18 @@ export function Navbar() {
         <div className="min-h-0 overflow-hidden">
           <div className="section-padding flex flex-col gap-2 py-6">
             {links.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onMouseEnter={() => prefetchRoute(link.to)}
+              <a
+                key={link.id}
+                href={`#${link.id}`}
                 className={`block px-4 py-3 font-mono text-base uppercase tracking-wide transition-colors ${
-                  isActive(link.to)
+                  activeSection === link.id
                     ? "bg-accent/10 text-accent"
                     : "text-body hover:bg-heading/5 hover:text-heading"
                 }`}
+                onClick={() => setIsOpen(false)}
               >
                 {t(link.label, lang)}
-              </Link>
+              </a>
             ))}
             <div className="mt-4 flex gap-3 px-4">
               <button onClick={toggleTheme} className="btn-secondary flex-1 text-xs">
@@ -223,9 +218,9 @@ export function Navbar() {
               >
                 {t(nav.language, lang)}
               </button>
-              <Link to="/contact" onMouseEnter={() => prefetchRoute("/contact")} className="btn-primary flex-1 text-xs">
+              <a href="#contact" className="btn-primary flex-1 text-xs" onClick={() => setIsOpen(false)}>
                 {t(nav.quote, lang)}
-              </Link>
+              </a>
             </div>
           </div>
         </div>

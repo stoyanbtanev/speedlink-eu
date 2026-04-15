@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
 import { gsap, ScrollTrigger, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { ctaDual, t } from "../../src/data/translations";
@@ -91,9 +90,9 @@ export function CtaDualSection() {
                 {t(ctaDual.ship.desc, lang)}
               </p>
               <div className="mt-8 flex gap-3">
-                <Link to="/contact" className="btn-primary text-sm">
+                <a href="#contact" className="btn-primary text-sm">
                   {t(ctaDual.ship.cta1, lang)}
-                </Link>
+                </a>
                 <a href="tel:+359877404599" className="btn-secondary text-sm">
                   {t(ctaDual.ship.cta2, lang)}
                 </a>

@@ -1,10 +1,8 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "../src/lib/gsap-config";
 import { useLang } from "../src/context/LanguageContext";
-import { servicesPage, faq, ctaDual, t } from "../src/data/translations";
+import { servicesPage, t } from "../src/data/translations";
 import { IMAGES } from "../src/data/images";
-import { PageHeader } from "../src/components/PageHeader";
 
 const SERVICE_IMAGES = [IMAGES.services.ftl, IMAGES.services.ltl, IMAGES.services.ocean, IMAGES.services.air];
 
@@ -91,7 +89,7 @@ function ServicesGrid() {
             <span className="tag mb-4 inline-flex w-fit">{t(servicesPage.featured.tag, lang)}</span>
             <h3 className="font-display text-display-md text-heading">{t(servicesPage.featured.title, lang)}</h3>
             <p className="mt-4 font-body text-body-md text-heading/50">{t(servicesPage.featured.desc, lang)}</p>
-            <Link to="/contact" className="btn-primary mt-8 w-fit text-sm">{t(servicesPage.featured.cta, lang)}</Link>
+            <a href="#contact" className="btn-primary mt-8 w-fit text-sm">{t(servicesPage.featured.cta, lang)}</a>
           </div>
         </div>
       </div>
@@ -165,8 +163,8 @@ function AboutSection() {
             <h2 className="font-display text-display-lg text-heading">{t(servicesPage.aboutTitle, lang)}</h2>
             <p className="mt-6 font-body text-body-lg leading-relaxed text-heading/50">{t(servicesPage.aboutDesc, lang)}</p>
             <div className="mt-8 flex gap-4">
-              <Link to="/contact" className="btn-primary">{lang === "bg" ? "Запитай" : "Inquire"}</Link>
-              <Link to="/reviews" className="btn-secondary">{lang === "bg" ? "Отзиви" : "Reviews"}</Link>
+              <a href="#contact" className="btn-primary">{lang === "bg" ? "Запитай" : "Inquire"}</a>
+              <a href="#reviews" className="btn-secondary">{lang === "bg" ? "Отзиви" : "Reviews"}</a>
             </div>
           </div>
           <div className="relative overflow-hidden border border-border">
@@ -180,14 +178,8 @@ function AboutSection() {
 }
 
 export default function Page() {
-  const { lang } = useLang();
   return (
     <>
-      <PageHeader
-        title={t(servicesPage.heroTitle, lang)}
-        subtitle={t(servicesPage.heroSubtitle, lang)}
-        image={IMAGES.pageHeaders.services}
-      />
       <ServicesGrid />
       <WhyChoose />
       <AboutSection />

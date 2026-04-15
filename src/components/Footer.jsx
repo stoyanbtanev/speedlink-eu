@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "../lib/gsap-config";
 import { useLang } from "../context/LanguageContext";
 import { nav, footer, t } from "../data/translations";
@@ -72,10 +71,10 @@ export function Footer() {
   }, { scope: footerRef });
 
   const links = [
-    { to: "/", label: nav.home },
-    { to: "/services", label: nav.services },
-    { to: "/reviews", label: nav.reviews },
-    { to: "/contact", label: nav.contact },
+    { id: "home",     label: nav.home },
+    { id: "services", label: nav.services },
+    { id: "reviews",  label: nav.reviews },
+    { id: "contact",  label: nav.contact },
   ];
 
   return (
@@ -85,7 +84,7 @@ export function Footer() {
         <div className="container-xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
             <div className="footer-logo lg:col-span-4">
-              <Link to="/" className="mb-6 block" aria-label="SpeedLink Home">
+              <a href="#home" className="mb-6 block" aria-label="SpeedLink Home">
                 {/* Crop container: showing the icon and text, hiding 'worldwide delivery' */}
                 <div className="relative overflow-hidden w-28 md:w-36 lg:w-[10rem] aspect-[1500/850]">
                   <div 
@@ -102,7 +101,7 @@ export function Footer() {
                     }}
                   />
                 </div>
-              </Link>
+              </a>
               <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">
                 {lang === "bg"
                   ? "Логистични решения от България за Европа и Азия. Бързи оферти, прозрачни цени, доказана надеждност."
@@ -116,13 +115,13 @@ export function Footer() {
               </h4>
               <ul className="flex flex-col gap-3">
                 {links.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
+                  <li key={link.id}>
+                    <a
+                      href={`#${link.id}`}
                       className="footer-nav-link font-body text-sm text-body transition-colors duration-300 hover:text-accent"
                     >
                       {t(link.label, lang)}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>

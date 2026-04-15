@@ -11,11 +11,17 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
-            if (id.includes("react-router") || id.includes("/react-dom/") || id.includes("/react/") || id.includes("scheduler")) {
+            if (id.includes("/react-dom/") || id.includes("/react/") || id.includes("scheduler")) {
               return "vendor-react";
             }
             if (id.includes("gsap") || id.includes("@gsap")) {
               return "vendor-gsap";
+            }
+            if (id.includes("framer-motion")) {
+              return "vendor-framer";
+            }
+            if (id.includes("leaflet") || id.includes("topojson") || id.includes("world-atlas")) {
+              return "vendor-map";
             }
           }
         },

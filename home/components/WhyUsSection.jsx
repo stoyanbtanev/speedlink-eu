@@ -1,12 +1,11 @@
 import React, { useRef, useState, Suspense } from "react";
-import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { useTheme } from "../../src/context/ThemeContext";
 import { whyUs, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
 import { Modal } from "../../src/components/Modal";
-import { ContactForm } from "../../contact/index.jsx";
+import { ContactForm } from "../../src/components/ContactForm";
 
 const LeafletMap = React.lazy(() =>
   import("../../src/components/LeafletMap").then((m) => ({ default: m.LeafletMap }))
@@ -133,13 +132,13 @@ export function WhyUsSection() {
               {t(whyUs.subtitle, lang)}
             </p>
             <div className="reveal-header-child mt-8 hidden lg:block">
-              <Link to="/contact" className="btn-ghost">
+              <a href="#contact" className="btn-ghost">
                 {t(whyUs.featured.cta, lang)}
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </Link>
+              </a>
             </div>
           </div>
 

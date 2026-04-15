@@ -104,8 +104,8 @@ export function StatsSection() {
                 key={i}
                 className="stat-card glass-card flex-1 p-6 md:p-8"
               >
-                <p className="stat-counter font-display text-4xl text-accent md:text-5xl">
-                  0
+                <p className="stat-counter font-display text-4xl text-accent md:text-5xl" data-target={STAT_TARGETS[i].num}>
+                  {STAT_TARGETS[i].num}{STAT_TARGETS[i].suffix}
                 </p>
                 <h3 className="mt-2 font-display text-lg text-heading">
                   {t(item.label, lang)}

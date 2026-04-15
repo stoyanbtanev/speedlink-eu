@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { faq, t } from "../../src/data/translations";
@@ -94,9 +93,9 @@ export function FaqSection() {
                 <p className="mt-2 font-body text-body-sm text-heading/40">
                   {t(faq.stillHaveDesc, lang)}
                 </p>
-                <Link to="/contact" className="btn-primary mt-6 w-full text-sm">
+                <a href="#contact" className="btn-primary mt-6 w-full text-sm">
                   {t(faq.cta, lang)}
-                </Link>
+                </a>
               </div>
             </div>
           </div>

@@ -1,5 +1,4 @@
 import { useRef, useMemo, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap, useGSAP } from "../../src/lib/gsap-config"; // Keep GSAP for text if desired, but framer-motion is fine too.
 import { useLang } from "../../src/context/LanguageContext";
@@ -121,14 +120,14 @@ export function HeroSection() {
           variants={FADE_UP_VARIANTS}
           className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:mt-10 sm:gap-4"
         >
-          <Link to="/contact" className="btn-primary" aria-label={t(hero.cta1, lang)}>
+          <a href="#contact" className="btn-primary" aria-label={t(hero.cta1, lang)}>
             {t(hero.cta1, lang)}
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
               <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               <circle cx="5" cy="12" r="0.7" fill="currentColor" opacity="0.3"/>
             </svg>
-          </Link>
+          </a>
           <a href="tel:+359877404599" className="btn-secondary bg-surface/10 backdrop-blur-sm" aria-label={t(hero.cta2, lang)}>
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
               <path d="M5 4.5C5 3.67 5.67 3 6.5 3h2.7c.46 0 .87.3 1 .74l1.1 3.48a1 1 0 0 1-.35 1.05l-1.6 1.2a12.5 12.5 0 0 0 5.17 5.17l1.2-1.6a1 1 0 0 1 1.05-.35l3.48 1.1c.44.14.74.54.74 1v2.7c0 .83-.67 1.5-1.5 1.5C10.8 19 5 13.2 5 4.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>

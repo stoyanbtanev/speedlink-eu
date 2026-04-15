@@ -1,10 +1,7 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "../src/lib/gsap-config";
 import { useLang } from "../src/context/LanguageContext";
 import { reviewsPage, t } from "../src/data/translations";
-import { IMAGES } from "../src/data/images";
-import { PageHeader } from "../src/components/PageHeader";
 
 function TestimonialsGrid() {
   const { lang } = useLang();
@@ -152,12 +149,12 @@ function StatsSection() {
               {lang === "bg" ? "Твърда оферта до 24 часа. Без задължение." : "Firm quote within 24 hours. No obligation."}
             </p>
           </div>
-          <Link to="/contact" className="btn-primary flex-shrink-0">
+          <a href="#contact" className="btn-primary flex-shrink-0">
             {lang === "bg" ? "Поискай оферта" : "Get a quote"}
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </Link>
+          </a>
         </div>
       </div>
     </section>
@@ -165,14 +162,8 @@ function StatsSection() {
 }
 
 export default function Page() {
-  const { lang } = useLang();
   return (
     <>
-      <PageHeader
-        title={t(reviewsPage.heroTitle, lang)}
-        subtitle={t(reviewsPage.heroSubtitle, lang)}
-        image={IMAGES.pageHeaders.reviews}
-      />
       <TestimonialsGrid />
       <StatsSection />
     </>
