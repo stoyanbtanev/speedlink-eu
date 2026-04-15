@@ -1,11 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
+import { useTheme } from "../../src/context/ThemeContext";
 import { whyUs, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
 import { Modal } from "../../src/components/Modal";
 import { ContactForm } from "../../contact/index.jsx";
+
+const LeafletMap = React.lazy(() =>
+  import("../../src/components/LeafletMap").then((m) => ({ default: m.LeafletMap }))
+);
 
 const ICONS = [
   <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
@@ -45,9 +50,11 @@ const CARD_IMAGES = [
 
 export function WhyUsSection() {
   const { lang } = useLang();
+  const { theme } = useTheme();
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [mapModalOpen, setMapModalOpen] = useState(false);
 
   useGSAP(() => {
     const section = sectionRef.current;
@@ -140,12 +147,18 @@ export function WhyUsSection() {
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {whyUs.cards.map((card, i) => {
               const isQuoteCard = i === 0;
+              const isReachCard = i === 1;
+              const isClickable = isQuoteCard || isReachCard;
               return (
                 <article
                   key={i}
-                  onClick={isQuoteCard ? () => setModalOpen(true) : undefined}
+                  onClick={
+                    isQuoteCard ? () => setModalOpen(true)
+                    : isReachCard ? () => setMapModalOpen(true)
+                    : undefined
+                  }
                   className={`why-card group relative overflow-hidden border border-border aspect-[3/4] sm:aspect-[4/5] transition-[border-color,transform] duration-500 hover:border-accent/40 hover:-translate-y-0.5 ${
-                    isQuoteCard ? "cursor-pointer" : ""
+                    isClickable ? "cursor-pointer" : ""
                   }`}
                 >
                   <img
@@ -176,6 +189,11 @@ export function WhyUsSection() {
                     {isQuoteCard && (
                       <button className="btn-primary mt-4 text-xs">
                         {lang === "bg" ? "Попълни форма" : "Fill form"}
+                      </button>
+                    )}
+                    {isReachCard && (
+                      <button className="btn-primary mt-4 text-xs">
+                        {lang === "bg" ? "Виж обхвата" : "Show range"}
                       </button>
                     )}
                   </div>
@@ -227,6 +245,29 @@ export function WhyUsSection() {
       </div>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <ContactForm isModal={true} />
+      </Modal>
+
+      <Modal isOpen={mapModalOpen} onClose={() => setMapModalOpen(false)}>
+        <div className="p-4 sm:p-6 md:p-8">
+          <p className="mb-1 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-accent">
+            {lang === "bg" ? "Обхват" : "Coverage"}
+          </p>
+          <h2 className="font-display text-display-sm text-heading mb-4">
+            {lang === "bg" ? "47 държави" : "47 countries"}
+          </h2>
+          <p className="mb-6 font-body text-body-sm text-heading/50">
+            {lang === "bg"
+              ? "Собствена партньорска мрежа от терминали и хъбове в Европа, Турция и Централна Азия."
+              : "Dedicated partner network of terminals and hubs across Europe, Turkey and Central Asia."}
+          </p>
+          <Suspense fallback={
+            <div className="flex h-64 items-center justify-center border border-border">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+            </div>
+          }>
+            <LeafletMap lang={lang} theme={theme} mode="range" wrapClass="border border-border" />
+          </Suspense>
+        </div>
       </Modal>
     </section>
   );
