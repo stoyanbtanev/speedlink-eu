@@ -91,7 +91,7 @@ export function HeroSection() {
         variants={STAGGER_CONTAINER_VARIANTS}
         initial="hidden"
         animate="show"
-        className="z-10 flex flex-col items-center pb-24 sm:pb-32 lg:pb-40 w-full max-w-7xl pt-16 sm:pt-20"
+        className="z-10 flex flex-col items-center pb-24 sm:pb-32 lg:pb-40 w-full max-w-7xl pt-28 sm:pt-32"
       >
         <motion.div variants={FADE_UP_VARIANTS}>
           <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
@@ -99,7 +99,7 @@ export function HeroSection() {
 
         <motion.h1
           variants={FADE_UP_VARIANTS}
-          className="mx-auto max-w-4xl px-4 font-display text-[2.5rem] uppercase leading-[1.05] text-heading sm:text-6xl md:text-display-xl sm:px-0"
+          className="mx-auto max-w-4xl px-4 font-display text-[clamp(2.5rem,8vw,3.5rem)] uppercase leading-[0.95] text-heading sm:text-6xl md:text-display-xl sm:px-0"
         >
           {titleText}
         </motion.h1>

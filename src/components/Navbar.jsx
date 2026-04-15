@@ -78,10 +78,10 @@ export function Navbar() {
 
   const isActive = (path) => decodeURIComponent(location.pathname) === path;
 
-  const textBase = "text-white/70 hover:text-white group-data-[scrolled]:text-body group-data-[scrolled]:hover:text-heading";
+  const textBase = "text-body hover:text-heading transition-colors duration-300";
   const textActive = "text-accent";
-  const logoText = "text-white group-data-[scrolled]:text-heading";
-  const hamburgerBg = isOpen ? "bg-heading" : "bg-white group-data-[scrolled]:bg-heading";
+  const logoText = "text-heading";
+  const hamburgerBg = "bg-heading";
 
   return (
     <header
