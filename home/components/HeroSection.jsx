@@ -1,6 +1,7 @@
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { gsap, useGSAP } from "../../src/lib/gsap-config";
+import { motion, AnimatePresence } from "framer-motion";
+import { gsap, useGSAP } from "../../src/lib/gsap-config"; // Keep GSAP for text if desired, but framer-motion is fine too.
 import { useLang } from "../../src/context/LanguageContext";
 import { hero, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
@@ -27,80 +28,31 @@ export function HeroSection() {
 
   const titleText = useMemo(() => t(hero.title, lang), [lang]);
 
-  useGSAP(() => {
-    const isMobile = window.innerWidth < 768;
+  // Framer Motion variants for text content
+  const FADE_UP_VARIANTS = {
+    hidden: { opacity: 0, y: 20 },
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        type: "spring", 
+        stiffness: 80, 
+        damping: 15,
+        duration: 0.8
+      } 
+    },
+  };
 
-    const tl = gsap.timeline({ delay: 0.15 });
-
-    if (tagRef.current) {
-      if (isMobile) {
-        gsap.set(tagRef.current, { opacity: 0, y: 15 });
-        tl.to(tagRef.current, { opacity: 1, y: 0, duration: 0.5, ease: "silk" });
-      } else {
-        gsap.set(tagRef.current, { clipPath: "inset(0 100% 0 0)", opacity: 1 });
-        tl.to(tagRef.current, { clipPath: "inset(0 0% 0 0)", duration: 0.6, ease: "silk" });
-      }
-    }
-
-    if (h1Ref.current) {
-      h1Ref.current.style.visibility = "visible";
-      if (isMobile) {
-        gsap.set(h1Ref.current, { opacity: 0, y: 20 });
-        tl.to(h1Ref.current, { opacity: 1, y: 0, duration: 0.6, ease: "silk" }, "-=0.2");
-      } else {
-        const chars = h1Ref.current.querySelectorAll(".hero-char");
-        gsap.set(chars, { y: 60, opacity: 0, rotateX: 8 });
-        tl.to(chars, {
-          y: 0,
-          opacity: 1,
-          rotateX: 0,
-          duration: 0.9,
-          stagger: { each: 0.02, ease: "power3.inOut" },
-          ease: "silk",
-        }, "-=0.2");
-      }
-    }
-
-    if (subtitleRef.current) {
-      gsap.set(subtitleRef.current, { y: isMobile ? 15 : 30, opacity: 0 });
-      tl.to(subtitleRef.current, { y: 0, opacity: 1, duration: isMobile ? 0.5 : 0.9, ease: "silk" }, "-=0.5");
-    }
-
-    if (ruleRef.current) {
-      tl.to(ruleRef.current, {
-        opacity: 1, scaleX: 1,
-        duration: 0.8, ease: "silk",
-      }, "-=0.3");
-    }
-
-    if (ctaRef.current) {
-      const buttons = ctaRef.current.children;
-      gsap.set(buttons, { y: isMobile ? 15 : 30, opacity: 0, scale: 0.95 });
-      tl.to(buttons, {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: isMobile ? 0.5 : 0.7,
-        stagger: 0.08,
-        ease: "whip",
-      }, "-=0.4");
-    }
-
-    if (statsRef.current) {
-      if (isMobile) {
-        gsap.set(statsRef.current, { opacity: 0, y: 10 });
-        tl.to(statsRef.current, { opacity: 1, y: 0, duration: 0.4, ease: "silk" }, "-=0.2");
-      } else {
-        gsap.set(statsRef.current, { clipPath: "inset(0 50% 0 50%)", opacity: 1 });
-        tl.to(statsRef.current, { clipPath: "inset(0 0% 0 0%)", duration: 0.8, ease: "silk" }, "-=0.2");
-      }
-    }
-
-    tl.eventCallback("onComplete", () => {
-      gsap.set([tagRef.current, h1Ref.current, subtitleRef.current, ruleRef.current, ctaRef.current, statsRef.current].filter(Boolean), { willChange: "auto" });
-    });
-
-  }, { scope: sectionRef, dependencies: [lang] });
+  const STAGGER_CONTAINER_VARIANTS = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.2,
+      },
+    },
+  };
 
   const splitChars = (text) => {
     const tokens = text.split(/(\s|\n)/);
@@ -108,7 +60,7 @@ export function HeroSection() {
       if (token === "\n") return <br key={`br-${wi}`} />;
       if (token === " ")
         return (
-          <span key={`sp-${wi}`} className="hero-char inline-block" style={{ whiteSpace: "pre" }}>
+          <span key={`sp-${wi}`} className="inline-block" style={{ whiteSpace: "pre" }}>
             {" "}
           </span>
         );
@@ -116,7 +68,7 @@ export function HeroSection() {
       return (
         <span key={`w-${wi}`} className="inline-block whitespace-nowrap">
           {token.split("").map((char, ci) => (
-            <span key={ci} className="hero-char inline-block">
+            <span key={ci} className="inline-block">
               {char}
             </span>
           ))}
@@ -126,45 +78,48 @@ export function HeroSection() {
   };
 
   const heroImages = Array.isArray(IMAGES.hero) ? IMAGES.hero : [];
-  const duplicatedImages = [...heroImages, ...heroImages];
+  // Triple the images for very long containers to ensure no gaps
+  const duplicatedImages = [...heroImages, ...heroImages, ...heroImages];
 
   return (
     <section 
       ref={sectionRef} 
-      className="relative w-full overflow-hidden bg-dark flex flex-col items-center justify-center text-center px-4"
+      className="relative w-full overflow-hidden bg-bg flex flex-col items-center justify-center text-center px-4 transition-colors duration-500"
       style={{ minHeight: lockedH ? `${lockedH}px` : "100svh" }}
     >
-      <div className="z-10 flex flex-col items-center pb-24 sm:pb-32 lg:pb-40 w-full max-w-7xl">
-        <div ref={tagRef} style={{ opacity: 0 }}>
+      <motion.div 
+        variants={STAGGER_CONTAINER_VARIANTS}
+        initial="hidden"
+        animate="show"
+        className="z-10 flex flex-col items-center pb-24 sm:pb-32 lg:pb-40 w-full max-w-7xl pt-16 sm:pt-20"
+      >
+        <motion.div variants={FADE_UP_VARIANTS}>
           <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
-        </div>
+        </motion.div>
 
-        <h1
-          ref={h1Ref}
-          className="mx-auto max-w-4xl px-4 font-display text-[2rem] uppercase leading-[1.1] text-[#F5F0E8] sm:text-5xl md:text-display-xl sm:px-0"
-          style={{ visibility: "hidden" }}
+        <motion.h1
+          variants={FADE_UP_VARIANTS}
+          className="mx-auto max-w-4xl px-4 font-display text-[2.5rem] uppercase leading-[1.05] text-heading sm:text-6xl md:text-display-xl sm:px-0"
         >
-          {splitChars(titleText)}
-        </h1>
+          {titleText}
+        </motion.h1>
 
-        <p
-          ref={subtitleRef}
-          className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-[#B4AEA5] sm:text-body-lg sm:px-0 sm:mt-6"
-          style={{ opacity: 0 }}
+        <motion.p
+          variants={FADE_UP_VARIANTS}
+          className="mx-auto mt-4 max-w-xl px-6 font-body text-base text-body/90 sm:text-body-lg sm:px-0 sm:mt-6"
         >
           {t(hero.subtitle, lang)}
-        </p>
+        </motion.p>
 
-        <div
-          ref={ruleRef}
-          className="mx-auto mt-4 h-px w-24 bg-accent sm:mt-6 sm:w-32"
-          style={{ opacity: 0, transform: "scaleX(0)", transformOrigin: "left" }}
+        <motion.div
+          variants={FADE_UP_VARIANTS}
+          className="mx-auto mt-6 h-px w-24 bg-accent sm:mt-8 sm:w-32"
+          style={{ transformOrigin: "center" }}
         />
 
-        <div
-          ref={ctaRef}
-          className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row sm:mt-10 sm:gap-4"
-          style={{ opacity: 0 }}
+        <motion.div
+          variants={FADE_UP_VARIANTS}
+          className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row sm:mt-10 sm:gap-4"
         >
           <Link to="/contact" className="btn-primary" aria-label={t(hero.cta1, lang)}>
             {t(hero.cta1, lang)}
@@ -182,12 +137,11 @@ export function HeroSection() {
             </svg>
             {t(hero.cta2, lang)}
           </a>
-        </div>
+        </motion.div>
 
-        <div
-          ref={statsRef}
-          className="hero-stats mt-4 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-body sm:gap-8"
-          style={{ opacity: 0 }}
+        <motion.div
+          variants={FADE_UP_VARIANTS}
+          className="hero-stats mt-6 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-body sm:gap-8"
         >
           <div className="flex items-center gap-2">
             <span className="font-display text-2xl text-accent">47</span>
@@ -203,31 +157,43 @@ export function HeroSection() {
             <span className="font-display text-2xl text-accent">15+</span>
             <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "години" : "years"}</span>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      {/* MARQUEE IMAGE STRIP */}
+      {/* INFINITE FRAMER MOTION MARQUEE */}
       <div 
-        className="absolute bottom-0 left-0 w-full h-[28vh] md:h-[35vh] lg:h-[40vh] pointer-events-none pb-4" 
+        className="absolute bottom-0 left-0 w-full h-[28vh] md:h-[35vh] lg:h-[40vh] pointer-events-none pb-4 overflow-hidden" 
         style={{
-          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-          maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
+          maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
         }}
       >
-        <div className="flex gap-4 sm:gap-6 w-max animate-marquee">
+        <motion.div 
+          className="flex gap-4 sm:gap-6 w-max absolute bottom-4"
+          initial={{ x: 0 }}
+          animate={{ x: "-33.33%" }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 50,
+              ease: "linear",
+            },
+          }}
+        >
           {duplicatedImages.map((src, index) => (
             <div
               key={index}
-              className="relative aspect-[3/4] h-48 sm:h-56 md:h-64 lg:h-[18rem] flex-shrink-0"
+              className="relative aspect-[3/4] h-48 sm:h-56 md:h-64 lg:h-[20rem] flex-shrink-0"
               style={{
-                transform: `rotate(${index % 2 === 0 ? -2 : 3}deg)`,
+                transform: `rotate(${index % 2 === 0 ? -1.5 : 2.5}deg)`,
                 pointerEvents: 'none',
               }}
             >
               <img
                 src={src}
                 alt={`SpeedLink logistics ${index + 1}`}
-                className="w-full h-full object-cover rounded-xl sm:rounded-2xl shadow-xl shadow-black/40"
+                className="w-full h-full object-cover rounded-xl sm:rounded-2xl border border-border/20 shadow-xl shadow-black/30 dark:shadow-black/60"
                 loading={index < heroImages.length ? "eager" : "lazy"}
                 decoding={index < heroImages.length ? "sync" : "async"}
                 width={400}
@@ -235,9 +201,10 @@ export function HeroSection() {
               />
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+
 
