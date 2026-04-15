@@ -143,7 +143,7 @@ export function WhyUsSection() {
           </div>
 
           {/* CARDS COLUMN */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {whyUs.cards.map((card, i) => {
               const isQuoteCard = i === 0;
               const isReachCard = i === 1;
@@ -156,7 +156,7 @@ export function WhyUsSection() {
                     : isReachCard ? () => setMapModalOpen(true)
                     : undefined
                   }
-                  className={`why-card group relative overflow-hidden border border-border aspect-[3/4] sm:aspect-[4/5] transition-[border-color,transform] duration-500 hover:border-accent/40 hover:-translate-y-0.5 ${
+                  className={`why-card group relative overflow-hidden border border-border aspect-[4/3] sm:aspect-[4/5] transition-[border-color,transform] duration-500 hover:border-accent/40 hover:-translate-y-0.5 ${
                     isClickable ? "cursor-pointer" : ""
                   }`}
                 >
@@ -178,7 +178,7 @@ export function WhyUsSection() {
                       {t(card.tag, lang)}
                     </span>
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-7">
+                  <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 lg:p-7">
                     <h3 className="font-display text-display-sm leading-[1.1] tracking-[0.03em] text-white mt-4 mb-2">
                       {t(card.title, lang)}
                     </h3>
@@ -199,46 +199,6 @@ export function WhyUsSection() {
                 </article>
               );
             })}
-
-            <article className="why-featured group relative col-span-2 min-h-[280px] sm:min-h-[320px] overflow-hidden border border-border transition-[border-color] duration-500 hover:border-accent/40 grayscale opacity-80 pointer-events-none">
-              <img
-                src={IMAGES.services.air}
-                alt={t(whyUs.featured.title, lang)}
-                width={1600}
-                height={1000}
-                loading="lazy"
-                decoding="async"
-                className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-black/95 via-black/80 to-black/40" />
-              <div className="absolute inset-x-0 top-0 flex items-start justify-end p-4 sm:p-6 opacity-40">
-                <span className="border border-white/20 bg-black/40 px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-white">
-                  {t(whyUs.featured.tag, lang)}
-                </span>
-              </div>
-              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 opacity-40">
-                <div className="flex h-12 w-12 items-center justify-center border border-accent/30 bg-black/50 text-white transition-[background-color,color] duration-500">
-                  <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-              <div className="absolute inset-x-0 bottom-0 max-w-2xl p-4 sm:p-6 md:p-8 opacity-40">
-                <h3 className="font-display text-display-sm text-white md:text-display-md">
-                  {t(whyUs.featured.title, lang)}
-                </h3>
-                <p className="mt-3 max-w-lg font-body text-body-md text-white/70">
-                  {t(whyUs.featured.desc, lang)}
-                </p>
-              </div>
-
-              {/* COMING SOON OVERLAY */}
-              <div className="absolute inset-0 z-10 flex items-center justify-center backdrop-blur-[2px]">
-                <span className="border border-white/10 bg-black/80 px-4 py-2 font-mono text-sm uppercase tracking-[0.2em] text-white/90">
-                  {lang === "bg" ? "Очаквайте скоро" : "Coming soon"}
-                </span>
-              </div>
-            </article>
           </div>
         </div>
       </div>

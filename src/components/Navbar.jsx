@@ -90,7 +90,7 @@ export function Navbar() {
       }`}
     >
       <div className="px-4 md:px-8 lg:px-12">
-        <div className="container-xl flex h-20 items-center justify-between md:h-24">
+        <div className="container-xl relative flex h-20 items-center justify-between md:h-24">
           <a href="#home" className="flex items-center -translate-y-[2px]" aria-label="SpeedLink Home">
             {/* Precision crop container: adjusted aspect ratio to show the cabin icon and 'Speedlink Logistics' text, but hide 'worldwide delivery' at the bottom */}
             <div className="relative overflow-hidden w-20 md:w-[6rem] lg:w-[7rem] aspect-[1500/850]">
@@ -110,7 +110,7 @@ export function Navbar() {
             </div>
           </a>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="absolute left-1/2 -translate-x-1/2 hidden items-center gap-1 lg:flex">
             {links.map((link) => (
               <a
                 key={link.id}
