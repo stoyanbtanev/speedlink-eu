@@ -98,16 +98,16 @@ export function StatsSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-dark/60 to-transparent" />
           </div>
 
-          <div className="flex flex-col gap-x-12 sm:gap-x-16 lg:gap-x-20 gap-y-10 sm:gap-y-12 lg:col-span-2">
+          <div className="flex flex-col gap-4 lg:col-span-2">
             {stats.items.map((item, i) => (
               <div
                 key={i}
                 className="stat-card glass-card flex-1 p-6 md:p-8"
               >
-                <p className="stat-counter font-display text-[clamp(3rem,7vw,5rem)] leading-[0.9] tracking-[0.04em] text-accent" data-target={STAT_TARGETS[i].num}>
+                <p className="stat-counter font-display text-4xl text-accent md:text-5xl" data-target={STAT_TARGETS[i].num}>
                   {STAT_TARGETS[i].num}{STAT_TARGETS[i].suffix}
                 </p>
-                <h3 className="mt-2 font-mono text-label uppercase tracking-[0.14em] text-muted">
+                <h3 className="mt-2 font-display text-lg text-heading">
                   {t(item.label, lang)}
                 </h3>
                 <p className="mt-1 font-body text-body-sm text-heading/40">

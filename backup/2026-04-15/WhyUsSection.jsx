@@ -121,7 +121,7 @@ export function WhyUsSection() {
       <div className="container-xl">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-16">
           {/* STICKY HEADER COLUMN */}
-          <div ref={headerRef} className="lg:sticky lg:top-28 lg:self-start mb-12 sm:mb-16 lg:mb-20">
+          <div ref={headerRef} className="lg:sticky lg:top-28 lg:self-start">
             <span className="reveal-header-child tag mb-6 inline-flex">
               {t(whyUs.tag, lang)}
             </span>
@@ -178,11 +178,11 @@ export function WhyUsSection() {
                       {t(card.tag, lang)}
                     </span>
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-7">
-                    <h3 className="font-display text-display-sm leading-[1.1] tracking-[0.03em] text-white mt-4 mb-2">
+                  <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 md:p-6">
+                    <h3 className="font-display text-base font-semibold text-white sm:text-2xl md:text-display-sm">
                       {t(card.title, lang)}
                     </h3>
-                    <p className="font-body text-[0.9375rem] leading-[1.65] tracking-[-0.005em] text-white/70">
+                    <p className="mt-1 font-body text-xs text-white/70 sm:mt-2 sm:text-body-sm">
                       {t(card.desc, lang)}
                     </p>
                     {isQuoteCard && (

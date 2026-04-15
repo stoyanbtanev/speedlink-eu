@@ -21,12 +21,7 @@ export function HeroSection() {
 
   useEffect(() => {
     if (!isDesktop) {
-      // Use CSS custom property to respect dynamic viewport, not raw innerHeight
-      const svhPx = parseFloat(getComputedStyle(document.documentElement)
-        .getPropertyValue('--vh-fallback') || '1') * 100;
-      setLockedH(Math.min(window.innerHeight, svhPx > 0 ? svhPx : window.innerHeight));
-    } else {
-      setLockedH(null);
+      setLockedH(window.innerHeight);
     }
   }, [isDesktop]);
 
@@ -89,13 +84,13 @@ export function HeroSection() {
     <section 
       ref={sectionRef} 
       className="relative w-full bg-bg flex flex-col items-center justify-center text-center px-4 transition-colors duration-500"
-      style={{ minHeight: lockedH ? `${lockedH}px` : "100svh", maxHeight: lockedH ? `${lockedH}px` : "none" }}
+      style={{ minHeight: lockedH ? `${lockedH}px` : "100svh" }}
     >
       <motion.div 
         variants={STAGGER_CONTAINER_VARIANTS}
         initial="hidden"
         animate="show"
-        className="z-10 flex flex-col items-center pb-16 sm:pb-20 lg:pb-28 w-full max-w-7xl pt-24 sm:pt-28 lg:pt-32"
+        className="z-10 flex flex-col items-center pb-24 sm:pb-32 lg:pb-40 w-full max-w-7xl pt-28 sm:pt-32"
       >
         <motion.div variants={FADE_UP_VARIANTS}>
           <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
@@ -103,14 +98,14 @@ export function HeroSection() {
 
         <motion.h1
           variants={FADE_UP_VARIANTS}
-          className="mx-auto w-full max-w-[22ch] px-2 font-display text-display-xl uppercase text-heading sm:px-0"
+          className="mx-auto max-w-4xl px-4 font-display text-[clamp(2.2rem,8vw,3.5rem)] uppercase leading-[0.95] text-heading sm:text-6xl md:text-display-xl sm:px-0"
         >
           {splitChars(titleText)}
         </motion.h1>
 
         <motion.p
           variants={FADE_UP_VARIANTS}
-          className="mx-auto mt-4 max-w-[52ch] px-6 font-body text-body-lg leading-[1.7] tracking-[-0.005em] text-body/90 sm:px-0 sm:mt-6"
+          className="mx-auto mt-4 max-w-xl px-6 font-body text-base text-body/90 sm:text-body-lg sm:px-0 sm:mt-6"
         >
           {t(hero.subtitle, lang)}
         </motion.p>
@@ -145,21 +140,21 @@ export function HeroSection() {
 
         <motion.div
           variants={FADE_UP_VARIANTS}
-          className="hero-stats mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-12 lg:gap-x-16 gap-y-3 drop-shadow-sm"
+          className="hero-stats mt-6 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-heading sm:gap-8 drop-shadow-sm"
         >
           <div className="flex items-center gap-2">
-            <span className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-none tracking-[0.03em] text-accent drop-shadow-sm">47</span>
-            <span className="font-mono text-[0.6875rem] leading-[1.5] tracking-[0.14em] uppercase text-heading/80">{lang === "bg" ? "държави" : "countries"}</span>
+            <span className="font-display text-2xl text-accent drop-shadow-sm">47</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider text-heading/80">{lang === "bg" ? "държави" : "countries"}</span>
           </div>
           <div className="hero-stats-divider h-4 w-px bg-border/40" />
           <div className="flex items-center gap-2">
-            <span className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-none tracking-[0.03em] text-accent drop-shadow-sm">8,400+</span>
-            <span className="font-mono text-[0.6875rem] leading-[1.5] tracking-[0.14em] uppercase text-heading/80">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
+            <span className="font-display text-2xl text-accent drop-shadow-sm">8,400+</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider text-heading/80">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
           </div>
           <div className="hero-stats-divider h-4 w-px bg-border/40" />
           <div className="flex items-center gap-2">
-            <span className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-none tracking-[0.03em] text-accent drop-shadow-sm">15+</span>
-            <span className="font-mono text-[0.6875rem] leading-[1.5] tracking-[0.14em] uppercase text-heading/80">{lang === "bg" ? "години" : "years"}</span>
+            <span className="font-display text-2xl text-accent drop-shadow-sm">15+</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider text-heading/80">{lang === "bg" ? "години" : "years"}</span>
           </div>
         </motion.div>
       </motion.div>
