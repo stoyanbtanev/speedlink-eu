@@ -146,7 +146,7 @@ function StatsSection() {
               {lang === "bg" ? "Готови да станете следващия доволен клиент?" : "Ready to become our next happy client?"}
             </h3>
             <p className="mt-2 font-body text-body-md text-heading/50">
-              {lang === "bg" ? "Твърда оферта до 24 часа. Без задължение." : "Firm quote within 24 hours. No obligation."}
+              {lang === "bg" ? "Твърда оферта до минути. Без задължение." : "Firm quote in minutes. No obligation."}
             </p>
           </div>
           <a href="#contact" className="btn-primary flex-shrink-0">

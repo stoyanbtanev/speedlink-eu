@@ -15,8 +15,8 @@ export const hero = {
   tag:      { bg: "Спедиция и логистика", en: "Freight & Logistics" },
   title:    { bg: "Вашият товар.\nНашата мрежа.", en: "Your freight.\nOur network." },
   subtitle: {
-    bg: "Сухопътен, морски и въздушен транспорт в 47 държави. Оферта до 24 часа. Митница включена.",
-    en: "Road, ocean and air freight across 47 countries. Quoted within 24 hours. Customs included.",
+    bg: "Сухопътен, морски и въздушен транспорт в 47 държави. Оферта до минути. Митница включена.",
+    en: "Road, ocean and air freight across 47 countries. Quoted in minutes. Customs included.",
   },
   cta1: { bg: "Поискай оферта", en: "Request a Quote" },
   cta2: { bg: "Обади се",       en: "Call Us" },
@@ -50,8 +50,8 @@ export const whyUs = {
   cards: [
     {
       tag:   { bg: "Реакция",    en: "Response" },
-      title: { bg: "Оферта до 24 часа",   en: "Quoted within 24 hours" },
-      desc:  { bg: "Изпратете запитване — получавате твърда цена и срок до обяд на следващия работен ден.", en: "Submit your inquiry — receive a binding price and timeline by noon the next business day." },
+      title: { bg: "Оферта до минути",   en: "Offer in minutes" },
+      desc:  { bg: "Получавате твърда цена и срок веднага след уточняване на детайлите и спецификата на вашия товар.", en: "You receive a binding price and timeline immediately after clarifying the details and specifications of your cargo." },
     },
     {
       tag:   { bg: "Обхват",   en: "Reach" },
@@ -152,7 +152,7 @@ export const stats = {
 export const ctaDual = {
   ship: {
     title: { bg: "Готови да изпратите?",   en: "Ready to ship?" },
-    desc:  { bg: "Твърда оферта до 24 часа. Без скрити разходи.", en: "Binding quote within 24 hours. No hidden costs." },
+    desc:  { bg: "Твърда оферта до минути. Без скрити разходи.", en: "Binding quote in minutes. No hidden costs." },
     cta1:  { bg: "Оферта",    en: "Get a Quote" },
     cta2:  { bg: "Обади се",  en: "Call Us" },
   },
@@ -259,7 +259,7 @@ export const servicesPage = {
   whyTitle:    { bg: "Защо SpeedLink Logistics", en: "Why SpeedLink Logistics" },
   whySubtitle: { bg: "Отговор в часове. Реален човек на линията. Ясни цени.", en: "Response within hours. A real person on the line. Clear pricing." },
   whyCards: [
-    { title: { bg: "Оферта до 24 часа",  en: "Quoted within 24 hours" }, desc: { bg: "Твърда цена и срок — в рамките на един работен ден.",       en: "Binding price and timeline — within one business day." } },
+    { title: { bg: "Оферта до минути",  en: "Offer in minutes" }, desc: { bg: "Твърда цена и срок — веднага след уточняване на детайлите.", en: "Binding price and timeline — immediately after clarifying the details." } },
     { title: { bg: "От врата до врата",   en: "Door to door" },          desc: { bg: "Поемаме целия процес — вие получавате стоката.", en: "We manage the entire process — you receive the goods." } },
     { title: { bg: "Митница включена",    en: "Customs included" },      desc: { bg: "Документи и съответствие — част от всяка услуга.",         en: "Documentation and compliance — part of every service." } },
   ],
