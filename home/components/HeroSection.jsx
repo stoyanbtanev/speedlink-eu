@@ -21,10 +21,7 @@ export function HeroSection() {
 
   useEffect(() => {
     if (!isDesktop) {
-      // Use CSS custom property to respect dynamic viewport, not raw innerHeight
-      const svhPx = parseFloat(getComputedStyle(document.documentElement)
-        .getPropertyValue('--vh-fallback') || '1') * 100;
-      setLockedH(Math.min(window.innerHeight, svhPx > 0 ? svhPx : window.innerHeight));
+      setLockedH(window.innerHeight);
     } else {
       setLockedH(null);
     }
@@ -89,7 +86,7 @@ export function HeroSection() {
     <section 
       ref={sectionRef} 
       className="relative w-full bg-bg flex flex-col items-center justify-center text-center px-4 transition-colors duration-500"
-      style={{ minHeight: lockedH ? `${lockedH}px` : "100svh", maxHeight: lockedH ? `${lockedH}px` : "none" }}
+      style={{ minHeight: lockedH ? `${lockedH}px` : "100svh" }}
     >
       <motion.div 
         variants={STAGGER_CONTAINER_VARIANTS}
