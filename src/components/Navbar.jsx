@@ -86,17 +86,13 @@ export function Navbar() {
   return (
     <header
       ref={headerRef}
-      className={`group fixed top-0 z-50 w-full transition-[background-color,box-shadow] duration-500 ease-out-expo ${
-        isOpen
-          ? "bg-menu border-b border-border"
-          : isDesktop
-            ? "bg-transparent data-[scrolled]:bg-nav-scrolled/95 data-[scrolled]:border-b data-[scrolled]:border-border"
-            : "bg-transparent data-[scrolled]:bg-nav-scrolled data-[scrolled]:border-b data-[scrolled]:border-border"
+      className={`group fixed top-0 z-50 w-full border-b border-border bg-nav-scrolled/95 backdrop-blur-md transition-[background-color,box-shadow] duration-500 ease-out-expo ${
+        isOpen ? "bg-menu" : ""
       }`}
     >
-      <div className="section-padding">
+      <div className="px-4 md:px-8 lg:px-12">
         <div className="container-xl flex h-20 items-center justify-between md:h-24">
-          <Link to="/" className="flex items-center gap-2" aria-label="SpeedLink Home">
+          <Link to="/" className="flex items-center gap-3" aria-label="SpeedLink Home">
             <img
               src="/images/logo.png"
               alt="SpeedLink Logistics logo"
@@ -106,7 +102,7 @@ export function Navbar() {
               fetchpriority="high"
               className="block h-10 w-auto shrink-0 object-contain md:h-12"
             />
-            <span className={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 md:text-3xl ${logoText}`}>
+            <span className={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 md:text-3xl ${logoText} leading-none pt-1`}>
               SpeedLink Logistics<span className="text-accent">.</span>
             </span>
           </Link>

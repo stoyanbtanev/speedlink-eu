@@ -282,7 +282,7 @@ export function HeroSection() {
 
                 <h1
                 ref={h1Ref}
-                className="mx-auto max-w-4xl px-4 font-display text-[2rem] uppercase leading-[1.1] text-heading sm:text-5xl md:text-display-xl sm:px-0"
+                className="mx-auto max-w-4xl px-4 font-display text-[2rem] uppercase leading-[1.1] text-[#F5F0E8] sm:text-5xl md:text-display-xl sm:px-0"
                 style={{ visibility: "hidden" }}
               >
                 {splitChars(titleText)}
@@ -290,7 +290,7 @@ export function HeroSection() {
 
               <p
                 ref={subtitleRef}
-                className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-body sm:text-body-lg sm:px-0 sm:mt-6"
+                className="mx-auto mt-3 max-w-xl px-6 font-body text-base text-[#B4AEA5] sm:text-body-lg sm:px-0 sm:mt-6"
                 style={{ opacity: 0 }}
               >
                 {t(hero.subtitle, lang)}
