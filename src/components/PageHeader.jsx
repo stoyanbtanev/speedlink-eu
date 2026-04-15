@@ -50,11 +50,11 @@ export function PageHeader({ title, subtitle, image }) {
       </div>
       <div className="section-padding relative z-10 pb-16 pt-40 md:pb-24 md:pt-48">
         <div className="container-xl">
-          <h1 className="ph-title max-w-2xl font-display text-heading uppercase text-[clamp(3.5rem,9vw,8rem)] leading-none">
+          <h1 className="ph-title max-w-4xl font-display text-white uppercase text-[clamp(3.5rem,9vw,8rem)] leading-[0.9] [clip-path:inset(0_-10%_-10%_0)]">
             {title}
           </h1>
           {subtitle && (
-            <p className="ph-subtitle mt-4 max-w-lg font-body text-body-lg text-body">
+            <p className="ph-subtitle mt-4 max-w-lg font-body text-body-lg text-white/70">
               {subtitle}
             </p>
           )}
