@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { whyUs, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
+import { Modal } from "../../src/components/Modal";
+import { ContactForm } from "../../contact/index.jsx";
 
 const ICONS = [
   <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
@@ -38,13 +40,14 @@ const CARD_IMAGES = [
   IMAGES.services.ftl,
   IMAGES.services.ocean,
   IMAGES.services.customs,
-  IMAGES.services.air,
+  IMAGES.services.warehouse,
 ];
 
 export function WhyUsSection() {
   const { lang } = useLang();
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useGSAP(() => {
     const section = sectionRef.current;
@@ -110,13 +113,13 @@ export function WhyUsSection() {
   return (
     <section className="section-padding section-py" ref={sectionRef}>
       <div className="container-xl">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-16">
           {/* STICKY HEADER COLUMN */}
           <div ref={headerRef} className="lg:sticky lg:top-28 lg:self-start">
             <span className="reveal-header-child tag mb-6 inline-flex">
               {t(whyUs.tag, lang)}
             </span>
-            <h2 className="reveal-header-child font-display text-display-lg text-heading">
+            <h2 className="reveal-header-child font-display text-display-md text-heading">
               {t(whyUs.title, lang)}
             </h2>
             <p className="reveal-header-child mt-4 font-body text-body-lg text-heading/50">
@@ -135,44 +138,54 @@ export function WhyUsSection() {
 
           {/* CARDS COLUMN */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            {whyUs.cards.map((card, i) => (
-              <article
-                key={i}
-                className="why-card group relative overflow-hidden border border-border aspect-[3/4] sm:aspect-[4/5] transition-[border-color,transform] duration-500 hover:border-accent/40 hover:-translate-y-0.5"
-              >
-                <img
-                  src={CARD_IMAGES[i]}
-                  alt={t(card.title, lang)}
-                  width={800}
-                  height={1000}
-                  loading="lazy"
-                  decoding="async"
-                  className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
-                <div className="absolute inset-x-0 top-0 flex items-start justify-between p-5">
-                  <div className="flex h-11 w-11 items-center justify-center border border-accent/30 bg-black/50 text-white transition-[background-color,color] duration-500 group-hover:bg-accent/90 group-hover:text-bg">
-                    {ICONS[i]}
+            {whyUs.cards.map((card, i) => {
+              const isQuoteCard = i === 0;
+              return (
+                <article
+                  key={i}
+                  onClick={isQuoteCard ? () => setModalOpen(true) : undefined}
+                  className={`why-card group relative overflow-hidden border border-border aspect-[3/4] sm:aspect-[4/5] transition-[border-color,transform] duration-500 hover:border-accent/40 hover:-translate-y-0.5 ${
+                    isQuoteCard ? "cursor-pointer" : ""
+                  }`}
+                >
+                  <img
+                    src={CARD_IMAGES[i]}
+                    alt={t(card.title, lang)}
+                    width={800}
+                    height={1000}
+                    loading="lazy"
+                    decoding="async"
+                    className="why-card-img absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+                  <div className="absolute inset-x-0 top-0 flex items-start justify-between p-5">
+                    <div className="flex h-11 w-11 items-center justify-center border border-accent/30 bg-black/50 text-white transition-[background-color,color] duration-500 group-hover:bg-accent/90 group-hover:text-bg">
+                      {ICONS[i]}
+                    </div>
+                    <span className="border border-white/20 bg-black/40 px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-white">
+                      {t(card.tag, lang)}
+                    </span>
                   </div>
-                  <span className="border border-white/20 bg-black/40 px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-white">
-                    {t(card.tag, lang)}
-                  </span>
-                </div>
-                <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 md:p-6">
-                  <h3 className="font-display text-base font-semibold text-white sm:text-2xl md:text-display-sm">
-                    {t(card.title, lang)}
-                  </h3>
-                  <p className="mt-1 font-body text-xs text-white/70 sm:mt-2 sm:text-body-sm">
-                    {t(card.desc, lang)}
-                  </p>
-                </div>
-              </article>
-            ))}
+                  <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 md:p-6">
+                    <h3 className="font-display text-base font-semibold text-white sm:text-2xl md:text-display-sm">
+                      {t(card.title, lang)}
+                    </h3>
+                    <p className="mt-1 font-body text-xs text-white/70 sm:mt-2 sm:text-body-sm">
+                      {t(card.desc, lang)}
+                    </p>
+                    {isQuoteCard && (
+                      <button className="btn-primary mt-4 text-xs">
+                        {lang === "bg" ? "Попълни форма" : "Fill form"}
+                      </button>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
 
-            {/* FEATURED FULL-BLEED */}
-            <article className="why-featured group relative col-span-2 min-h-[280px] sm:min-h-[320px] overflow-hidden border border-border transition-[border-color] duration-500 hover:border-accent/40">
+            <article className="why-featured group relative col-span-2 min-h-[280px] sm:min-h-[320px] overflow-hidden border border-border transition-[border-color] duration-500 hover:border-accent/40 grayscale opacity-80 pointer-events-none">
               <img
-                src={IMAGES.services.warehouse}
+                src={IMAGES.services.air}
                 alt={t(whyUs.featured.title, lang)}
                 width={1600}
                 height={1000}
@@ -180,39 +193,41 @@ export function WhyUsSection() {
                 decoding="async"
                 className="why-card-img absolute inset-0 h-full w-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-black/50 to-transparent" />
-              <div className="absolute inset-x-0 top-0 flex items-start justify-end p-4 sm:p-6">
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/95 via-black/80 to-black/40" />
+              <div className="absolute inset-x-0 top-0 flex items-start justify-end p-4 sm:p-6 opacity-40">
                 <span className="border border-white/20 bg-black/40 px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-white">
                   {t(whyUs.featured.tag, lang)}
                 </span>
               </div>
-              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8">
-                <div className="flex h-12 w-12 items-center justify-center border border-accent/30 bg-black/50 text-white transition-[background-color,color] duration-500 group-hover:bg-accent/90 group-hover:text-bg">
+              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 opacity-40">
+                <div className="flex h-12 w-12 items-center justify-center border border-accent/30 bg-black/50 text-white transition-[background-color,color] duration-500">
                   <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-                    <path d="M12 2v20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <path d="M16.5 6H10a3 3 0 0 0 0 6h4.5a3 3 0 0 1 0 6H7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
-              <div className="absolute inset-x-0 bottom-0 max-w-2xl p-4 sm:p-6 md:p-8">
+              <div className="absolute inset-x-0 bottom-0 max-w-2xl p-4 sm:p-6 md:p-8 opacity-40">
                 <h3 className="font-display text-display-sm text-white md:text-display-md">
                   {t(whyUs.featured.title, lang)}
                 </h3>
                 <p className="mt-3 max-w-lg font-body text-body-md text-white/70">
                   {t(whyUs.featured.desc, lang)}
                 </p>
-                <Link to="/contact" className="btn-primary mt-6 text-sm">
-                  {t(whyUs.featured.cta, lang)}
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                    <path d="M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </Link>
+              </div>
+
+              {/* COMING SOON OVERLAY */}
+              <div className="absolute inset-0 z-10 flex items-center justify-center backdrop-blur-[2px]">
+                <span className="border border-white/10 bg-black/80 px-4 py-2 font-mono text-sm uppercase tracking-[0.2em] text-white/90">
+                  {lang === "bg" ? "Очаквайте скоро" : "Coming soon"}
+                </span>
               </div>
             </article>
           </div>
         </div>
       </div>
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <ContactForm isModal={true} />
+      </Modal>
     </section>
   );
 }

@@ -85,19 +85,23 @@ export function Footer() {
         <div className="container-xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
             <div className="footer-logo lg:col-span-4">
-              <Link to="/" className="mb-6 flex items-center gap-2" aria-label="SpeedLink Home">
-                <img
-                  src="/images/logo.png"
-                  alt="SpeedLink Logistics logo"
-                  width={1201}
-                  height={880}
-                  decoding="async"
-                  loading="lazy"
-                  className="block h-10 w-auto shrink-0 object-contain md:h-12"
-                />
-                <span className="font-display text-3xl uppercase tracking-widest text-heading">
-                  SpeedLink Logistics<span className="text-accent">.</span>
-                </span>
+              <Link to="/" className="mb-6 block" aria-label="SpeedLink Home">
+                {/* Crop container: showing the icon and text, hiding 'worldwide delivery' */}
+                <div className="relative overflow-hidden w-28 md:w-36 lg:w-[10rem] aspect-[1500/850]">
+                  <div 
+                    className="absolute top-0 w-full aspect-[1500/1099] bg-[#DB971F]"
+                    style={{
+                      maskImage: 'url(/images/logovector.png)',
+                      WebkitMaskImage: 'url(/images/logovector.png)',
+                      maskSize: 'contain',
+                      WebkitMaskSize: 'contain',
+                      maskPosition: 'top left',
+                      WebkitMaskPosition: 'top left',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskRepeat: 'no-repeat'
+                    }}
+                  />
+                </div>
               </Link>
               <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">
                 {lang === "bg"

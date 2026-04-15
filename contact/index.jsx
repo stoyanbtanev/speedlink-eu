@@ -12,7 +12,7 @@ const LeafletMap = React.lazy(() =>
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-function ContactForm() {
+export function ContactForm({ isModal }) {
   const { lang } = useLang();
   const { theme } = useTheme();
   const sectionRef = useRef(null);

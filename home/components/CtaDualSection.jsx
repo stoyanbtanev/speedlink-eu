@@ -101,9 +101,9 @@ export function CtaDualSection() {
             </div>
           </div>
 
-          <div className="cta-right glass-card relative overflow-hidden p-8 md:p-12">
+          <div className="cta-right glass-card relative overflow-hidden p-8 md:p-12 grayscale opacity-80">
             <div ref={glowRightRef} className="absolute right-0 top-0 h-40 w-40 bg-accent/5 blur-3xl" />
-            <div className="relative">
+            <div className="relative opacity-40 pointer-events-none">
               <div className="cta-icon mb-6 flex h-14 w-14 items-center justify-center border border-accent bg-accent/10">
                 <svg className="h-7 w-7 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
@@ -116,13 +116,19 @@ export function CtaDualSection() {
                 {t(ctaDual.track.desc, lang)}
               </p>
               <div className="mt-8 flex gap-3">
-                <button className="btn-primary text-sm">
+                <button className="btn-primary text-sm" disabled>
                   {t(ctaDual.track.cta1, lang)}
                 </button>
-                <button className="btn-secondary text-sm">
+                <button className="btn-secondary text-sm" disabled>
                   {t(ctaDual.track.cta2, lang)}
                 </button>
               </div>
+            </div>
+            {/* COMING SOON OVERLAY */}
+            <div className="absolute inset-0 z-10 flex items-center justify-center backdrop-blur-[2px]">
+              <span className="border border-white/10 bg-black/80 px-4 py-2 font-mono text-sm uppercase tracking-[0.2em] text-white/90">
+                {lang === "bg" ? "Очаквайте скоро" : "Coming soon"}
+              </span>
             </div>
           </div>
         </div>

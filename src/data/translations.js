@@ -63,16 +63,16 @@ export const whyUs = {
       desc:  { bg: "Документация, тарифна класификация, съответствие — ние поемаме целия граничен процес.", en: "Documentation, tariff classification, compliance — we handle the entire border process." },
     },
     {
-      tag:   { bg: "Видимост", en: "Visibility" },
-      title: { bg: "Проследяване в реално време",   en: "Real-time tracking" },
-      desc:  { bg: "Следете пратката на живо — позиция, статус и очаквано пристигане по всяко време.", en: "Track your shipment live — position, status and ETA available at all times." },
+      tag:   { bg: "Ценообразуване", en: "Pricing" },
+      title: { bg: "Прозрачни цени. Без изненади.", en: "Transparent pricing. Zero surprises." },
+      desc:  { bg: "Цената в офертата е крайна. Без скрити такси, без доплащания, без уговорки.", en: "The quoted price is final. No hidden fees, no surcharges, no fine print." },
     },
   ],
   featured: {
-    tag:   { bg: "Ценообразуване", en: "Pricing" },
-    title: { bg: "Прозрачни цени. Без изненади.", en: "Transparent pricing. Zero surprises." },
-    desc:  { bg: "Цената в офертата е крайна. Без скрити такси, без доплащания, без уговорки.", en: "The quoted price is final. No hidden fees, no surcharges, no fine print." },
-    cta:   { bg: "Вземи оферта", en: "Get a quote" },
+    tag:   { bg: "Видимост", en: "Visibility" },
+    title: { bg: "Проследяване в реално време",   en: "Real-time tracking" },
+    desc:  { bg: "Следете пратката на живо — позиция, статус и очаквано пристигане по всяко време.", en: "Track your shipment live — position, status and ETA available at all times." },
+    cta:   { bg: "Проследи", en: "Track" },
   },
 };
 

@@ -99,9 +99,9 @@ export function HeroSection() {
 
         <motion.h1
           variants={FADE_UP_VARIANTS}
-          className="mx-auto max-w-4xl px-4 font-display text-[clamp(2.5rem,8vw,3.5rem)] uppercase leading-[0.95] text-heading sm:text-6xl md:text-display-xl sm:px-0"
+          className="mx-auto max-w-4xl px-4 font-display text-[clamp(2.2rem,8vw,3.5rem)] uppercase leading-[0.95] text-heading sm:text-6xl md:text-display-xl sm:px-0"
         >
-          {titleText}
+          {splitChars(titleText)}
         </motion.h1>
 
         <motion.p
@@ -129,7 +129,7 @@ export function HeroSection() {
               <circle cx="5" cy="12" r="0.7" fill="currentColor" opacity="0.3"/>
             </svg>
           </Link>
-          <a href="tel:+359877404599" className="btn-secondary" aria-label={t(hero.cta2, lang)}>
+          <a href="tel:+359877404599" className="btn-secondary bg-surface/10 backdrop-blur-sm" aria-label={t(hero.cta2, lang)}>
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
               <path d="M5 4.5C5 3.67 5.67 3 6.5 3h2.7c.46 0 .87.3 1 .74l1.1 3.48a1 1 0 0 1-.35 1.05l-1.6 1.2a12.5 12.5 0 0 0 5.17 5.17l1.2-1.6a1 1 0 0 1 1.05-.35l3.48 1.1c.44.14.74.54.74 1v2.7c0 .83-.67 1.5-1.5 1.5C10.8 19 5 13.2 5 4.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
               <path d="M15 3.5c2.5.5 4.5 2.5 5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
@@ -141,21 +141,21 @@ export function HeroSection() {
 
         <motion.div
           variants={FADE_UP_VARIANTS}
-          className="hero-stats mt-6 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-body sm:gap-8"
+          className="hero-stats mt-6 sm:mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-4 text-heading sm:gap-8 drop-shadow-sm"
         >
           <div className="flex items-center gap-2">
-            <span className="font-display text-2xl text-accent">47</span>
-            <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "държави" : "countries"}</span>
+            <span className="font-display text-2xl text-accent drop-shadow-sm">47</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider text-heading/80">{lang === "bg" ? "държави" : "countries"}</span>
           </div>
-          <div className="hero-stats-divider h-4 w-px bg-border" />
+          <div className="hero-stats-divider h-4 w-px bg-border/40" />
           <div className="flex items-center gap-2">
-            <span className="font-display text-2xl text-accent">8,400+</span>
-            <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
+            <span className="font-display text-2xl text-accent drop-shadow-sm">8,400+</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider text-heading/80">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
           </div>
-          <div className="hero-stats-divider h-4 w-px bg-border" />
+          <div className="hero-stats-divider h-4 w-px bg-border/40" />
           <div className="flex items-center gap-2">
-            <span className="font-display text-2xl text-accent">15+</span>
-            <span className="font-mono text-body-sm uppercase tracking-wider">{lang === "bg" ? "години" : "years"}</span>
+            <span className="font-display text-2xl text-accent drop-shadow-sm">15+</span>
+            <span className="font-mono text-body-sm uppercase tracking-wider text-heading/80">{lang === "bg" ? "години" : "years"}</span>
           </div>
         </motion.div>
       </motion.div>
