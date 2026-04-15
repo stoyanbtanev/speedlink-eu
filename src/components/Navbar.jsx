@@ -99,15 +99,15 @@ export function Navbar() {
           <Link to="/" className="flex items-center gap-2" aria-label="SpeedLink Home">
             <img
               src="/images/logo.png"
-              alt="SpeedLink logo"
+              alt="SpeedLink Logistics logo"
               width={1201}
               height={880}
               decoding="async"
               fetchpriority="high"
-              className="block h-6 w-auto shrink-0 object-contain md:h-8"
+              className="block h-10 w-auto shrink-0 object-contain md:h-12"
             />
-            <span className={`font-display text-xl uppercase tracking-widest transition-colors duration-300 md:text-2xl ${logoText}`}>
-              SpeedLink<span className="text-accent">.</span>
+            <span className={`font-display text-2xl uppercase tracking-widest transition-colors duration-300 md:text-3xl ${logoText}`}>
+              SpeedLink Logistics<span className="text-accent">.</span>
             </span>
           </Link>
 

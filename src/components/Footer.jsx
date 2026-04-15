@@ -88,15 +88,15 @@ export function Footer() {
               <Link to="/" className="mb-6 flex items-center gap-2" aria-label="SpeedLink Home">
                 <img
                   src="/images/logo.png"
-                  alt="SpeedLink logo"
+                  alt="SpeedLink Logistics logo"
                   width={1201}
                   height={880}
                   decoding="async"
                   loading="lazy"
-                  className="block h-7 w-auto shrink-0 object-contain md:h-8"
+                  className="block h-10 w-auto shrink-0 object-contain md:h-12"
                 />
-                <span className="font-display text-2xl uppercase tracking-widest text-heading">
-                  SpeedLink<span className="text-accent">.</span>
+                <span className="font-display text-3xl uppercase tracking-widest text-heading">
+                  SpeedLink Logistics<span className="text-accent">.</span>
                 </span>
               </Link>
               <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">

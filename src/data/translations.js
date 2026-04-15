@@ -44,7 +44,7 @@ export const logos = {
 
 export const whyUs = {
   tag:      { bg: "Предимства",  en: "Advantages" },
-  title:    { bg: "Защо клиентите избират SpeedLink", en: "Why clients choose SpeedLink" },
+  title:    { bg: "Защо клиентите избират SpeedLink Logistics", en: "Why clients choose SpeedLink Logistics" },
   subtitle: { bg: "Бързина. Прозрачност. Контрол.", en: "Speed. Transparency. Control." },
   cards: [
     {
@@ -120,16 +120,16 @@ export const testimonials = {
     },
     {
       quote: {
-        bg: "Изпращаме автомобилни части из Европа всеки месец. SpeedLink поемат целия митнически процес — ние само следим.",
-        en: "We ship automotive parts across Europe every month. SpeedLink handles the entire customs process — we just monitor.",
+        bg: "Изпращаме автомобилни части из Европа всеки месец. SpeedLink Logistics поемат целия митнически процес — ние само следим.",
+        en: "We ship automotive parts across Europe every month. SpeedLink Logistics handles the entire customs process — we just monitor.",
       },
       name: "Елена Ковачева",
       role: { bg: "Директор верига на доставки, AutoParts Bulgaria", en: "Supply Chain Director, AutoParts Bulgaria" },
     },
     {
       quote: {
-        bg: "При фармацевтичните пратки няма място за компромис. SpeedLink доказаха, че познават изискванията.",
-        en: "In pharmaceutical shipments there is no room for compromise. SpeedLink proved they understand the requirements.",
+        bg: "При фармацевтичните пратки няма място за компромис. SpeedLink Logistics доказаха, че познават изискванията.",
+        en: "In pharmaceutical shipments there is no room for compromise. SpeedLink Logistics proved they understand the requirements.",
       },
       name: "Димитър Ангелов",
       role: { bg: "Ръководител операции, MediCare Logistics", en: "Operations Lead, MediCare Logistics" },
@@ -194,7 +194,7 @@ export const faq = {
 };
 
 export const footer = {
-  copyright: { bg: "© 2025 SpeedLink EU. Всички права запазени.", en: "© 2025 SpeedLink EU. All rights reserved." },
+  copyright: { bg: "© 2025 SpeedLink Logistics. Всички права запазени.", en: "© 2025 SpeedLink Logistics. All rights reserved." },
 };
 
 export const contactPage = {
@@ -255,7 +255,7 @@ export const servicesPage = {
     cta:   { bg: "Запитване", en: "Inquire" },
   },
   whyTag:      { bg: "Защо",   en: "Why" },
-  whyTitle:    { bg: "Защо SpeedLink", en: "Why SpeedLink" },
+  whyTitle:    { bg: "Защо SpeedLink Logistics", en: "Why SpeedLink Logistics" },
   whySubtitle: { bg: "Отговор в часове. Реален човек на линията. Ясни цени.", en: "Response within hours. A real person on the line. Clear pricing." },
   whyCards: [
     { title: { bg: "Оферта до 24 часа",  en: "Quoted within 24 hours" }, desc: { bg: "Твърда цена и срок — в рамките на един работен ден.",       en: "Binding price and timeline — within one business day." } },
@@ -264,7 +264,7 @@ export const servicesPage = {
   ],
   aboutTag:   { bg: "За нас",  en: "About" },
   aboutTitle: { bg: "Вашият логистичен партньор", en: "Your logistics partner" },
-  aboutDesc:  { bg: "SpeedLink е българска спедиторска компания с мрежа от партньори в Европа и Азия. Двуезичен екип, персонален подход, доказана надеждност.", en: "SpeedLink is a Bulgarian freight forwarding company with a partner network across Europe and Asia. Bilingual team, personal approach, proven reliability." },
+  aboutDesc:  { bg: "SpeedLink Logistics е българска спедиторска компания с мрежа от партньори в Европа и Азия. Двуезичен екип, персонален подход, доказана надеждност.", en: "SpeedLink Logistics is a Bulgarian freight forwarding company with a partner network across Europe and Asia. Bilingual team, personal approach, proven reliability." },
 };
 
 export const reviewsPage = {
@@ -274,12 +274,12 @@ export const reviewsPage = {
   testimonialsSubtitle: { bg: "Реални партньори. Реални резултати.", en: "Real partners. Real results." },
   items: [
     {
-      quote: { bg: "SpeedLink доставиха пратката до Берлин за 48 часа. Без закъснения, без допълнителни разходи.", en: "SpeedLink delivered our shipment to Berlin in 48 hours. No delays, no additional costs." },
+      quote: { bg: "SpeedLink Logistics доставиха пратката до Берлин за 48 часа. Без закъснения, без допълнителни разходи.", en: "SpeedLink Logistics delivered our shipment to Berlin in 48 hours. No delays, no additional costs." },
       name: "Марко Петров",
       role: { bg: "Логистичен мениджър, TechImports Sofia", en: "Logistics Manager, TechImports Sofia" },
     },
     {
-      quote: { bg: "Три пратки месечно от година насам. Митническият екип на SpeedLink поема всичко — ние само потвърждаваме.", en: "Three shipments a month for over a year. SpeedLink's customs team handles everything — we just confirm." },
+      quote: { bg: "Три пратки месечно от година насам. Митническият екип на SpeedLink Logistics поема всичко — ние само потвърждаваме.", en: "Three shipments a month for over a year. SpeedLink Logistics' customs team handles everything — we just confirm." },
       name: "Елена Василева",
       role: { bg: "Директор верига на доставки, FashionHub EU", en: "Supply Chain Director, FashionHub EU" },
     },
