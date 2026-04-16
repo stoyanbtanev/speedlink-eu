@@ -164,10 +164,11 @@ export function HeroSection() {
 
       {/* INFINITE FRAMER MOTION MARQUEE */}
       <div 
-        className="absolute bottom-0 left-0 w-full h-[28vh] md:h-[35vh] lg:h-[40vh] pointer-events-none pb-4 overflow-hidden" 
+        className="absolute bottom-0 left-0 w-full h-[28svh] md:h-[35svh] lg:h-[40svh] pointer-events-none pb-4 overflow-hidden will-change-transform" 
         style={{
           WebkitMaskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
           maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
+          contain: "paint",
         }}
       >
         {useCssMarquee ? (
