@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import { CookieBanner } from "./components/CookieBanner";
 import { ScrollTrigger } from "./lib/gsap-config";
 import HomePage from "../home";
 import ServicesPage from "../services";
@@ -89,6 +90,7 @@ export default function App() {
 
   return (
     <>
+      <CookieBanner />
       <div className="noise-overlay hidden sm:block" />
       <Navbar />
       <main>

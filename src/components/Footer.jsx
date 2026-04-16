@@ -79,12 +79,12 @@ export function Footer() {
   return (
     <footer ref={footerRef} className="relative border-t-2 border-accent bg-bg">
       <div className="footer-divider-top absolute left-0 right-0 top-0 h-px bg-accent/20" />
+      <TrustSection />
       <div className="section-padding section-py">
         <div className="container-xl">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
-            <div className="footer-logo lg:col-span-4">
+            <div className="footer-logo lg:col-span-3">
               <a href="#home" className="mb-6 block" aria-label="SpeedLink Home">
-                {/* Crop container: showing the icon and text, hiding 'worldwide delivery' */}
                 <div className="relative overflow-hidden w-28 md:w-36 lg:w-[10rem] aspect-[1500/850]">
                   <div 
                     className="absolute top-0 w-full aspect-[1500/1099] bg-[#DB971F]"
@@ -126,6 +126,29 @@ export function Footer() {
               </ul>
             </div>
 
+            <div className="lg:col-span-2">
+              <h4 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent">
+                {lang === "bg" ? "Правна информация" : "Legal"}
+              </h4>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <a href="#" className="footer-nav-link font-body text-sm text-body transition-colors duration-300 hover:text-accent">
+                    {t(legal.privacy, lang)}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-nav-link font-body text-sm text-body transition-colors duration-300 hover:text-accent">
+                    {t(legal.cookies, lang)}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-nav-link font-body text-sm text-body transition-colors duration-300 hover:text-accent">
+                    {t(legal.terms, lang)}
+                  </a>
+                </li>
+              </ul>
+            </div>
+
             <div className="lg:col-span-3">
               <h4 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent">
                 {lang === "bg" ? "Контакт" : "Contact"}
@@ -147,11 +170,11 @@ export function Footer() {
               </ul>
             </div>
 
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-2">
               <h4 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-accent">
                 {lang === "bg" ? "Следвайте ни" : "Follow us"}
               </h4>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {[
                   { label: "Facebook", icon: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" },
                   { label: "LinkedIn", icon: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" },
@@ -161,7 +184,7 @@ export function Footer() {
                     key={social.label}
                     href="#"
                     aria-label={social.label}
-                    className="footer-social flex h-10 w-10 items-center justify-center border border-border text-muted transition-[color,border-color] duration-300 hover:border-accent/40 hover:text-accent"
+                    className="footer-social flex h-9 w-9 items-center justify-center border border-border text-muted transition-[color,border-color] duration-300 hover:border-accent/40 hover:text-accent"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d={social.icon} />

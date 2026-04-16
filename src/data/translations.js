@@ -306,3 +306,36 @@ export const reviewsPage = {
     { value: "47",     label: { bg: "Обслужени държави",   en: "Countries served" } },
   ],
 };
+
+export const legal = {
+  privacy: { bg: "Политика за поверителност", en: "Privacy Policy" },
+  cookies: { bg: "Политика за бисквитки",     en: "Cookie Policy" },
+  terms:   { bg: "Общи условия",             en: "Terms & Conditions" },
+};
+
+export const cookiesBanner = {
+  title:     { bg: "Ние ценим вашата поверителност", en: "We value your privacy" },
+  desc:      { 
+    bg: "Използваме бисквитки, за да подобрим вашето преживяване и да анализираме трафика си. Винаги можете да промените настройките си.",
+    en: "We use cookies to enhance your browsing experience and analyze our traffic. You can always change your preferences."
+  },
+  acceptAll: { bg: "Приемам всички", en: "Accept All" },
+  rejectAll: { bg: "Отказвам",      en: "Reject All" },
+  customize: { bg: "Настройки",    en: "Customize" },
+  save:      { bg: "Запази",       en: "Save preferences" },
+  essential: { bg: "Необходими",    en: "Essential" },
+  analytics: { bg: "Аналитични",    en: "Analytics" },
+  marketing: { bg: "Маркетингови",  en: "Marketing" },
+};
+
+export const trust = {
+  title: { bg: "Сертификати и съответствие", en: "Certificates & Compliance" },
+  items: [
+    { label: "ISO 9001",    desc: { bg: "Управление на качеството", en: "Quality Management" } },
+    { label: "ISO 14001",   desc: { bg: "Екологичен мениджмънт", en: "Environmental Management" } },
+    { label: "AEO",         desc: { bg: "Оторизиран икономически оператор", en: "Authorized Economic Operator" } },
+    { label: "GDP",         desc: { bg: "Добра дистрибуторска практика", en: "Good Distribution Practice" } },
+    { label: "ADR",         desc: { bg: "Опасни товари", en: "Dangerous Goods" } },
+    { label: "HACCP",       desc: { bg: "Безопасност на храните", en: "Food Safety" } },
+  ]
+};
