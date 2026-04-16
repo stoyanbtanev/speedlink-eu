@@ -439,6 +439,11 @@
     filter: grayscale(100%) contrast(1.1) brightness(0.6);
   }
 
+  @keyframes speedlink-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-33.33%); }
+  }
+
   /* ─── TAG (now industrial label style) ─── */
   .tag {
     @apply inline-flex items-center border border-accent bg-accent/5 font-mono uppercase text-accent;
@@ -554,8 +559,14 @@
     text-wrap: balance;
   }
 
-  .will-animate {
-    will-change: transform, opacity;
+  @media (prefers-reduced-motion: no-preference) {
+    .will-animate {
+      will-change: transform, opacity;
+    }
+  }
+
+  .will-animate-done {
+    will-change: auto;
   }
 }
 

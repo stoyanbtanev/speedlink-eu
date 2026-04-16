@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap, useGSAP } from "../../src/lib/gsap-config"; // Keep GSAP for text if desired, but framer-motion is fine too.
+import { gsap, isLowEndDevice, useGSAP } from "../../src/lib/gsap-config"; // Keep GSAP for text if desired, but framer-motion is fine too.
 import { useLang } from "../../src/context/LanguageContext";
 import { hero, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
@@ -169,43 +169,56 @@ export function HeroSection() {
           maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
         }}
       >
-        <motion.div 
-          className="flex gap-4 sm:gap-6 w-max absolute bottom-4"
-          initial={{ x: 0 }}
-          animate={{ x: "-33.33%" }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 50,
-              ease: "linear",
-            },
-          }}
-        >
-          {duplicatedImages.map((src, index) => (
-            <div
-              key={index}
-              className="relative aspect-[3/4] h-48 sm:h-56 md:h-64 lg:h-[20rem] flex-shrink-0"
-              style={{
-                transform: `rotate(${index % 2 === 0 ? -1.5 : 2.5}deg)`,
-                pointerEvents: 'none',
-              }}
-            >
-              <img
-                src={src}
-                alt={`SpeedLink logistics ${index + 1}`}
-                className="w-full h-full object-cover rounded-xl sm:rounded-2xl border border-border/20 shadow-xl shadow-black/30 dark:shadow-black/60"
-                loading={index < heroImages.length ? "eager" : "lazy"}
-                decoding={index < heroImages.length ? "sync" : "async"}
-                width={400}
-                height={533}
-              />
-            </div>
-          ))}
-        </motion.div>
+        {isLowEndDevice ? (
+          <div
+            className="flex gap-4 sm:gap-6 w-max absolute bottom-4"
+            style={{ animation: "speedlink-marquee 60s linear infinite" }}
+          >
+            {duplicatedImages.map((src, index) => (
+              <div
+                key={index}
+                className="relative aspect-[3/4] h-48 sm:h-56 md:h-64 lg:h-[20rem] flex-shrink-0"
+                style={{ transform: `rotate(${index % 2 === 0 ? -1.5 : 2.5}deg)`, pointerEvents: "none" }}
+              >
+                <img
+                  src={src}
+                  alt={`SpeedLink logistics ${index + 1}`}
+                  className="w-full h-full object-cover rounded-xl sm:rounded-2xl border border-border/20 shadow-xl shadow-black/30"
+                  loading={index < heroImages.length ? "eager" : "lazy"}
+                  decoding={index < heroImages.length ? "sync" : "async"}
+                  width={400}
+                  height={533}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            className="flex gap-4 sm:gap-6 w-max absolute bottom-4"
+            initial={{ x: 0 }}
+            animate={{ x: "-33.33%" }}
+            transition={{ x: { repeat: Infinity, repeatType: "loop", duration: 50, ease: "linear" } }}
+          >
+            {duplicatedImages.map((src, index) => (
+              <div
+                key={index}
+                className="relative aspect-[3/4] h-48 sm:h-56 md:h-64 lg:h-[20rem] flex-shrink-0"
+                style={{ transform: `rotate(${index % 2 === 0 ? -1.5 : 2.5}deg)`, pointerEvents: "none" }}
+              >
+                <img
+                  src={src}
+                  alt={`SpeedLink logistics ${index + 1}`}
+                  className="w-full h-full object-cover rounded-xl sm:rounded-2xl border border-border/20 shadow-xl shadow-black/30 dark:shadow-black/60"
+                  loading={index < heroImages.length ? "eager" : "lazy"}
+                  decoding={index < heroImages.length ? "sync" : "async"}
+                  width={400}
+                  height={533}
+                />
+              </div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </section>
   );
 }
-
-

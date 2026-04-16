@@ -34,6 +34,7 @@ export const IMAGES = {
     automotive: L("/images/industry-automotive.jpg", "https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&w=600&q=80"),
     pharma: L("/images/industry-pharma.jpg", "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=600&q=80"),
     chemical: L("/images/industry-chemical.jpg", "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&w=600&q=80"),
+    food: L("/images/industry-food.jpg", "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80"),
   },
   pageHeaders: {
     services: L("/images/header-services.jpg", "https://images.unsplash.com/photo-1494412574643-ff11b0a5eb19?auto=format&fit=crop&w=1920&q=80"),

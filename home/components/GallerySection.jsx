@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { gsap, useGSAP } from "../../src/lib/gsap-config";
+import { gsap, isLowEndDevice, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { gallery, t } from "../../src/data/translations";
 import { IMAGES } from "../../src/data/images";
@@ -32,11 +32,11 @@ export function GallerySection() {
         trigger: scrollContainer,
         start: "top top",
         end: () => `+=${track.scrollWidth - window.innerWidth}`,
-        scrub: 1.5,
+        scrub: isLowEndDevice ? true : 1.5,
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
-        onUpdate: (self) => {
+        onUpdate: isLowEndDevice ? undefined : (self) => {
           const scale = 1 + 0.08 * self.progress;
           for (let i = 0; i < cardImages.length; i++) {
             gsap.set(cardImages[i], { scale });

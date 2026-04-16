@@ -1,5 +1,5 @@
 import React, { useRef, useState, Suspense } from "react";
-import { gsap, useGSAP } from "../../src/lib/gsap-config";
+import { gsap, isLowEndDevice, useGSAP } from "../../src/lib/gsap-config";
 import { useLang } from "../../src/context/LanguageContext";
 import { useTheme } from "../../src/context/ThemeContext";
 import { whyUs, t } from "../../src/data/translations";
@@ -82,7 +82,7 @@ export function WhyUsSection() {
 
     // --- Per-card image parallax (desktop only) ---
     const isDesktop = window.innerWidth >= 1024;
-    if (isDesktop) {
+    if (isDesktop && !isLowEndDevice) {
       cards.forEach((card) => {
         const img = card.querySelector(".why-card-img");
         if (!img) return;
@@ -147,18 +147,10 @@ export function WhyUsSection() {
             {whyUs.cards.map((card, i) => {
               const isQuoteCard = i === 0;
               const isReachCard = i === 1;
-              const isClickable = isQuoteCard || isReachCard;
               return (
                 <article
                   key={i}
-                  onClick={
-                    isQuoteCard ? () => setModalOpen(true)
-                    : isReachCard ? () => setMapModalOpen(true)
-                    : undefined
-                  }
-                  className={`why-card group relative overflow-hidden border border-border aspect-[4/3] sm:aspect-[4/5] transition-[border-color,transform] duration-500 hover:border-accent/40 hover:-translate-y-0.5 ${
-                    isClickable ? "cursor-pointer" : ""
-                  }`}
+                  className="why-card group relative overflow-hidden border border-border aspect-[4/3] sm:aspect-[4/5] transition-[border-color,transform] duration-500 hover:border-accent/40 hover:-translate-y-0.5"
                 >
                   <img
                     src={CARD_IMAGES[i]}
@@ -186,12 +178,18 @@ export function WhyUsSection() {
                       {t(card.desc, lang)}
                     </p>
                     {isQuoteCard && (
-                      <button className="btn-primary mt-4 text-xs">
+                      <button
+                        className="btn-primary mt-4 text-xs"
+                        onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}
+                      >
                         {lang === "bg" ? "Попълни форма" : "Fill form"}
                       </button>
                     )}
                     {isReachCard && (
-                      <button className="btn-primary mt-4 text-xs">
+                      <button
+                        className="btn-primary mt-4 text-xs"
+                        onClick={(e) => { e.stopPropagation(); setMapModalOpen(true); }}
+                      >
                         {lang === "bg" ? "Виж обхвата" : "Show range"}
                       </button>
                     )}

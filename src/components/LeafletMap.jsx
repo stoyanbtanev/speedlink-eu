@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import * as topojson from "topojson-client";
@@ -111,6 +111,8 @@ export function LeafletMap({ lang = "bg", theme = "dark", mode = "default", wrap
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const tileLayerRef = useRef(null);
+  const [mapActive, setMapActive] = useState(false);
+  const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
   const isRange = mode === "range";
 
@@ -129,6 +131,12 @@ export function LeafletMap({ lang = "bg", theme = "dark", mode = "default", wrap
       scrollWheelZoom: false,
       attributionControl: false,
     });
+
+    if (isTouchDevice) {
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+    }
 
     L.control.zoom({ position: "bottomright" }).addTo(map);
 
@@ -199,8 +207,50 @@ export function LeafletMap({ lang = "bg", theme = "dark", mode = "default", wrap
     : "aspect-[4/3] w-full sm:aspect-[16/10]";
 
   return (
-    <div className={outerClass}>
+    <div className={outerClass} style={{ position: "relative" }}>
       <div ref={mapRef} className={innerClass} />
+      {isTouchDevice && !mapActive && (
+        <div
+          role="button"
+          aria-label={lang === "bg" ? "Докоснете за карта" : "Tap to interact with map"}
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 1000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0,0,0,0.28)",
+            cursor: "pointer",
+            backdropFilter: "blur(1px)",
+            WebkitBackdropFilter: "blur(1px)",
+          }}
+          onClick={() => {
+            setMapActive(true);
+            if (mapInstance.current) {
+              mapInstance.current.dragging.enable();
+              mapInstance.current.touchZoom.enable();
+              mapInstance.current.doubleClickZoom.enable();
+            }
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono, monospace)",
+              fontSize: "0.65rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "rgba(245,240,232,0.9)",
+              background: "rgba(0,0,0,0.7)",
+              border: "1px solid rgba(232,168,56,0.4)",
+              padding: "0.5em 1em",
+              pointerEvents: "none",
+            }}
+          >
+            {lang === "bg" ? "Докоснете за карта" : "Tap to interact"}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

@@ -98,6 +98,13 @@ export const industries = {
       title: { bg: "Химикали и опасни товари", en: "Chemicals & hazmat" },
       desc:  { bg: "ADR-сертифицирани шофьори, пълна документация, спазване на всички регулации за опасни товари.", en: "ADR-certified drivers, full documentation, compliance with all hazmat regulations." },
     },
+    {
+      title: { bg: "Хранителни продукти", en: "Food & beverages" },
+      desc:  {
+        bg: "Транспорт с температурен контрол, HACCP съответствие, стриктни срокове за доставка. Прясно от производителя до рафта.",
+        en: "Temperature-controlled transport, HACCP compliance, strict delivery windows. Fresh from producer to shelf.",
+      },
+    },
   ],
   cta: { bg: "Всички отрасли", en: "All sectors" },
 };

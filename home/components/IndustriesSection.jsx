@@ -9,6 +9,7 @@ const INDUSTRY_IMAGES = [
   IMAGES.industries.automotive,
   IMAGES.industries.pharma,
   IMAGES.industries.chemical,
+  IMAGES.industries.food,
 ];
 
 const INDUSTRY_ICONS = [
@@ -41,6 +42,14 @@ const INDUSTRY_ICONS = [
     <path d="M12 8v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
     <circle cx="12" cy="15.5" r="0.8" fill="currentColor"/>
     <path d="M4.5 6l1.5 1.5M19.5 6l-1.5 1.5" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" opacity="0.4"/>
+  </svg>,
+  // Food — plate with fork and knife
+  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+    <rect x="3" y="7" width="18" height="14" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+    <path d="M3 11h18" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.4"/>
+    <path d="M7 7l2-4M17 7l-2-4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" opacity="0.45"/>
+    <path d="M12 14.5v-2.5M12 14.5l1.8-1.8M12 14.5l-1.8-1.8M12 14.5v2.5M12 14.5l1.8 1.8M12 14.5l-1.8 1.8" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+    <path d="M9.5 14.5h5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
   </svg>,
 ];
 
@@ -97,7 +106,7 @@ export function IndustriesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {industries.items.map((item, i) => (
             <div
               key={i}
