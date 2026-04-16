@@ -202,7 +202,7 @@ export const faq = {
 };
 
 export const footer = {
-  copyright: { bg: "© 2025 SpeedLink Logistics. Всички права запазени.", en: "© 2025 SpeedLink Logistics. All rights reserved." },
+  copyright: { bg: "© 2026 SpeedLink Logistics. Всички права запазени.", en: "© 2026 SpeedLink Logistics. All rights reserved." },
 };
 
 export const contactPage = {
