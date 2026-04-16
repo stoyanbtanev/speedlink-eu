@@ -81,6 +81,7 @@ export function HeroSection() {
   const heroImages = Array.isArray(IMAGES.hero) ? IMAGES.hero : [];
   // Triple the images for very long containers to ensure no gaps
   const duplicatedImages = [...heroImages, ...heroImages, ...heroImages];
+  const useCssMarquee = isLowEndDevice && !isDesktop;
 
   return (
     <section 
@@ -169,7 +170,7 @@ export function HeroSection() {
           maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
         }}
       >
-        {isLowEndDevice ? (
+        {useCssMarquee ? (
           <div
             className="flex gap-4 sm:gap-6 w-max absolute bottom-4"
             style={{ animation: "speedlink-marquee 60s linear infinite" }}
