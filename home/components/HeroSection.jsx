@@ -163,14 +163,29 @@ export function HeroSection() {
       </motion.div>
 
       {/* INFINITE FRAMER MOTION MARQUEE */}
-      <div 
-        className="absolute bottom-0 left-0 w-full h-[28svh] md:h-[35svh] lg:h-[40svh] pointer-events-none pb-4 overflow-hidden will-change-transform" 
-        style={{
-          WebkitMaskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
-          maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent)",
-          contain: "paint",
-        }}
+      {/* Chrome Android bug: -webkit-mask on an absolute+composited element shifts with the visual
+          viewport during momentum scroll, making the top fade grow/shrink. Fix: use a static
+          outer wrapper (no mask) and apply the mask only to an inner div that is forced into its
+          own stable stacking context via isolation+transform, so the gradient is always anchored
+          to the element's own coordinate space and never re-evaluated against the scroll offset. */}
+      <div
+        className="absolute bottom-0 left-0 w-full h-[28svh] md:h-[35svh] lg:h-[40svh] pointer-events-none overflow-hidden"
+        style={{ contain: "paint", isolation: "isolate" }}
       >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            overflow: "hidden",
+            transform: "translateZ(0)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, transparent, black 25%, black 75%, transparent 100%)",
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+          }}
+        >
         {useCssMarquee ? (
           <div
             className="flex gap-4 sm:gap-6 w-max absolute bottom-4"
@@ -220,6 +235,7 @@ export function HeroSection() {
             ))}
           </motion.div>
         )}
+        </div>
       </div>
     </section>
   );
