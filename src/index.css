@@ -89,6 +89,13 @@
     @apply bg-bg text-body font-body;
     font-size: 16px;
     line-height: 1.6;
+    hyphens: none;
+  }
+
+  html[lang="bg"], [lang="bg"] {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
   }
 
   #root {

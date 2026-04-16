@@ -128,7 +128,10 @@ export function IndustriesSection() {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="font-display text-display-sm text-heading">
+                <h3 
+                  className="font-display text-heading text-[clamp(1.25rem,4vw,1.75rem)] xl:text-[clamp(1.125rem,2.2vw,1.4375rem)] leading-[1.1] tracking-[0.03em] break-words hyphens-auto"
+                  lang={lang}
+                >
                   {t(item.title, lang)}
                 </h3>
                 <p className="mt-2 font-body text-body-sm text-heading/50 leading-relaxed">
