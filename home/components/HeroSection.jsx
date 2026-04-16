@@ -86,7 +86,7 @@ export function HeroSection() {
   return (
     <section 
       ref={sectionRef} 
-      className="relative w-full bg-bg flex flex-col items-center justify-center text-center px-4 transition-colors duration-500"
+      className="relative w-full flex flex-col items-center justify-center text-center px-4 transition-colors duration-500"
       style={{ minHeight: lockedH ? `${lockedH}px` : "100svh" }}
     >
       <motion.div 
