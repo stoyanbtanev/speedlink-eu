@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import { gsap, useGSAP } from "../lib/gsap-config";
 import { useLang } from "../context/LanguageContext";
-import { nav, footer, t } from "../data/translations";
+import { nav, footer, legal, t } from "../data/translations";
+import { TrustSection } from "./TrustSection";
 
 export function Footer() {
   const { lang } = useLang();
