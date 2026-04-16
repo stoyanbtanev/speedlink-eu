@@ -12,6 +12,8 @@ export function useReveal(opts = {}) {
     const el = ref.current;
     if (!el) return;
 
+    const isTouchDevice = typeof window !== "undefined" && "ontouchstart" in window;
+
     const {
       children = null,
       y = 60,
@@ -24,7 +26,7 @@ export function useReveal(opts = {}) {
       stagger = children
         ? { each: 0.12, from: "start", ease: "power2.out" }
         : 0,
-      start = "top 82%",
+      start = isTouchDevice ? "top 92%" : "top 82%",
       toggleActions = "play none none none",
       once = true,
     } = opts;
@@ -54,6 +56,8 @@ export function useReveal(opts = {}) {
         start,
         toggleActions,
         once,
+        fastScrollEnd: true,
+        invalidateOnRefresh: true,
       },
       onComplete: () => {
         gsap.set(targets, { willChange: "auto" });

@@ -7,6 +7,12 @@ import ServicesPage from "../services";
 import { FaqSection } from "../home/components/FaqSection";
 import ContactPage from "../contact";
 
+const DESKTOP_MQ = "(min-width: 1024px)";
+
+const easeInOutCubic = (t) => (t < 0.5
+  ? 4 * t * t * t
+  : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
 class ErrorBoundary extends React.Component {
   constructor(props) { super(props); this.state = { hasError: false }; }
   static getDerivedStateFromError() { return { hasError: true }; }
@@ -29,6 +35,56 @@ class ErrorBoundary extends React.Component {
 export default function App() {
   useEffect(() => {
     ScrollTrigger.refresh();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const mediaQuery = window.matchMedia(DESKTOP_MQ);
+
+    const onDocumentClick = (event) => {
+      if (!mediaQuery.matches) return;
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const link = event.target.closest('a[href^="#"]');
+      if (!link) return;
+
+      const hash = link.getAttribute("href");
+      if (!hash || hash === "#") return;
+
+      const target = document.querySelector(hash);
+      if (!target) return;
+
+      event.preventDefault();
+
+      const header = document.querySelector("header");
+      const headerOffset = header ? header.getBoundingClientRect().height : 96;
+      const startY = window.scrollY;
+      const targetY = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerOffset);
+      const distance = targetY - startY;
+      const duration = Math.min(700, Math.max(420, Math.abs(distance) * 0.35));
+      const startTime = performance.now();
+
+      const step = (now) => {
+        const progress = Math.min(1, (now - startTime) / duration);
+        const easedProgress = easeInOutCubic(progress);
+        window.scrollTo({ top: startY + distance * easedProgress, behavior: "auto" });
+
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+          return;
+        }
+
+        window.history.replaceState(null, "", hash);
+        ScrollTrigger.refresh();
+      };
+
+      window.requestAnimationFrame(step);
+    };
+
+    document.addEventListener("click", onDocumentClick);
+    return () => document.removeEventListener("click", onDocumentClick);
   }, []);
 
   return (
