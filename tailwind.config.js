@@ -4,7 +4,7 @@ module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./{home,services,reviews,contact}/**/*.{js,jsx}",
+    "./{home,services,contact}/**/*.{js,jsx}",
   ],
   theme: {
     extend: {
@@ -52,13 +52,13 @@ module.exports = {
         body:    'var(--font-body)',
       },
       fontSize: {
-        "display-xl": ["clamp(2.5rem, 7.5vw, 5.5rem)", { lineHeight: "0.93", letterSpacing: "0.05em", fontWeight: "400" }],
-        "display-lg": ["clamp(2rem, 5.5vw, 4rem)", { lineHeight: "0.97", letterSpacing: "0.04em", fontWeight: "400" }],
-        "display-md": ["clamp(1.625rem, 3.5vw, 2.75rem)", { lineHeight: "1.05", letterSpacing: "0.03em", fontWeight: "400" }],
-        "display-sm": ["clamp(1.25rem, 2.5vw, 1.75rem)", { lineHeight: "1.15", letterSpacing: "0.02em", fontWeight: "400" }],
-        "body-lg": ["clamp(1rem, 1.25vw, 1.125rem)", { lineHeight: "1.7" }],
-        "body-md": ["1rem", { lineHeight: "1.65" }],
-        "body-sm": ["0.875rem", { lineHeight: "1.55" }],
+        "display-xl": ["clamp(2.25rem, 6vw, 4.5rem)",   { lineHeight: "0.95", letterSpacing: "0.02em",  fontWeight: "400" }],
+        "display-lg": ["clamp(1.75rem, 4.5vw, 3.25rem)", { lineHeight: "1.0",  letterSpacing: "0.02em",  fontWeight: "400" }],
+        "display-md": ["clamp(1.5rem, 3vw, 2.25rem)",    { lineHeight: "1.08", letterSpacing: "0.015em", fontWeight: "400" }],
+        "display-sm": ["clamp(1.125rem, 2vw, 1.5rem)",   { lineHeight: "1.18", letterSpacing: "0.01em",  fontWeight: "400" }],
+        "body-lg": ["clamp(0.9375rem, 1.15vw, 1.0625rem)", { lineHeight: "1.65" }],
+        "body-md": ["0.9375rem", { lineHeight: "1.6" }],
+        "body-sm": ["0.8125rem", { lineHeight: "1.55" }],
         label: ["0.6875rem", { lineHeight: "1.5", letterSpacing: "0.14em", fontWeight: "500" }],
       },
       borderRadius: {

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Fonts are preloaded in index.html with explicit cyrillic+latin subsets; no @import here to avoid a second request. */
 
 @tailwind base;
 @tailwind components;
@@ -111,11 +111,11 @@
     transition: background-color 0.4s ease, color 0.4s ease;
   }
 
-  /* ── Display headings ── */
+  /* ── Display headings (tightened: less theatrical, more editorial) ── */
   h1, h2, h3 { @apply font-display text-heading uppercase; }
-  h1 { @apply text-[clamp(2.5rem,7.5vw,5.5rem)] leading-[0.93] tracking-[0.05em]; }
-  h2 { @apply text-[clamp(1.75rem,4.5vw,3.5rem)] leading-[1.0] tracking-[0.04em]; }
-  h3 { @apply text-[clamp(1.25rem,2.5vw,2rem)] leading-[1.1] tracking-[0.03em]; }
+  h1 { @apply text-[clamp(2.25rem,6vw,4.5rem)] leading-[0.95] tracking-[0.02em]; }
+  h2 { @apply text-[clamp(1.625rem,3.75vw,2.875rem)] leading-[1.02] tracking-[0.02em]; }
+  h3 { @apply text-[clamp(1.125rem,2.25vw,1.75rem)] leading-[1.12] tracking-[0.015em]; }
 
   h4, h5, h6 {
     font-family: var(--font-display);
@@ -149,10 +149,10 @@
   }
 
   .section-py {
-    @apply py-16 md:py-24 lg:py-32;
+    @apply py-14 md:py-20 lg:py-24;
   }
   .section-py-sm {
-    @apply py-12 md:py-16 lg:py-20;
+    @apply py-10 md:py-14 lg:py-16;
   }
 
   .container-xl {

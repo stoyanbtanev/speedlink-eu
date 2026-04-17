@@ -3,43 +3,123 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>SpeedLink Logistics — Логистика за Европа и Азия</title>
-    <meta name="description" content="SpeedLink Logistics — бързи оферти, прозрачни цени, доказана надеждност. Превозваме товари из Европа и Азия. Оферта до 24 часа." />
+    <title>SpeedLink Logistics — Спедиция за Европа и Азия</title>
+    <meta name="description" content="SpeedLink Logistics — сухопътен, морски и въздушен транспорт в 47 държави. Митническо представителство. Твърда оферта до минути." />
     <meta name="theme-color" content="#0A0A0A" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="author" content="SpeedLink Logistics" />
+
+    <!-- TODO at launch: swap to https://speedlinklogistics.eu/ -->
     <link rel="canonical" href="https://speedlink-eu.vercel.app/" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/png" href="/images/logo.png" />
+    <link rel="mask-icon" href="/favicon-mono.svg" color="#E8A838" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Fonts: request Cyrillic + Latin subsets explicitly (BG site) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://images.unsplash.com" />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" />
-    <link rel="icon" type="image/png" href="/images/logo.png" />
-    <link rel="apple-touch-icon" href="/images/logo.png" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic,latin" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic,latin" />
+
     <link rel="preload" as="image" href="/images/hero-1.jpg" fetchpriority="high" />
-    <meta property="og:title" content="SpeedLink Logistics — Logistics for Europe &amp; Asia" />
-    <meta property="og:description" content="Fast quotes, transparent pricing, proven reliability. Door-to-door freight across Europe and Asia." />
+
+    <!-- Open Graph (description localised to Bulgarian to match og:locale) -->
+    <meta property="og:title" content="SpeedLink Logistics — Спедиция за Европа и Азия" />
+    <meta property="og:description" content="Сухопътен, морски и въздушен транспорт в 47 държави. Твърда оферта до минути. Митница включена." />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SpeedLink Logistics" />
     <meta property="og:locale" content="bg_BG" />
     <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:url" content="https://speedlink-eu.vercel.app/" />
-    <meta property="og:image" content="/images/og-social.jpg" />
+    <!-- og:image — dedicated asset pending; falls back to hero visual for valid previews -->
+    <meta property="og:image" content="/images/hero-1.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SpeedLink Logistics — европейска спедиция" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SpeedLink Logistics — Логистика за Европа и Азия" />
-    <meta name="twitter:description" content="Бързи оферти, прозрачни цени, доказана надеждност. Превозваме товари из Европа и Азия." />
-    <meta name="twitter:image" content="/images/og-social.jpg" />
+    <meta name="twitter:title" content="SpeedLink Logistics — Спедиция за Европа и Азия" />
+    <meta name="twitter:description" content="Сухопътен, морски и въздушен транспорт в 47 държави. Твърда оферта до минути." />
+    <meta name="twitter:image" content="/images/hero-1.jpg" />
+
+    <!-- Structured data: MovingCompany (logistics) + FAQPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": "MovingCompany",
+      "@id": "https://speedlink-eu.vercel.app/#org",
       "name": "SpeedLink Logistics",
-      "url": "https://speedlink-eu.vercel.app",
+      "url": "https://speedlink-eu.vercel.app/",
+      "logo": "https://speedlink-eu.vercel.app/images/logo.png",
+      "image": "https://speedlink-eu.vercel.app/images/hero-1.jpg",
+      "description": "Спедиция и логистика — сухопътен, морски и въздушен транспорт в 47 държави. Митническо представителство.",
       "telephone": "+359877404599",
       "email": "office@speedlink-eu.com",
-      "description": "Спедиция и логистика — автомобилен, морски и въздушен транспорт в 47 държави. Митническо представителство.",
-      "areaServed": ["BG","SK","RS","RO","EU"]
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BG",
+        "addressLocality": "София",
+        "addressRegion": "София-град"
+      },
+      "areaServed": [
+        { "@type": "Country", "name": "Bulgaria" },
+        { "@type": "Place", "name": "European Union" },
+        { "@type": "Place", "name": "Central Asia" }
+      ],
+      "serviceType": [
+        "Full Truckload (FTL)",
+        "Less than Truckload (LTL)",
+        "Ocean Freight",
+        "Air Freight",
+        "Customs Clearance",
+        "Warehousing"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+359877404599",
+        "email": "office@speedlink-eu.com",
+        "contactType": "customer service",
+        "availableLanguage": ["Bulgarian", "English"]
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Как формирате цените?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Цената зависи от тегло, разстояние, вид на товара и актуални пазарни условия. Котировката е окончателна — без допълнителни такси след приемане." }
+        },
+        {
+          "@type": "Question",
+          "name": "Какви са стандартните транзитни срокове?",
+          "acceptedAnswer": { "@type": "Answer", "text": "FTL в Европа: 2–5 дни. LTL с консолидация: 3–7 дни. Морски транспорт до Азия: 20–30 дни. Въздушен транспорт: 2–4 дни." }
+        },
+        {
+          "@type": "Question",
+          "name": "Предлагате ли товарна застраховка?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Да. Организираме пълно застрахователно покритие чрез лицензирани застрахователи. Застраховката може да бъде включена директно в офертата." }
+        },
+        {
+          "@type": "Question",
+          "name": "Кой отговаря за митническото оформяне?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Нашият екип поема целия процес — подаване на документи, тарифна класификация, координация с граничните власти." }
+        },
+        {
+          "@type": "Question",
+          "name": "Каква е разликата между FTL и LTL?",
+          "acceptedAnswer": { "@type": "Answer", "text": "FTL (Full Truck Load) — целият камион е за вашия товар. LTL (Less Than Truck Load) — товарът се консолидира с други съвместими пратки, което намалява разходите." }
+        }
+      ]
     }
     </script>
   </head>

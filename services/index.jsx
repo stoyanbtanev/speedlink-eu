@@ -109,7 +109,7 @@ function AboutSection() {
             <p className="mt-6 font-body text-body-lg leading-relaxed text-heading/50">{t(servicesPage.aboutDesc, lang)}</p>
             <div className="mt-8 flex gap-4">
               <a href="#contact" className="btn-primary">{lang === "bg" ? "Запитай" : "Inquire"}</a>
-              <a href="#reviews" className="btn-secondary">{lang === "bg" ? "Отзиви" : "Reviews"}</a>
+              <a href="#faq" className="btn-secondary">{lang === "bg" ? "Въпроси" : "FAQ"}</a>
             </div>
           </div>
           <div className="relative overflow-hidden border border-border">

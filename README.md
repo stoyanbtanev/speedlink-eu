@@ -1,6 +1,6 @@
 # SpeedLink EU
 
-Marketing site for a European logistics company. Single-page React app, four routes, bilingual (Bulgarian / English), dark by default.
+Marketing site for a European logistics company. Single-page React app with in-page scroll sections, bilingual (Bulgarian / English), dark by default.
 
 Built on Vite + React 18, Tailwind for styling, GSAP + Framer Motion for the scroll and reveal animations. Deployed on Vercel.
 
@@ -22,12 +22,16 @@ npm run preview
 
 Output goes to `dist/`.
 
-## Routes
+## Sections
 
-- `/` — home
-- `/services`
-- `/reviews`
-- `/contact`
+Single page, scroll anchors:
+
+- `#home` — hero + why-us + industries + stats + testimonials + gallery
+- `#services`
+- `#faq`
+- `#contact`
+
+`vercel.json` rewrites every path back to `/` — the app is deliberately one document.
 
 Language toggle swaps all copy in place via a small context in `src/context/LanguageContext.jsx`. No route changes per language.
 
@@ -35,20 +39,20 @@ Language toggle swaps all copy in place via a small context in `src/context/Lang
 
 ```
 src/
-  App.jsx              routing + scroll-to-top + error boundary
+  App.jsx              section composition + smooth-scroll + error boundary
   main.jsx             entry
-  components/          Navbar, Footer, PageHeader, LeafletMap
+  components/          Navbar, Footer, PageHeader, LeafletMap, CookieBanner, ContactForm, TrustSection, Modal
   context/             Language + Theme providers
   data/                translations.js (BG/EN strings) and images.js
   hooks/               small reusable bits (counter, magnetic, reveal, parallax)
   lib/gsap-config.js   GSAP plugin registration + custom eases
   index.css            tokens, utility classes, a few @layer rules
 
-home/      services/      reviews/      contact/
-  each has its own components/ folder and an index.jsx
+home/      services/      contact/
+  each owns its own components/ folder and an index.jsx
 ```
 
-Page folders (`home`, `services`, etc.) live at the root alongside `src/` so each page owns its own section components without polluting a shared tree.
+Section folders (`home`, `services`, `contact`) live at the root alongside `src/` so each section owns its own components without polluting a shared tree.
 
 ## Images
 

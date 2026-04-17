@@ -93,7 +93,7 @@ export function HeroSection() {
         variants={STAGGER_CONTAINER_VARIANTS}
         initial="hidden"
         animate="show"
-        className="z-10 flex flex-col items-center pb-16 sm:pb-20 lg:pb-28 w-full max-w-7xl pt-24 sm:pt-28 lg:pt-32"
+        className="z-10 flex flex-col items-center pb-14 sm:pb-16 lg:pb-24 w-full max-w-7xl pt-20 sm:pt-24 lg:pt-28"
       >
         <motion.div variants={FADE_UP_VARIANTS}>
           <span className="tag mb-4 sm:mb-8 inline-flex">{t(hero.tag, lang)}</span>
@@ -146,17 +146,17 @@ export function HeroSection() {
           className="hero-stats mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-12 lg:gap-x-16 gap-y-3 drop-shadow-sm"
         >
           <div className="flex items-center gap-2">
-            <span className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-none tracking-[0.03em] text-accent drop-shadow-sm">47</span>
+            <span className="font-display text-[clamp(1.25rem,2.75vw,2rem)] leading-none tracking-[0.02em] text-accent drop-shadow-sm">47</span>
             <span className="font-mono text-[0.6875rem] leading-[1.5] tracking-[0.14em] uppercase text-heading/80">{lang === "bg" ? "държави" : "countries"}</span>
           </div>
           <div className="hero-stats-divider h-4 w-px bg-border/40" />
           <div className="flex items-center gap-2">
-            <span className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-none tracking-[0.03em] text-accent drop-shadow-sm">8,400+</span>
+            <span className="font-display text-[clamp(1.25rem,2.75vw,2rem)] leading-none tracking-[0.02em] text-accent drop-shadow-sm">8,400+</span>
             <span className="font-mono text-[0.6875rem] leading-[1.5] tracking-[0.14em] uppercase text-heading/80">{lang === "bg" ? "пратки/год." : "shipments/yr"}</span>
           </div>
           <div className="hero-stats-divider h-4 w-px bg-border/40" />
           <div className="flex items-center gap-2">
-            <span className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-none tracking-[0.03em] text-accent drop-shadow-sm">15+</span>
+            <span className="font-display text-[clamp(1.25rem,2.75vw,2rem)] leading-none tracking-[0.02em] text-accent drop-shadow-sm">15+</span>
             <span className="font-mono text-[0.6875rem] leading-[1.5] tracking-[0.14em] uppercase text-heading/80">{lang === "bg" ? "години" : "years"}</span>
           </div>
         </motion.div>

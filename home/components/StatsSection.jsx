@@ -77,7 +77,7 @@ export function StatsSection() {
   return (
     <section className="section-padding section-py border-t border-border" ref={sectionRef}>
       <div className="container-xl">
-        <div className="mx-auto mb-16 max-w-2xl text-center md:mb-20">
+        <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
           <span className="reveal-header-child tag mb-6 inline-flex">{t(stats.tag, lang)}</span>
           <h2 className="reveal-header-child font-display text-display-lg text-heading">
             {t(stats.title, lang)}
@@ -93,7 +93,10 @@ export function StatsSection() {
               src={IMAGES.stats}
               alt="SpeedLink operations"
               className="aspect-[3/2] img-cover"
+              width={1200}
+              height={800}
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-dark/60 to-transparent" />
           </div>
@@ -104,7 +107,7 @@ export function StatsSection() {
                 key={i}
                 className="stat-card glass-card flex-1 p-6 md:p-8"
               >
-                <p className="stat-counter font-display text-[clamp(3rem,7vw,5rem)] leading-[0.9] tracking-[0.04em] text-accent" data-target={STAT_TARGETS[i].num}>
+                <p className="stat-counter font-display text-[clamp(2.25rem,5vw,3.75rem)] leading-[0.92] tracking-[0.02em] text-accent" data-target={STAT_TARGETS[i].num}>
                   {STAT_TARGETS[i].num}{STAT_TARGETS[i].suffix}
                 </p>
                 <h3 className="mt-2 font-mono text-label uppercase tracking-[0.14em] text-muted">

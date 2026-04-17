@@ -1,0 +1,15 @@
+{
+  "name": "SpeedLink Logistics",
+  "short_name": "SpeedLink",
+  "description": "Спедиция и логистика в Европа и Азия.",
+  "lang": "bg",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/images/logo.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

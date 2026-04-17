@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="geometricPrecision">
+  <g fill="currentColor">
+    <path d="M5 10 L15 10 L13 22 L3 22 Z"/>
+    <path d="M19 10 L29 10 L27 22 L17 22 Z"/>
+  </g>
+</svg>
